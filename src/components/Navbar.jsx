@@ -65,7 +65,7 @@ const Navbar = ({ theme, toggleTheme }) => {
 
         {/* 2. Hamburger Menu (Mobile Only) */}
         <div className="menu-btn" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </div>
       </div>
     </nav>

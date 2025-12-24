@@ -48,17 +48,23 @@ body {
 
 /* ... existing styles ... */
 
-/* --- Navbar Layout --- */
 .navbar {
   display: flex;
-  justify-content: space-between; /* Pushes Logo left, Actions right */
+  justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
   background-color: var(--nav-bg);
   border-bottom: var(--nav-border);
   backdrop-filter: blur(10px);
-  position: sticky;
-  top: 0;
+  
+  /* --- CHANGED LINES --- */
+  position: fixed;        /* Forces it to stay in the viewport */
+  top: 0;                 /* Pins it to the very top */
+  left: 0;                /* Aligns it to the left edge */
+  width: 100%;            /* Ensures it spans the full width */
+  box-sizing: border-box; /* Prevents padding from breaking the width */
+  /* -------------------- */
+  
   z-index: 1000;
 }
 
@@ -182,6 +188,10 @@ body {
   transition: background-color 0.3s;
 }
 
+
 .nav-icon:hover {
-  background-color: rgba(128, 128, 128, 0.2);
+  background-color: rgba(255, 215, 0, 0.15);   /* Subtle Gold background */
+  color: #FFD700;                              /* Icon turns Gold (Matches your Logo) */
+  transform: scale(1.15) rotate(15deg);        /* Zooms in 15% and tilts slightly */
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4); /* Adds a soft glow around it */
 }
