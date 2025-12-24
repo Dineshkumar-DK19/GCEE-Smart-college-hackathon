@@ -1,197 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply m-0 p-0 bg-[#020817] text-white min-h-screen overflow-x-hidden font-sans;
+  }
+}
+
+/* Optional: Custom scrollbar to match the dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-[#020817];
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-800 rounded-full hover:bg-slate-700;
+}
+
+/* 🔥 HARD STOP horizontal scroll */
+html,
 body {
-  background-color: #151E3D; /* Dark Blue */
   margin: 0;
   padding: 0;
-  min-height: 100vh;
-}
-html {
-  scroll-behavior: smooth;
-}
-:root {
-  /* --- DEFAULT IS NOW DARK MODE --- */
-  --bg-color: #020817; /* Dark Blue */
-  --text-color: #ffffff;
-  --box-border: 2px dashed rgba(255, 255, 255, 0.3);
-  
-  /* Navbar Dark Defaults */
-  --nav-bg: rgba(0, 0, 50, 0.8);
-  --nav-border: 1px solid rgba(255, 255, 255, 0.1);
-  --link-color: #ffffff;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
-/* When the 'data-theme' attribute is set to 'dark' */
-[data-theme='light'] {
-  --bg-color: #ffffff;
-  --text-color: #333333;
-  --box-border: 2px dashed #333;
-  
-  /* Navbar Light Overrides */
-  --nav-bg: rgba(255, 255, 255, 0.9);
-  --nav-border: 1px solid rgba(0, 0, 0, 0.1);
-  --link-color: #213547;
-}
-
-body {
-  background-color: var(--bg-color); /* Uses the variable */
-  color: var(--text-color);
-  transition: background-color 0.3s, color 0.3s; /* Smooth transition */
-  margin: 0;
-  min-height: 100vh;
-}
-
-/* Update your layout boxes to use variables too */
-.layout-box {
-  border: var(--box-border);
-  color: var(--text-color);
-  /* ... keep your other padding/margin styles ... */
-}
-
-/* ... existing styles ... */
-
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background-color: var(--nav-bg);
-  border-bottom: var(--nav-border);
-  backdrop-filter: blur(10px);
-  
-  /* --- CHANGED LINES --- */
-  position: fixed;        /* Forces it to stay in the viewport */
-  top: 0;                 /* Pins it to the very top */
-  left: 0;                /* Aligns it to the left edge */
-  width: 100%;            /* Ensures it spans the full width */
-  box-sizing: border-box; /* Prevents padding from breaking the width */
-  /* -------------------- */
-  
-  z-index: 1000;
-}
-
-/* Logo Styling */
-.nav-logo {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2;
-}
-.college-name { 
-  font-size: 0.75rem; 
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  opacity: 0.8; 
-}
-.event-name { 
-  font-size: 1.5rem; 
-  font-weight: 900; 
-  color: #FFD700; /* Gold Color like the image */
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); /* Slight glow */
-}
-
-/* Center Links */
-.nav-links {
-  display: flex;
-  gap: 25px;
-  /* To center them absolutely, we can use margin-left: auto; margin-right: auto; 
-     but keeping them in flow is safer for responsiveness. */
-}
-
-/* Link Styling */
-.nav-link {
-  text-decoration: none;
-  font-weight: 500;
-  color: var(--link-color);
-  font-size: 0.95rem;
-  position: relative;
-  transition: color 0.3s;
-}
-
-/* Hover Effect (Underline) */
-.nav-link::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -4px;
-  left: 0;
-  background-color: #FFD700;
-  transition: width 0.3s;
-}
-.nav-link:hover::after,
-.active-link::after {
-  width: 100%; /* Full underline on hover/active */
-}
-
-/* --- Mobile Responsiveness --- */
-@media (max-width: 900px) {
-  .nav-links {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    flex-direction: column;
-    background-color: var(--nav-bg); /* Use nav-bg for glass effect */
-    backdrop-filter: blur(12px);      /* Ensure blur matches navbar */
-    -webkit-backdrop-filter: blur(12px);
-    
-    padding: 2rem;
-    gap: 2rem;
-    border-bottom: var(--nav-border);
-    
-    transform: translateY(-200%);
-    transition: transform 0.3s ease-in-out;
-    display: flex;
-    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
-  }
-  
-  .nav-links.active {
-    transform: translateY(0);
-  }
-
-  /* Show Hamburger */
-  .menu-btn { 
-    display: block; 
-    cursor: pointer; 
-    color: var(--link-color);
-    margin-left: 10px; /* Space between Sun/Moon and Hamburger */
-  }
-
-  /* Ensure the container aligns them in a row */
-  .nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 5px; /* Adjust gap between the two icons */
-  }
-}
-
-@media (min-width: 901px) {
-  .menu-btn { display: none; }
-}
-.nav-link {
-  text-decoration: none;
-  font-weight: 500;
-  color: var(--link-color);
-  transition: opacity 0.2s;
-}
-
-.nav-link:hover {
-  opacity: 0.7;
-}
-
-.nav-icon {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-color);
-  padding: 5px;
-  border-radius: 50%;
-  transition: background-color 0.3s;
-}
-
-
-.nav-icon:hover {
-  background-color: rgba(255, 215, 0, 0.15);   /* Subtle Gold background */
-  color: #FFD700;                              /* Icon turns Gold (Matches your Logo) */
-  transform: scale(1.15) rotate(15deg);        /* Zooms in 15% and tilts slightly */
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4); /* Adds a soft glow around it */
+/* React root (Vite) */
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }

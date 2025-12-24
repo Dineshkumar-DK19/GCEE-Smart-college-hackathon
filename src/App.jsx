@@ -1,71 +1,113 @@
-import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-// Import from your components barrel file
-import { Navbar, Home, Contribute, Guidelines, YoutubeVideo, Timeline, Footer } from './components';
+// Components
 
-// Import from your pages barrel file
-import ProblemStatements from './pages/ProblemStatements';
+import {
+  Navbar,
+  Home,
+  Contribute,
+  Guidelines,
+  YoutubeVideo,
+  Timeline,
+  Footer,
+} from "./components";
+import ProblemStatements from "./pages/ProblemStatements";
 
-import './index.css'; 
+// Backgrounds
+import Particles from "./components/Particles/Particles";
+import { BackgroundBeams } from "./components/UI/background-beams";
+
+import "./index.css";
 
 function App() {
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState("dark");
 
-  // Apply the theme to the HTML tag
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
-  // Toggle Function
   const toggleTheme = () => {
-    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
+
+  // Common layout class for sections (replaces .layout-box)
+  const sectionLayout =
+    "min-h-screen flex flex-col items-center justify-center p-8 border border-dashed border-white/10";
 
   return (
     <BrowserRouter>
-      <main className="app-container">
-        {/* Navbar is outside Routes so it's always visible */}
+
+      <div className="fixed inset-0 w-screen h-screen z-0 pointer-events-none overflow-hidden">
+
+        <BackgroundBeams className="absolute inset-0 z-0 " />
+
+
+        <Particles
+          className="absolute inset-0 z-10"
+          particleCount={150}
+          particleBaseSize={100}
+          moveParticlesOnHover={false}
+          alphaParticles={true}
+          disableRotation={true}
+        />
+      </div>
+
+
+      <main className="relative z-10 pt-[20px]">
         <Navbar theme={theme} toggleTheme={toggleTheme} />
 
-        <Routes>
-          {/* --- ROUTE 1: LANDING PAGE (Scrollable Sections) --- */}
-          <Route path="/" element={
-            <>
-              {/* We wrap components in Sections with IDs for scrolling */}
-              <section id="home">
-                <Home />
-              </section>
+            <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <section id="home">
+                  <Home />
+                </section>
 
-              <section id="about">
-                {/* Placeholder for About until you create About.jsx */}
-                <div className="layout-box"><h2>About Section</h2></div>
-              </section>
+                <section id="about">
+                  <div className={sectionLayout}>
+                    <h2 className="text-2xl font-bold">About Section</h2>
+                  </div>
+                </section>
 
-              <section id="contribute">
-                <Contribute />
-              </section>
+                <section id="contribute">
+                  <div className={sectionLayout}>
+                    <Contribute />
+                  </div>
+                </section>
+                <section id="guidelines">
+                  <div className={sectionLayout}>
+                    <Guidelines />
+                  </div>
+                </section>
+                <section id="timeline">
+                  <div className={sectionLayout}>
+                    <Timeline />
+                  </div>
+                </section>
 
-              <section id="guidelines">
-                <Guidelines />
-              </section>
+                <section id="timeline">
+                  <div className={sectionLayout}>
+                    <YoutubeVideo />
+                  </div>
+                </section>
 
-              <section id="timeline">
-                <Timeline />
-              </section>
+                <section id="timeline">
+                  <div className={sectionLayout}>
+                    <Footer />
+                  </div>
+                </section>
+              </>
+            }
+          />
 
-              <YoutubeVideo />
-              <Footer />
-            </>
-          } />
-
-          {/* --- ROUTE 2: SEPARATE PAGES --- */}
           <Route path="/problems" element={<ProblemStatements />} />
-          
         </Routes>
       </main>
     </BrowserRouter>
   );
 }
 
-export default App;     
+export default App;
