@@ -4,19 +4,29 @@
 
 @layer base {
   body {
-    @apply m-0 p-0 bg-[#020817] text-white min-h-screen overflow-x-hidden font-sans;
+    /* FIX: Added transition and dynamic theme colors */
+    @apply m-0 p-0 min-h-screen overflow-x-hidden font-sans transition-colors duration-300 ease-in-out;
+    
+    /* Light Mode Defaults */
+    @apply bg-white text-slate-950;
+
+    /* Dark Mode Overrides */
+    @apply dark:bg-[#020817] dark:text-white;
   }
 }
 
-/* Optional: Custom scrollbar to match the dark theme */
+/* Custom scrollbar to match the active theme */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  @apply bg-[#020817];
+  /* Adapts to light/dark track */
+  @apply bg-slate-100 dark:bg-[#020817];
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-800 rounded-full hover:bg-slate-700;
+  /* Adapts to light/dark thumb */
+  @apply bg-slate-400 rounded-full hover:bg-slate-500;
+  @apply dark:bg-slate-800 dark:hover:bg-slate-700;
 }
 
 /* 🔥 HARD STOP horizontal scroll */
