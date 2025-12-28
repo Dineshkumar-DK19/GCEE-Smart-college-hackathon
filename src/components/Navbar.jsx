@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { 
-  Menu, 
-  X, 
+import {
+  Menu,
+  X,
   GraduationCap,
   Home,
   Info,
@@ -16,9 +16,9 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { name: "Home", type: "scroll", path: "home", icon: <Home size={18} /> },
-  { name: "About", type: "scroll", path: "about", icon: <Info size={18} /> },
   { name: "Problem Statements", type: "route", path: "/problems", icon: <FileQuestion size={18} /> },
   { name: "Contribute", type: "scroll", path: "contribute", icon: <GitBranch size={18} /> },
+  { name: "About", type: "scroll", path: "about", icon: <Info size={18} /> },
   { name: "Guidelines", type: "scroll", path: "guidelines", icon: <BookOpen size={18} /> },
   { name: "Timeline", type: "scroll", path: "timeline", icon: <Calendar size={18} /> },
 ];
@@ -63,18 +63,18 @@ export default function Navbar() { // Removed theme props
       className={`
         relative group
         ${mobile ? "px-4 py-3 rounded-xl hover:bg-white/5" : "px-4 h-full"}
-        
-        text-base font-medium 
-        text-white/70
-        hover:text-white
+
+        text-base font-medium
+        text-white
+
         transition-colors duration-200
         flex items-center gap-2 w-full text-left
       `}
     >
-      <span className="text-yellow-400/80 group-hover:text-yellow-400 transition-colors">
+      <span className="text-white-100 transition-colors">
         {link.icon}
       </span>
-      
+
       {link.name}
 
       {!mobile && (
@@ -104,17 +104,14 @@ export default function Navbar() { // Removed theme props
           ${scrolled ? "bg-[#020817]/80 shadow-lg" : "bg-[#020817]/60"}
         `}
       >
-        <nav className="mx-auto max-w-7xl px-6 h-20 flex items-center justify-between">
-          {/* LOGO */}
+  <nav className="mx-auto max-w-7xl px-0 h-20 flex items-center justify-between lg:justify-center gap-12">
           <Link to="/" className="flex items-center gap-2 group">
-            <GraduationCap className="w-8 h-8 text-yellow-400 transition-transform group-hover:scale-110" />
-            <span className="hidden sm:block font-semibold tracking-wide text-white">
-              Hackathon
-            </span>
+            <GraduationCap className="w-12 h-12 text-white-100 transition-transform group-hover:scale-110" />
+
           </Link>
 
           {/* DESKTOP NAV */}
-          <div className="hidden md:flex items-center h-full gap-2">
+          <div className="hidden md:flex items-center h-full gap-4 ">
             {navLinks.map((link, i) => (
               <motion.div
                 key={link.name}
@@ -128,7 +125,7 @@ export default function Navbar() { // Removed theme props
             ))}
           </div>
 
-          {/* MOBILE TOGGLE (No Sun/Moon button anymore) */}
+          {/* MOBILE TOGGLE */}
           <div className="flex items-center gap-2 md:hidden">
             <button
               className="p-2 rounded-full text-white/80 hover:bg-white/10 transition"
