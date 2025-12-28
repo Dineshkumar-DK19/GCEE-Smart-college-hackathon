@@ -2,15 +2,10 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Components
-<<<<<<< HEAD
-
-// Find your component imports and add About
-=======
->>>>>>> ad6bfdeb3119d2ba491d41fa00c249a496bf6fe7
 import {
   Navbar,
   Home,
-  About, // Add this
+  About,
   Contribute,
   Guidelines,
   YoutubeVideo,
@@ -26,7 +21,6 @@ import { BackgroundBeams } from "./components/UI/background-beams";
 import "./index.css";
 
 function App() {
-  // Common layout class for sections
   const sectionLayout =
     "min-h-screen flex flex-col items-center justify-center p-8 border border-dashed border-white/10";
 
@@ -44,13 +38,8 @@ function App() {
         />
       </div>
 
-      {/* FIX APPLIED HERE: 
-         1. Removed 'pt-[20px]'. 
-         2. This removes the "permanent gap" at the top of the page.
-         3. Now 'Home.jsx' fully controls its own spacing.
-      */}
-      <main className="relative z-10"> 
-        <Navbar  />
+      <main className="relative z-10">
+        <Navbar />
 
         <Routes>
           <Route
@@ -61,8 +50,6 @@ function App() {
                   <Home />
                 </section>
 
-                
-                {/* Replace your current #about section with this */}
                 <section id="about">
                   <div className={sectionLayout}>
                     <About />
@@ -74,11 +61,13 @@ function App() {
                     <Contribute />
                   </div>
                 </section>
+
                 <section id="guidelines">
                   <div className={sectionLayout}>
                     <Guidelines />
                   </div>
                 </section>
+
                 <section id="timeline">
                   <div className={sectionLayout}>
                     <Timeline />
