@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Components
-
 import {
   Navbar,
   Home,
@@ -21,28 +20,14 @@ import { BackgroundBeams } from "./components/UI/background-beams";
 import "./index.css";
 
 function App() {
-  const [theme, setTheme] = useState("dark");
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
-
-  // Common layout class for sections (replaces .layout-box)
+  // Common layout class for sections
   const sectionLayout =
     "min-h-screen flex flex-col items-center justify-center p-8 border border-dashed border-white/10";
 
   return (
     <BrowserRouter>
-
       <div className="fixed inset-0 w-screen h-screen z-0 pointer-events-none overflow-hidden">
-
         <BackgroundBeams className="absolute inset-0 z-0 " />
-
-
         <Particles
           className="absolute inset-0 z-10"
           particleCount={150}
@@ -53,11 +38,15 @@ function App() {
         />
       </div>
 
+      {/* FIX APPLIED HERE: 
+         1. Removed 'pt-[20px]'. 
+         2. This removes the "permanent gap" at the top of the page.
+         3. Now 'Home.jsx' fully controls its own spacing.
+      */}
+      <main className="relative z-10"> 
+        <Navbar  />
 
-      <main className="relative z-10 pt-[20px]">
-        <Navbar theme={theme} toggleTheme={toggleTheme} />
-
-            <Routes>
+        <Routes>
           <Route
             path="/"
             element={
@@ -88,13 +77,13 @@ function App() {
                   </div>
                 </section>
 
-                <section id="timeline">
+                <section id="youtube">
                   <div className={sectionLayout}>
                     <YoutubeVideo />
                   </div>
                 </section>
 
-                <section id="timeline">
+                <section id="footer">
                   <div className={sectionLayout}>
                     <Footer />
                   </div>

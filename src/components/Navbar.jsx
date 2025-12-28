@@ -3,8 +3,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { 
   Menu, 
   X, 
-  Sun, 
-  Moon, 
   GraduationCap,
   Home,
   Info,
@@ -15,7 +13,6 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-/* ---------------- NAV CONFIG ---------------- */
 
 const navLinks = [
   { name: "Home", type: "scroll", path: "home", icon: <Home size={18} /> },
@@ -28,21 +25,18 @@ const navLinks = [
 
 /* ---------------- COMPONENT ---------------- */
 
-export default function Navbar({ theme, toggleTheme }) {
+export default function Navbar() { // Removed theme props
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
 
-  /* ---------------- SCROLL DETECT ---------------- */
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  /* ---------------- HELPERS ---------------- */
 
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
@@ -51,12 +45,10 @@ export default function Navbar({ theme, toggleTheme }) {
 
   const handleNavigation = (link) => {
     setMenuOpen(false);
-
     if (link.type === "route") {
       navigate(link.path);
       return;
     }
-
     if (location.pathname !== "/") {
       navigate("/");
       setTimeout(() => scrollToSection(link.path), 120);
@@ -65,42 +57,33 @@ export default function Navbar({ theme, toggleTheme }) {
     }
   };
 
-  /* ---------------- NAV ITEM ---------------- */
-
   const NavItem = ({ link, mobile = false }) => (
     <button
       onClick={() => handleNavigation(link)}
       className={`
         relative group
-        ${mobile ? "px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/5" : "px-4 h-full"}
+        ${mobile ? "px-4 py-3 rounded-xl hover:bg-white/5" : "px-4 h-full"}
         
-        /* FIX: Dynamic text colors for Light/Dark mode */
         text-base font-medium 
-        text-slate-600 dark:text-white/70
-        
-        hover:text-black dark:hover:text-white
+        text-white/70
+        hover:text-white
         transition-colors duration-200
         flex items-center gap-2 w-full text-left
       `}
     >
-      {/* Icon */}
-      <span className="text-yellow-500 dark:text-yellow-400/80 group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors">
+      <span className="text-yellow-400/80 group-hover:text-yellow-400 transition-colors">
         {link.icon}
       </span>
       
       {link.name}
 
-      {/* Underline — center out (Desktop only) */}
       {!mobile && (
         <span
           className="
             pointer-events-none
             absolute left-1/2 bottom-[18px]
             h-[1.5px] w-0
-            
-            /* FIX: Underline color adaptation */
-            bg-black/80 dark:bg-white/80
-            
+            bg-white/80
             transition-all duration-300 ease-out
             group-hover:w-[80%]
             group-hover:left-[10%]
@@ -110,8 +93,6 @@ export default function Navbar({ theme, toggleTheme }) {
     </button>
   );
 
-  /* ---------------- JSX ---------------- */
-
   return (
     <header className="fixed top-0 left-0 right-0 z-50 overflow-x-hidden">
       <div
@@ -119,29 +100,20 @@ export default function Navbar({ theme, toggleTheme }) {
           w-full
           backdrop-blur-md
           transition-all duration-500
-          
-          /* FIX: Dynamic Border */
-          border-b border-black/5 dark:border-white/5
-          
-          ${
-            scrolled 
-              /* FIX: Dynamic Backgrounds */
-              ? "bg-white/80 dark:bg-[#020817]/80 shadow-lg" 
-              : "bg-white/60 dark:bg-[#020817]/60"
-          }
+          border-b border-white/5
+          ${scrolled ? "bg-[#020817]/80 shadow-lg" : "bg-[#020817]/60"}
         `}
       >
-        {/* CENTERED CONTENT */}
         <nav className="mx-auto max-w-7xl px-6 h-20 flex items-center justify-between">
-          {/* LEFT — LOGO */}
+          {/* LOGO */}
           <Link to="/" className="flex items-center gap-2 group">
-            <GraduationCap className="w-8 h-8 text-yellow-500 dark:text-yellow-400 transition-transform group-hover:scale-110" />
-            <span className="hidden sm:block font-semibold tracking-wide text-slate-900 dark:text-white">
+            <GraduationCap className="w-8 h-8 text-yellow-400 transition-transform group-hover:scale-110" />
+            <span className="hidden sm:block font-semibold tracking-wide text-white">
               Hackathon
             </span>
           </Link>
 
-          {/* CENTER — DESKTOP NAV */}
+          {/* DESKTOP NAV */}
           <div className="hidden md:flex items-center h-full gap-2">
             {navLinks.map((link, i) => (
               <motion.div
@@ -156,19 +128,10 @@ export default function Navbar({ theme, toggleTheme }) {
             ))}
           </div>
 
-          {/* RIGHT — ACTIONS */}
-          <div className="flex items-center gap-2">
-            {/* THEME TOGGLE */}
+          {/* MOBILE TOGGLE (No Sun/Moon button anymore) */}
+          <div className="flex items-center gap-2 md:hidden">
             <button
-              onClick={toggleTheme}
-              className="p-2 rounded-full text-slate-600 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/10 transition"
-            >
-              {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
-            </button>
-
-            {/* MOBILE MENU BUTTON */}
-            <button
-              className="md:hidden p-2 rounded-full text-slate-600 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/10 transition"
+              className="p-2 rounded-full text-white/80 hover:bg-white/10 transition"
               onClick={() => setMenuOpen((p) => !p)}
             >
               <AnimatePresence mode="wait">
@@ -210,12 +173,9 @@ export default function Navbar({ theme, toggleTheme }) {
             className="
               md:hidden
               w-full
-              
-              /* FIX: Dynamic Mobile Background */
-              bg-white/30 dark:bg-[#020817]/30
-              
+              bg-[#020817]/30
               backdrop-blur-xl
-              border-b border-black/5 dark:border-white/10
+              border-b border-white/10
               overflow-hidden
             "
           >
