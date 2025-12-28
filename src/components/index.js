@@ -5,3 +5,5 @@ export { default as YoutubeVideo } from './YoutubeVideo';
 export { default as Timeline } from './Timeline';
 export { default as Footer } from './Footer';
 export { default as Navbar } from './Navbar';
+export { default as About } from './About';
+// ... keep your other exports (Navbar, Home, etc.)

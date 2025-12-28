@@ -3,9 +3,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Components
 
+// Find your component imports and add About
 import {
   Navbar,
   Home,
+  About, // Add this
   Contribute,
   Guidelines,
   YoutubeVideo,
@@ -66,9 +68,11 @@ function App() {
                   <Home />
                 </section>
 
+                
+                {/* Replace your current #about section with this */}
                 <section id="about">
                   <div className={sectionLayout}>
-                    <h2 className="text-2xl font-bold">About Section</h2>
+                    <About />
                   </div>
                 </section>
 
