@@ -3,15 +3,20 @@
 @tailwind utilities;
 
 @layer base {
-  @layer base {
+  html {
+    /* 1. Fixes the scroll offset so headers don't hide behind the navbar */
+    /* 5rem (80px) is your navbar height + 2rem (32px) extra breathing room */
+    scroll-padding-top: 7rem;
+    scroll-behavior: smooth;
+  }
+
   body {
     /* Enforcing Dark Mode Styles Default */
     @apply m-0 p-0 min-h-screen overflow-x-hidden font-sans transition-colors duration-300 ease-in-out;
-    
+
     /* Hardcoded Dark Mode Colors */
     @apply bg-[#020817] text-white;
   }
-}
 }
 
 /* Custom scrollbar - Dark Mode Version Only */
@@ -36,20 +41,17 @@ body,
   padding: 0;
 }
 
-
+/* ... keep your existing 3D transform classes ... */
 .perspective-1000 {
   perspective: 1000px;
 }
-
 .transform-style-3d {
   transform-style: preserve-3d;
 }
-
 .backface-hidden {
   backface-visibility: hidden;
-  -webkit-backface-visibility: hidden; /* Safari support */
+  -webkit-backface-visibility: hidden;
 }
-
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
