@@ -39,7 +39,7 @@ function App() {
         />
       </div>
 
-      <main className="relative z-10"> 
+      <main className="relative z-10">
         <Navbar  />
 
         <Routes>
@@ -68,11 +68,11 @@ function App() {
                     <Guidelines />
                   </div>
                 </section>
-                <section id="timeline">
-                  <div className={sectionLayout}>
-                    <Timeline />
-                  </div>
-                </section>
+          <section id="timeline">
+  <div className={`${sectionLayout} !p-0 !m-0`}>
+    <Timeline />
+  </div>
+</section>
 
                 <section id="youtube">
                   <div className={sectionLayout}>
