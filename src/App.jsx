@@ -10,6 +10,7 @@ import {
   YoutubeVideo,
   Timeline,
   Footer,
+  About
 } from "./components";
 import ProblemStatements from "./pages/ProblemStatements";
 import Register from "./pages/Register"; // 1. IMPORT REGISTER
@@ -53,7 +54,7 @@ function App() {
 
                 <section id="about">
                   <div className={sectionLayout}>
-                    <h2 className="text-2xl font-bold">About Section</h2>
+                    <About />
                   </div>
                 </section>
 
