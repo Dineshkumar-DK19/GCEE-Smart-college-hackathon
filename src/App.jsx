@@ -5,7 +5,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {
   Navbar,
   Home,
-  About,
   Contribute,
   Guidelines,
   YoutubeVideo,
@@ -13,6 +12,7 @@ import {
   Footer,
 } from "./components";
 import ProblemStatements from "./pages/ProblemStatements";
+import Register from "./pages/Register"; // 1. IMPORT REGISTER
 
 // Backgrounds
 import Particles from "./components/Particles/Particles";
@@ -38,10 +38,11 @@ function App() {
         />
       </div>
 
-      <main className="relative z-10">
-        <Navbar />
+      <main className="relative z-10"> 
+        <Navbar  />
 
         <Routes>
+          {/* Main Home Route */}
           <Route
             path="/"
             element={
@@ -52,7 +53,7 @@ function App() {
 
                 <section id="about">
                   <div className={sectionLayout}>
-                    <About />
+                    <h2 className="text-2xl font-bold">About Section</h2>
                   </div>
                 </section>
 
@@ -61,13 +62,11 @@ function App() {
                     <Contribute />
                   </div>
                 </section>
-
                 <section id="guidelines">
                   <div className={sectionLayout}>
                     <Guidelines />
                   </div>
                 </section>
-
                 <section id="timeline">
                   <div className={sectionLayout}>
                     <Timeline />
@@ -89,7 +88,9 @@ function App() {
             }
           />
 
+          {/* New Routes */}
           <Route path="/problems" element={<ProblemStatements />} />
+          <Route path="/register" element={<Register />} /> {/* 2. ADD ROUTE */}
         </Routes>
       </main>
     </BrowserRouter>

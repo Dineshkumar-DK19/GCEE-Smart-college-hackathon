@@ -46,6 +46,7 @@ const LightRays = ({
   const animationIdRef = useRef(null);
   const meshRef = useRef(null);
   const cleanupFunctionRef = useRef(null);
+  const resizeObserverRef = useRef(null); // Ref to hold the ResizeObserver
   const [isVisible, setIsVisible] = useState(false);
   const observerRef = useRef(null);
 
@@ -231,8 +232,18 @@ const LightRays = ({
         }
       };
 
-      window.addEventListener('resize', updatePlacement);
+      // 1. Initial Update
       updatePlacement();
+      
+      // 2. Window Resize Listener (Backup)
+      window.addEventListener('resize', updatePlacement);
+      
+      // 3. ResizeObserver (CRITICAL FIX: Watches the box itself)
+      resizeObserverRef.current = new ResizeObserver(() => {
+        updatePlacement();
+      });
+      resizeObserverRef.current.observe(containerRef.current);
+
       animationIdRef.current = requestAnimationFrame(loop);
 
       cleanupFunctionRef.current = () => {
@@ -240,7 +251,14 @@ const LightRays = ({
           cancelAnimationFrame(animationIdRef.current);
           animationIdRef.current = null;
         }
+
         window.removeEventListener('resize', updatePlacement);
+
+        if (resizeObserverRef.current) {
+          resizeObserverRef.current.disconnect();
+          resizeObserverRef.current = null;
+        }
+
         if (renderer) {
           try {
             const canvas = renderer.gl.canvas;
@@ -267,6 +285,7 @@ const LightRays = ({
     };
   }, [isVisible, raysOrigin, raysColor, raysSpeed, lightSpread, rayLength, pulsating, fadeDistance, saturation, followMouse, mouseInfluence, noiseAmount, distortion]);
 
+  // Keep the other useEffects for updating uniforms if props change
   useEffect(() => {
     if (!uniformsRef.current || !containerRef.current || !rendererRef.current) return;
     const u = uniformsRef.current;
@@ -302,7 +321,6 @@ const LightRays = ({
     }
   }, [followMouse]);
 
-  // Changed: Removed CSS import reliance, added direct Tailwind w-full h-full
   return <div ref={containerRef} className={`w-full h-full ${className}`.trim()} />;
 };
 
