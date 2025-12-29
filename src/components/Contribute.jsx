@@ -18,7 +18,6 @@ const Contribute = () => {
     "Admin Office",
     "Automobile Engineering",
     "Civil Engineering",
-    "Computer Science and Data Science Engineering",
     "Computer Science and Engineering",
     "Electrical and Electronics Engineering",
     "Electronics and Communication Engineering",
