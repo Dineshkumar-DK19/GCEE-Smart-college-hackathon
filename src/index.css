@@ -8,6 +8,9 @@
     /* 5rem (80px) is your navbar height + 2rem (32px) extra breathing room */
     scroll-padding-top: 7rem;
     scroll-behavior: smooth;
+    overscroll-behavior-y: none;
+    /* height: 100%;
+   touch-action: manipulation; */
   }
 
   body {
@@ -16,7 +19,12 @@
 
     /* Hardcoded Dark Mode Colors */
     @apply bg-[#020817] text-white;
+    overscroll-behavior-y: none;
+    /* height: 100%; */
   }
+}
+:root {
+  --nav-h: 80px;
 }
 
 /* Custom scrollbar - Dark Mode Version Only */

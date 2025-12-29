@@ -39,10 +39,10 @@ export const AnimatedTimeline = ({ data }) => {
     >
       {/* Header Section */}
       <div className="max-w-7xl mx-auto py-12 md:py-20 px-4 md:px-8 lg:px-10">
-        <h2 className="text-2xl md:text-5xl mb-4 text-white max-w-4xl font-semibold">
+        <h2 className="text-xl md:text-4xl mb-4 text-white max-w-4xl font-semibold">
           Hackathon Timings
         </h2>
-        <p className="text-neutral-300 text-sm md:text-base max-w-sm">
+        <p className="text-neutral-300 text-xs md:text-sm max-w-sm">
           A detailed timeline of the Smart College Hackathon events and activities.
         </p>
       </div>
@@ -96,12 +96,12 @@ export const AnimatedTimeline = ({ data }) => {
         />
 
         {/* 2. ANIMATED PROGRESS LINE */}
-        <motion.div
+       <motion.div
           style={{
             height: heightTransform,
             opacity: opacityTransform,
           }}
-          className="absolute md:left-8 left-8 top-0 overflow-hidden w-[2px] bg-gradient-to-t from-purple-500 via-blue-500 to-transparent from-[0%] via-[10%] rounded-full"
+          className="absolute md:left-8 left-8 top-0 overflow-hidden w-[2px] bg-gradient-to-b from-purple-500 via-blue-500 to-purple-500 rounded-full"
         >
         </motion.div>
       </div>

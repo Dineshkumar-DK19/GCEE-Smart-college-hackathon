@@ -7,7 +7,7 @@ const About = () => {
       <div className="max-w-6xl mx-auto lg:space-y-10  sm:space-y-8 space-y-6">
 
         {/* SECTION TITLE — TOP CENTER */}
-        <h2 className="text-xl md:text-3xl font-bold text-white/80 text-center tracking-wider">
+        <h2 className="text-xl md:text-4xl font-bold text-white/80 text-center tracking-wider">
           About our  SCH
         </h2>
 

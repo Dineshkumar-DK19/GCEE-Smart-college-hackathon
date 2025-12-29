@@ -20,6 +20,7 @@ import Particles from "./components/Particles/Particles";
 import { BackgroundBeams } from "./components/UI/background-beams";
 
 import "./index.css";
+import Contact from "./components/Contact";
 
 function App() {
   // CHANGED: Removed 'min-h-screen', 'border', 'border-dashed'
@@ -79,8 +80,14 @@ function App() {
                 </section>
 
                 <section id="youtube">
-                  <div className={sectionLayout}>
+                  <div className="w-full">
                     <YoutubeVideo />
+                  </div>
+                </section>
+
+                 <section id="contact">
+                  <div className="w-full">
+                    <Contact/>
                   </div>
                 </section>
 

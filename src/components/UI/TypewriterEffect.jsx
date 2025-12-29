@@ -5,7 +5,7 @@ import { useEffect } from "react";
 export const TypewriterEffect = ({
   words,
   className,
-  cursorClassName
+
 }) => {
   // Split text inside of words into array of characters
   const wordsArray = words.map((word) => {
@@ -17,38 +17,49 @@ export const TypewriterEffect = ({
 
   const [scope, animate] = useAnimate();
   const isInView = useInView(scope);
-  
+
   useEffect(() => {
     if (isInView) {
-      const runLoop = async () => {
-        // 1. Reset (Ensure everything is hidden initially)
-        await animate("span", { opacity: 0, display: "none" }, { duration: 0 });
+     const runLoop = async () => {
+  /* 1️⃣ RESET — instant clear (no animation feel) */
+  await animate(
+    "span",
+    { opacity: 0, display: "none" },
+    { duration: 0 }
+  );
 
-        // 2. Type (Animate In) - SLOWER SPEED
-        // Changed stagger from 0.1 to 0.2
-        await animate(
-          "span",
-          { display: "inline-block", opacity: 1, width: "fit-content" },
-          { duration: 0.3, delay: stagger(0.2), ease: "easeInOut" }
-        );
-        /*
-        // 3. Wait (Pause for 2 seconds)
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+  /* 2️⃣ TYPE IN — confident, readable, hype */
+  await animate(
+    "span",
+    { display: "inline-block", opacity: 1 },
+    {
+      duration: 0.45,              // smooth fade-in per word/letter
+      delay: stagger(0.18),         // 🔥 hackathon typing speed
+      ease: "easeOut",
+    }
+  );
 
-        // 4. Delete (Animate Out) - SLOWER SPEED
-        // Changed stagger from 0.05 to 0.1
-        await animate(
-          "span",
-          { opacity: 0, display: "none" },
-          { duration: 0.1, delay: stagger(0.1, { from: "last" }) }
-        );
+  /* 3️⃣ HOLD — let it breathe (crowd reads it) */
+  await new Promise((resolve) => setTimeout(resolve, 3500));
+  // 👆 sweet spot: not boring, not rushed
 
-        // 5. Loop
-        if (scope.current) {
-           runLoop();
-        }
-           */
-      };
+  /* 4️⃣ DELETE — faster than typing (feels powerful) */
+  await animate(
+    "span",
+    { opacity: 0 },
+    {
+      duration: 0.15,
+      delay: stagger(0.12, { from: "last" }), // reverse wipe
+      ease: "easeIn",
+    }
+  );
+
+  /* 5️⃣ LOOP */
+  if (scope.current) {
+    runLoop();
+  }
+};
+
 
       runLoop();
     }
@@ -65,7 +76,7 @@ export const TypewriterEffect = ({
                   initial={{}}
                   key={`char-${index}`}
                   className={cn(
-                    "opacity-0 hidden", 
+                    "opacity-0 hidden",
                     word.className
                   )}
                 >

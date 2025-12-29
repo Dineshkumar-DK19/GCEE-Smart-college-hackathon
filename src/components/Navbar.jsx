@@ -11,6 +11,7 @@ import {
   BookOpen,
   Calendar
 } from "lucide-react";
+import hackathonLogo from '../assets/HackathonLogo.png';
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
@@ -60,7 +61,7 @@ export default function Navbar() {
       className={`
         relative group
         ${mobile ? "px-4 py-3 rounded-xl hover:bg-white/5" : "px-4 h-full"}
-        text-base font-medium text-white transition-colors duration-200 flex items-center gap-2 w-full text-left
+        text-base font-medium text-white/80 transition-colors duration-200 flex items-center gap-2 w-full text-left
       `}
     >
       <span className="text-white-100 transition-colors">{link.icon}</span>
@@ -76,16 +77,29 @@ export default function Navbar() {
       <div
         className={`
           w-full
-          backdrop-blur-md
+          backdrop-blur-xl
           transition-all duration-500
           border-b border-white/5
-          relative z-20 
-          ${scrolled ? "bg-[#020817]/80 shadow-lg" : "bg-[#020817]/60"}
+          relative z-20
+          ${scrolled ? "bg-[#020817]/90 shadow-lg" : "bg-[#020817]/50"}
         `}
       >
         <nav className="mx-auto max-w-7xl px-0 h-20 flex items-center justify-between lg:justify-center gap-12 relative z-10">
           <Link to="/" className="flex items-center gap-2 group">
-            <GraduationCap className="w-12 h-12 text-white-100 transition-transform group-hover:scale-110" />
+         <img
+  src={hackathonLogo}
+  alt="Hackathon Logo"
+className="
+  w-10 h-10
+  sm:w-12 sm:h-12
+  md:w-16 md:h-16
+  object-contain
+  transition-transform
+  group-hover:scale-110
+  ml-4
+"
+
+/>
           </Link>
 
           {/* DESKTOP NAV */}
@@ -104,7 +118,7 @@ export default function Navbar() {
           </div>
 
           {/* MOBILE TOGGLE */}
-          <div className="flex items-center gap-2 md:hidden">
+          <div className="flex items-center md:hidden  justify-between px-4 sm:px-6 md:px-8">
             <button
               className="p-2 rounded-full text-white/80 hover:bg-white/10 transition"
               onClick={() => setMenuOpen((p) => !p)}
@@ -128,8 +142,8 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="md:hidden w-full bg-[#020817]/30 backdrop-blur-xl border-b border-white/10 overflow-hidden relative z-30"
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="md:hidden  w-full bg-[#020817]/80 backdrop-blur-xl border-b border-white/10 overflow-hidden relative z-30"
           >
             <div className="mx-auto max-w-7xl px-6 py-4">
               <div className="flex flex-col gap-1">
