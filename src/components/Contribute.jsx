@@ -1,19 +1,96 @@
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, CheckCircle, ChevronDown } from "lucide-react";
 
+/* ---------- Reusable Animated Dropdown ---------- */
+const AnimatedDropdown = ({ value, setValue, options, placeholder }) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="relative">
+      {/* Trigger */}
+      <button
+        type="button"
+        onClick={() => setOpen((p) => !p)}
+        className="
+          w-full flex items-center justify-between
+          rounded-lg px-4 py-3
+          bg-[#020817]
+          border border-white/10
+          text-sm text-slate-300
+          focus:outline-none
+        "
+      >
+        <span className={value ? "text-slate-300" : "text-slate-500"}>
+          {value || placeholder}
+        </span>
+        <ChevronDown
+          size={18}
+          className={`transition-transform ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {/* Dropdown */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2 }}
+            className="
+              absolute z-50 mt-2 w-full
+              rounded-xl border border-white/10
+              bg-[#020817]
+              shadow-xl
+              max-h-56 overflow-y-auto
+              scrollbar-hide
+            "
+          >
+            {options.map((opt, i) => (
+              <motion.button
+                key={opt}
+                initial={{ opacity: 0, x: -6 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.04 }}
+                onClick={() => {
+                  setValue(opt);
+                  setOpen(false);
+                }}
+                className="
+                  w-full text-left px-4 py-2.5
+                  text-sm text-slate-400
+                  hover:bg-white/5 hover:text-white
+                  transition
+                "
+              >
+                {opt}
+              </motion.button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+/* ---------- Main Component ---------- */
 const Contribute = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    contact: '',
-    dept: 'Admin Office',
-    title: '',
-    requirement: 'Website',
-    theme: '',
-    description: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [open, setOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Departments sorted in Alphabetical Order
+  const [formData, setFormData] = useState({
+    name: "",
+    contact: "",
+    dept: "",
+    requirement: "",
+    title: "",
+    theme: "",
+    description: "",
+  });
+
   const departments = [
     "Admin Office",
     "Automobile Engineering",
@@ -28,112 +105,200 @@ const Contribute = () => {
     "Information Technology",
     "Library",
     "Mechanical Engineering",
-    "Sports"
-  ].sort();
+    "Sports",
+  ];
+
+  const requirements = ["Website", "Mobile App", "Web & App"];
+
+  const inputStyle = `
+    w-full rounded-lg
+    bg-[#020817]
+    border border-white/10
+    px-4 py-3
+    text-sm text-white
+    placeholder:text-slate-500
+    focus:outline-none
+  `;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    try {
-      const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxvahYIkAB2oX8AZJ-MFU8toDvDo1_19XV4-CW6g-klk_IokdfV8sy_ags3KkIRjZo04g/exec";
-      await fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: JSON.stringify(formData),
-      });
-      
+
+    setTimeout(() => {
+      setIsSubmitting(false);
       setSubmitted(true);
-      setIsSubmitting(false);
-      setFormData({ name: '', contact: '', dept: 'Admin Office', title: '', requirement: 'Website', theme: '', description: '' });
-      setTimeout(() => setSubmitted(false), 5000);
-    } catch (error) {
-      alert("Submission failed.");
-      setIsSubmitting(false);
-    }
+      setTimeout(() => {
+        setSubmitted(false);
+        setOpen(false);
+      }, 1500);
+    }, 1000);
   };
 
-  const inputStyle = "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all focus:ring-1 focus:ring-blue-500 placeholder:text-slate-600 text-sm md:text-base";
-
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 py-8 md:py-12 animate-in fade-in duration-500">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl md:text-5xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-emerald-400">
-          Staff Contribution Portal
-        </h2>
-        <p className="text-slate-400 mt-3 font-medium text-sm md:text-base tracking-wide">
-          Assigning unique <span className="text-blue-400">SCH IDs</span> for college-wide problems.
+    <section className="bg-[#020817]/70 py-16 px-6">
+      <div className="max-w-5xl mx-auto text-center space-y-6">
+        <h2 className="text-xl md:text-3xl font-bold text-white/80 text-center mb-10">
+          {" "}
+          Contribute a Problem Statement{" "}
+        </h2>{" "}
+        <p className="text-xs sm:text-sm md:text-lg text-slate-400 leading-relaxed">
+          {" "}
+          Smart College Hackathon invites faculty members and administrative
+          staff to contribute real-world problem statements from their
+          respective departments.{" "}
+        </p>{" "}
+        <p className="text-xs sm:text-sm md:text-lg text-slate-400 leading-relaxed">
+          {" "}
+          These problem statements help students work on practical challenges
+          and build technology-driven solutions that can be implemented within
+          the college ecosystem.{" "}
         </p>
+        <button
+          onClick={() => setOpen(true)}
+          className="
+            px-8 py-4 rounded-xl
+            bg-gradient-to-r from-blue-600 to-indigo-600
+            text-white font-semibold
+            hover:scale-[1.02] transition
+          "
+        >
+          ➕ Add Problem Statement
+        </button>
       </div>
 
-      <div className="relative">
-        <form onSubmit={handleSubmit} className={`space-y-6 bg-slate-900/40 p-6 md:p-10 rounded-3xl border border-white/10 backdrop-blur-xl shadow-2xl transition-all duration-300 ${isSubmitting ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
-          
-          {/* Row 1: Name & Contact */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="flex flex-col">
-              <label className="text-slate-400 mb-2 text-[10px] font-bold uppercase tracking-widest">Staff Name</label>
-              <input type="text" required className={inputStyle} placeholder="Enter Full Name" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
-            </div>
-            <div className="flex flex-col">
-              <label className="text-slate-400 mb-2 text-[10px] font-bold uppercase tracking-widest">Contact Number</label>
-              <input type="tel" required className={inputStyle} placeholder="e.g. 9876543210" value={formData.contact} onChange={(e) => setFormData({...formData, contact: e.target.value})} />
-            </div>
-          </div>
+      {/* ---------- MODAL ---------- */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="
+                relative w-full max-w-xl
+                bg-[#020817]
+                border border-white/10
+                rounded-2xl
+                p-6 md:p-8
+                max-h-[90vh] overflow-y-auto scrollbar-hide
+              "
+            >
+              {/* Header */}
+              <div className="sticky top-0 bg-[#020817] pb-4 mb-4 flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-white/80">
+                  Staff Contribution
+                </h3>
+                <button onClick={() => setOpen(false)}>
+                  <X className="text-slate-400 hover:text-white" size={20} />
+                </button>
+              </div>
 
-          {/* Row 2: Dept & Requirement */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="flex flex-col">
-              <label className="text-slate-400 mb-2 text-[10px] font-bold uppercase tracking-widest">Department</label>
-              <select className={inputStyle} value={formData.dept} onChange={(e) => setFormData({...formData, dept: e.target.value})}>
-                {departments.map(dept => <option key={dept} value={dept} className="bg-slate-900">{dept}</option>)}
-              </select>
-            </div>
-            <div className="flex flex-col">
-              <label className="text-slate-400 mb-2 text-[10px] font-bold uppercase tracking-widest">Project Requirement</label>
-              <select className={inputStyle} value={formData.requirement} onChange={(e) => setFormData({...formData, requirement: e.target.value})}>
-                <option value="Website" className="bg-slate-900">Website</option>
-                <option value="Mobile App" className="bg-slate-900">Mobile App</option>
-                <option value="Web & App" className="bg-slate-900">Both (Web & App)</option>
-              </select>
-            </div>
-          </div>
+              {!submitted ? (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <input
+                    className={inputStyle}
+                    placeholder="Staff Name"
+                    required
+                    value={formData.name}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
+                  />
 
-          {/* Row 3: Title & Theme */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="flex flex-col">
-              <label className="text-slate-400 mb-2 text-[10px] font-bold uppercase tracking-widest">Problem Title</label>
-              <input type="text" required className={inputStyle} placeholder="Short title" value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} />
-            </div>
-            <div className="flex flex-col">
-              <label className="text-slate-400 mb-2 text-[10px] font-bold uppercase tracking-widest">Theme</label>
-              <input type="text" required className={inputStyle} placeholder="e.g. Automation" value={formData.theme} onChange={(e) => setFormData({...formData, theme: e.target.value})} />
-            </div>
-          </div>
+                  <input
+                    className={inputStyle}
+                    placeholder="Contact Number"
+                    inputMode="numeric"
+                    maxLength={10}
+                    required
+                    value={formData.contact}
+                    onChange={(e) => {
+                      const v = e.target.value.replace(/\D/g, "");
+                      if (v.length <= 10)
+                        setFormData({ ...formData, contact: v });
+                    }}
+                  />
 
-          {/* Row 4: Description */}
-          <div className="flex flex-col">
-            <label className="text-slate-400 mb-2 text-[10px] font-bold uppercase tracking-widest">Detailed Description</label>
-            <textarea required className={`${inputStyle} h-32 resize-none`} placeholder="Explain the pain points or features required..." value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} />
-          </div>
+                  <AnimatedDropdown
+                    value={formData.dept}
+                    setValue={(v) => setFormData({ ...formData, dept: v })}
+                    options={departments}
+                    placeholder="Select Department"
+                  />
 
-          <button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-4 rounded-xl transition-all shadow-xl active:scale-95 uppercase tracking-widest text-sm">
-            {isSubmitting ? "Uploading to Cloud..." : "Submit Problem Statement"}
-          </button>
-        </form>
+                  <AnimatedDropdown
+                    value={formData.requirement}
+                    setValue={(v) =>
+                      setFormData({ ...formData, requirement: v })
+                    }
+                    options={requirements}
+                    placeholder="Project Requirement"
+                  />
 
-        {submitted && (
-          <div className="absolute inset-0 flex items-center justify-center rounded-3xl bg-slate-950/90 backdrop-blur-md border border-emerald-500/50 animate-in fade-in zoom-in duration-300 p-6">
-            <div className="text-center">
-              <div className="text-6xl mb-4">✨</div>
-              <h3 className="text-2xl font-bold text-white uppercase tracking-tighter">Entry Recorded</h3>
-              <p className="text-emerald-400 mt-2 font-medium">Your problem has been submitted successfully.</p>
-              <button onClick={() => setSubmitted(false)} className="mt-8 px-6 py-2 border border-white/20 rounded-full text-xs text-slate-400 hover:text-white transition-colors">Submit Another</button>
-            </div>
-          </div>
+                  <input
+                    className={inputStyle}
+                    placeholder="Problem Title"
+                    required
+                    value={formData.title}
+                    onChange={(e) =>
+                      setFormData({ ...formData, title: e.target.value })
+                    }
+                  />
+
+                  <input
+                    className={inputStyle}
+                    placeholder="Theme"
+                    required
+                    value={formData.theme}
+                    onChange={(e) =>
+                      setFormData({ ...formData, theme: e.target.value })
+                    }
+                  />
+
+                  <textarea
+                    className={`${inputStyle} h-28 resize-none`}
+                    placeholder="Describe the problem clearly"
+                    required
+                    value={formData.description}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        description: e.target.value,
+                      })
+                    }
+                  />
+
+                  <button
+                    disabled={isSubmitting}
+                    className="
+                      w-full py-3 rounded-xl
+                      bg-gradient-to-r from-blue-600 to-indigo-600
+                      text-white font-bold
+                    "
+                  >
+                    {isSubmitting ? "Submitting..." : "Submit"}
+                  </button>
+                </form>
+              ) : (
+                <motion.div
+                  className="flex items-center justify-center h-48"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 180 }}
+                >
+                  <CheckCircle className="w-20 h-20 text-emerald-500" />
+                </motion.div>
+              )}
+            </motion.div>
+          </motion.div>
         )}
-      </div>
-    </div>
+      </AnimatePresence>
+    </section>
   );
 };
 

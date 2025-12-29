@@ -22,8 +22,9 @@ import { BackgroundBeams } from "./components/UI/background-beams";
 import "./index.css";
 
 function App() {
-  const sectionLayout =
-    "min-h-screen flex flex-col items-center justify-center p-8 border border-dashed border-white/10";
+  // CHANGED: Removed 'min-h-screen', 'border', 'border-dashed'
+  // Now it just ensures full width and default spacing, letting content dictate height.
+  const sectionLayout = "w-full py-12 md:py-20";
 
   return (
     <BrowserRouter>
@@ -39,7 +40,7 @@ function App() {
         />
       </div>
 
-      <main className="relative z-10"> 
+      <main className="relative z-10">
         <Navbar  />
 
         <Routes>
@@ -53,13 +54,15 @@ function App() {
                 </section>
 
                 <section id="about">
-                  <div className={sectionLayout}>
+                  {/* Removed the extra wrapper styling since About has its own padding */}
+                  <div className="w-full">
                     <About />
                   </div>
                 </section>
 
                 <section id="contribute">
-                  <div className={sectionLayout}>
+                   {/* Removed sectionLayout restrictions */}
+                  <div className="w-full">
                     <Contribute />
                   </div>
                 </section>
@@ -68,8 +71,9 @@ function App() {
                     <Guidelines />
                   </div>
                 </section>
+
                 <section id="timeline">
-                  <div className={sectionLayout}>
+                  <div className="w-full">
                     <Timeline />
                   </div>
                 </section>
@@ -81,7 +85,7 @@ function App() {
                 </section>
 
                 <section id="footer">
-                  <div className={sectionLayout}>
+                  <div className="w-full">
                     <Footer />
                   </div>
                 </section>
