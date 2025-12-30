@@ -27,27 +27,27 @@ const Home = () => {
         <HomeLamp />
       </div> */}
 
-<div className="absolute top-20 left-0 right-0 bottom-0 z-0 pointer-events-none md:inset-0">
-  <LightRays
-    raysOrigin="top-left"
-    raysColor="rgba(255,255,255,0.85)"
-    raysSpeed={0.9}
-    lightSpread={0.9}
-    rayLength={3}
-  />
-</div>
+      {/* Left Light Rays - Reduced opacity on desktop (md:opacity-40) */}
+      <div className="absolute top-20 left-0 right-0 bottom-0 z-0 pointer-events-none md:inset-0 md:opacity-40">
+        <LightRays
+          raysOrigin="top-left"
+          raysColor="rgba(255,255,255,50)"
+          raysSpeed={0.5}
+          lightSpread={1}
+          rayLength={2}
+        />
+      </div>
 
-
-<div className="absolute top-20 left-0 right-0 bottom-0 z-0 pointer-events-none md:top-0">
- <LightRays
-    raysOrigin="top-right"
-    raysColor="rgba(255,255,255,0.75)"
-    raysSpeed={0.9}
-    lightSpread={0.9}
-    rayLength={3}
-  />
-</div>
-
+      {/* Right Light Rays - Reduced opacity on desktop (md:opacity-40) */}
+      <div className="absolute top-20 left-0 right-0 bottom-0 z-0 pointer-events-none md:top-0 md:opacity-40">
+        <LightRays
+          raysOrigin="top-right"
+          raysColor="rgba(255,255,255,0.75)"
+          raysSpeed={0.9}
+          lightSpread={0.9}
+          rayLength={3}
+        />
+      </div>
 
       {/* 2. FLIPPING LOGO */}
       <div className="relative z-10">
@@ -80,19 +80,9 @@ const Home = () => {
             flex flex-col items-center justify-center
             px-6 py-4 sm:px-10 sm:py-6
             rounded-xl
-
-
-
             overflow-hidden
           "
         >
-          {/* <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
-            <LightRays raysOrigin="top-left" raysColor="#ffffff" raysSpeed={2.0} lightSpread={1.0} rayLength={1.5} />
-          </div>
-          <div className="absolute inset-0 z-0 opacity-60 pointer-events-none mix-blend-screen">
-            <LightRays raysOrigin="top-right" raysColor="#ffffff" raysSpeed={1.8} lightSpread={1.0} rayLength={1.5} />
-          </div> */}
-
           <div className="relative z-10 flex flex-col items-center">
             <TypewriterEffect
               words={hackathonTitle}
@@ -116,7 +106,8 @@ const Home = () => {
             href="https://www.linkedin.com/company/gce-erode-cse/"
             target="_blank"
             rel="noopener noreferrer"
-    className="text-lime-400 font-bold  " >
+            className="text-lime-400 font-bold"
+          >
             Department of Computer Science and Engineering
           </a>
         </h2>
@@ -125,7 +116,7 @@ const Home = () => {
           Be part of <span className="text-lime-400 font-bold">SCH '26</span> on <span className="text-lime-400 font-bold px-1">30th of January</span> to celebrate creativity and technical brilliance. Experience over eight hours of continous coding, creativity, and engineering excellence.
         </p>
 
-        {/* --- REGISTER BUTTON (MOVED HERE) --- */}
+        {/* --- REGISTER BUTTON --- */}
         <button
           onClick={() => navigate('/register')}
           className="

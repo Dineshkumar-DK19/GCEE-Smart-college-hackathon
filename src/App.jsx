@@ -62,13 +62,13 @@ function App() {
                 </section>
 
                 <section id="contribute">
-                   {/* Removed sectionLayout restrictions */}
+                
                   <div className="w-full">
                     <Contribute />
                   </div>
                 </section>
                 <section id="guidelines">
-                  <div className={sectionLayout}>
+                  <div className="w-full">
                     <Guidelines />
                   </div>
                 </section>
