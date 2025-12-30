@@ -203,9 +203,9 @@ const Contribute = () => {
               <div className="px-4 py-1.5 rounded-full border border-lime-500/30 bg-lime-500/5 text-lime-400 text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em]">
                 Faculty & Staff Portal
               </div>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter leading-[0.95]">
-                HAVE A CHALLENGE?<br />
-                <span className="text-lime-400">CONTRIBUTE NOW.</span>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-wide leading-[0.95]">
+                HAVE A CHALLENGE ?<br />
+                <span className="text-lime-400 tracking-wide">CONTRIBUTE NOW.</span>
               </h1>
               <p className="max-w-xl text-slate-400 text-sm sm:text-base leading-relaxed font-medium px-2">
                 Submit departmental requirements and problem statements. Our engineering teams will analyze and develop custom software solutions for you.
