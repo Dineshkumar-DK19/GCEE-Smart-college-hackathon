@@ -46,26 +46,26 @@ const Contribute = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  // Ensure these keys are used in your state and input onChange handlers
-const [formData, setFormData] = useState({
-  dept: "", 
-  title: "", 
-  background: "", 
-  description: "", 
-  objective: "",
-  features: "", 
-  deliverables: "", 
-  constraints: "",
-  targetUsers: [], 
-  appType: "", 
-  sensitivity: "Low", 
-  priority: "Low",
-  coordinatorName: "", 
-  coordinatorDesignation: "", // MUST match script
-  coordinatorEmail: "", 
-  coordinatorContact: "", 
-  consent: false
-});
+  const [formData, setFormData] = useState({
+    dept: "", 
+    title: "", 
+    background: "", 
+    description: "", 
+    objective: "",
+    features: "", 
+    deliverables: "", 
+    constraints: "",
+    targetUsers: [], 
+    appType: "", 
+    sensitivity: "Low", 
+    priority: "Low",
+    coordinatorName: "", 
+    coordinatorDesignation: "", 
+    coordinatorEmail: "", 
+    coordinatorContact: "", 
+    consent: false
+  });
+
   const departments = ["Admin Office", "Automobile Engineering", "Civil Engineering", "CSE", "CS&DS", "ECE", "EEE", "Estate Management", "Exam Cell", "Information Technology", "Mechanical Engineering", "Sports"].sort();
 
   const handleToggleUser = (val) => {
@@ -81,28 +81,34 @@ const [formData, setFormData] = useState({
     e.preventDefault();
     setIsSubmitting(true);
 
-    /* ------------------------------------------------------------------ */
-    /* ENTER YOUR URL BELOW (Inside the quotes)                          */
-    /* ------------------------------------------------------------------ */
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyacf7ZXmas-3DJuSWTYmY7Ou5DFH5JRLyl35AriwphHB9YNNCuus2yQIBAmYwYsjDd/exec"; 
-    /* ------------------------------------------------------------------ */
+
+    const submissionData = {
+      ...formData,
+      targetUsers: formData.targetUsers.join(", ")
+    };
 
     try {
-      await fetch(SCRIPT_URL, {
+      // We don't "await" the response strictly because 'no-cors' 
+      // doesn't return a readable status anyway.
+      fetch(SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(submissionData)
       });
-      setSubmitted(true);
+
+      // Jump straight to success state
+      setTimeout(() => {
+        setSubmitted(true);
+        setIsSubmitting(false);
+      }, 800); // Small delay for "feel"
+      
     } catch (err) {
-      console.error("Submission Error:", err);
-      alert("There was an error submitting. Check your URL or connection.");
-    } finally {
+      console.error(err);
       setIsSubmitting(false);
     }
   };
-
   const inputStyle = "w-full bg-[#0B1221] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-700 focus:border-lime-500/40 outline-none transition-all";
 
   return (
@@ -124,7 +130,6 @@ const [formData, setFormData] = useState({
       <div className="w-full max-w-5xl relative z-10">
         <AnimatePresence mode="wait">
           {!showForm ? (
-            /* --- HERO VIEW --- */
             <motion.div 
               key="hero" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
               className="flex flex-col items-center text-center space-y-10 py-16"
@@ -147,7 +152,6 @@ const [formData, setFormData] = useState({
               </button>
             </motion.div>
           ) : (
-            /* --- FORM VIEW --- */
             <motion.div 
               key="form" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }}
               className="rounded-[2.5rem] border border-white/10 bg-slate-950/60 backdrop-blur-2xl shadow-2xl overflow-hidden"
@@ -164,7 +168,6 @@ const [formData, setFormData] = useState({
 
               {!submitted ? (
                 <form onSubmit={handleSubmit} className="p-8 md:p-12 space-y-12">
-                  
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
                       <Label helper="Department/Section">Department Name</Label>
@@ -182,18 +185,18 @@ const [formData, setFormData] = useState({
                   <div className="space-y-8">
                     <div>
                       <Label helper="Current manual method">Background / Current Process</Label>
-                      <textarea className={`${inputStyle} h-28 resize-none`} placeholder="Describe how the task is currently carried out (Manual / Excel / Paper-based)..." onChange={(e)=>setFormData({...formData, background: e.target.value})} required />
+                      <textarea className={`${inputStyle} h-28 resize-none`} placeholder="Describe how the task is currently carried out..." onChange={(e)=>setFormData({...formData, background: e.target.value})} required />
                     </div>
                     <div>
                       <Label helper="List the inefficiencies">Problem Description</Label>
-                      <textarea className={`${inputStyle} h-28 resize-none`} placeholder="List the issues, challenges, delays, errors, or inefficiencies..." onChange={(e)=>setFormData({...formData, description: e.target.value})} required />
+                      <textarea className={`${inputStyle} h-28 resize-none`} placeholder="List the issues, challenges, or inefficiencies..." onChange={(e)=>setFormData({...formData, description: e.target.value})} required />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
-                      <Label helper="What should it achieve?">Objective</Label>
-                      <textarea className={`${inputStyle} h-24 resize-none`} placeholder="Clearly state the goal of the proposed solution..." onChange={(e)=>setFormData({...formData, objective: e.target.value})} required />
+                      <Label helper="Goal">Objective</Label>
+                      <textarea className={`${inputStyle} h-24 resize-none`} placeholder="Clearly state the goal..." onChange={(e)=>setFormData({...formData, objective: e.target.value})} required />
                     </div>
                     <div>
                       <Label helper="Expected modules">Key Features</Label>
@@ -220,11 +223,16 @@ const [formData, setFormData] = useState({
                     <div className="space-y-3">
                       <Label>Data Sensitivity</Label>
                       <div className="flex bg-[#0B1221] rounded-xl p-1 border border-white/5">
-                        {["Low", "Medium", "High"].map(level => (
-                          <button 
-                            key={level} type="button"
-                            onClick={() => setFormData({...formData, sensitivity: level})}
-                            className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all ${formData.sensitivity === level ? 'bg-lime-500 text-black' : 'text-slate-500 hover:text-white'}`}
+                        {["Low", "Medium", "High"].map((level) => (
+                          <button
+                            key={level}
+                            type="button"
+                            onClick={() => setFormData({ ...formData, sensitivity: level })}
+                            className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all ${
+                              formData.sensitivity === level 
+                                ? "bg-lime-500 text-black" 
+                                : "text-slate-500 hover:text-white"
+                            }`}
                           >
                             {level}
                           </button>
@@ -235,11 +243,16 @@ const [formData, setFormData] = useState({
                     <div className="space-y-3">
                       <Label>Priority</Label>
                       <div className="flex bg-[#0B1221] rounded-xl p-1 border border-white/5">
-                        {["Low", "Medium", "High"].map(prio => (
-                          <button 
-                            key={prio} type="button"
-                            onClick={() => setFormData({...formData, priority: prio})}
-                            className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all ${formData.priority === prio ? 'bg-white text-black' : 'text-slate-500 hover:text-white'}`}
+                        {["Low", "Medium", "High"].map((prio) => (
+                          <button
+                            key={prio}
+                            type="button"
+                            onClick={() => setFormData({ ...formData, priority: prio })}
+                            className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all ${
+                              formData.priority === prio 
+                                ? "bg-lime-500 text-black" 
+                                : "text-slate-500 hover:text-white"
+                            }`}
                           >
                             {prio}
                           </button>
@@ -250,18 +263,17 @@ const [formData, setFormData] = useState({
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
-                      <Label helper="Prototype, code, etc.">Expected Deliverables</Label>
-                      <input className={inputStyle} placeholder="Prototype, source code, dashboards..." onChange={(e)=>setFormData({...formData, deliverables: e.target.value})} />
+                      <Label helper="Outputs">Expected Deliverables</Label>
+                      <input className={inputStyle} placeholder="Prototype, source code, etc..." onChange={(e)=>setFormData({...formData, deliverables: e.target.value})} />
                     </div>
                     <div>
-                      <Label helper="Any limitations">Constraints / Assumptions</Label>
-                      <input className={inputStyle} placeholder="Mention any specific constraints..." onChange={(e)=>setFormData({...formData, constraints: e.target.value})} />
+                      <Label helper="Limitations">Constraints / Assumptions</Label>
+                      <input className={inputStyle} placeholder="Mention specific constraints..." onChange={(e)=>setFormData({...formData, constraints: e.target.value})} />
                     </div>
                   </div>
 
                   <div className="p-8 rounded-[2rem] bg-lime-500/[0.03] border border-lime-500/10 space-y-8">
                     <div className="flex items-center gap-2 text-lime-400 uppercase text-[10px] font-black tracking-widest"><ShieldAlert size={16}/> Coordinator Details</div>
-                    
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-4">
                         <input className={inputStyle} placeholder="Full Name" onChange={(e)=>setFormData({...formData, coordinatorName: e.target.value})} required />
@@ -272,7 +284,6 @@ const [formData, setFormData] = useState({
                         <input className={inputStyle} placeholder="Contact Number" type="tel" onChange={(e)=>setFormData({...formData, coordinatorContact: e.target.value})} required />
                       </div>
                     </div>
-
                     <div className="pt-4 border-t border-white/5">
                       <label className="flex items-center gap-3 cursor-pointer group">
                         <div 
