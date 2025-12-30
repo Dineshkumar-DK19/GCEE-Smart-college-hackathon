@@ -22,7 +22,7 @@ const FlippingLogo = ({ frontImage, backImage, altText = "Logo" }) => {
 
       // Step 3: Wait for the flip back to finish (0.8s), then enable hover
       await new Promise(r => setTimeout(r, 800));
-      setIsInteractionEnabled(true); 
+      setIsInteractionEnabled(true);
     };
 
     runSequence();
@@ -39,15 +39,15 @@ const FlippingLogo = ({ frontImage, backImage, altText = "Logo" }) => {
   const sizeClasses = "w-[110px] sm:w-[140px] md:w-[170px] lg:w-[190px] h-auto";
 
   return (
-    <div 
+    <div
       className={`relative cursor-pointer [perspective:1000px] ${sizeClasses} z-10`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      style={{ aspectRatio: '1/1' }} 
+      style={{ aspectRatio: '1/1' }}
     >
       <div
         className={`
-          relative w-full h-full 
+          relative w-full h-full
           transition-transform duration-[800ms] ease-[cubic-bezier(0.4,0,0.2,1)]
           [transform-style:preserve-3d]
           ${isFlipped ? '[transform:rotateY(180deg)]' : '[transform:rotateY(0deg)]'}
@@ -68,7 +68,8 @@ const FlippingLogo = ({ frontImage, backImage, altText = "Logo" }) => {
           <img
             src={backImage}
             alt={`${altText} Back`}
-            className="w-full h-auto object-contain drop-shadow-[0_0_15px_rgba(163,230,53,0.6)]" 
+            // className="w-full h-auto object-contain drop-shadow-[0_0_15px_rgba(163,230,53,0.6)]"
+             className="w-full h-auto object-contain "
           />
         </div>
       </div>
