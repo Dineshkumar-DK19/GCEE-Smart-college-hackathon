@@ -31,7 +31,11 @@ const Home = () => {
           delay={150}
           animateBy="words"
           direction="top"
-          className="flex justify-center gap-x-1.5 flex-wrap text-sm sm:text-xl md:text-3xl lg:text-4xl font-bold text-center text-white/90 leading-snug"
+          className="
+            flex justify-center gap-x-0.5 flex-wrap
+            text-sm sm:text-xl md:text-3xl lg:text-4xl
+            font-bold text-center text-white/90
+          "
         />
       </div>
 
@@ -40,7 +44,7 @@ const Home = () => {
           <div className="relative z-10 flex flex-col items-center">
             <TypewriterEffect
               words={hackathonTitle}
-              className="text-2xl sm:text-4xl md:text-4xl lg:text-5xl font-black drop-shadow-[0_0_10px_rgba(163,230,53,0.8)] tracking-wide"
+              className="text-sm sm:text-xl md:text-3xl lg:text-4xl font-black drop-shadow-[0_0_10px_rgba(163,230,53,0.8)] tracking-wide"
             />
             <p className="mt-2 text-[10px] sm:text-xs md:text-sm font-semibold tracking-[0.25em] text-slate-300 uppercase border-t border-slate-700/50 pt-2 w-full text-center">
               Intra College Hackathon
