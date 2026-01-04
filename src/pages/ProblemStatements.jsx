@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { problemData } from "../data/problemData";
 
 // SET YOUR RELEASE DATE HERE: (Year, Month Index 0-11, Day, Hour, Minute)
-const RELEASE_DATE = new Date(2026, 0, 4, 22, 36, 0); // Example: Jan 10, 2026, 9:00 AM
+const RELEASE_DATE = new Date(2026, 0, 12, 24, 0, 0); // Example: Jan 10, 2026, 9:00 AM
 
 const ProblemStatements = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -123,15 +123,15 @@ const ProblemStatements = () => {
           </>
         ) : (
           /* Locked State UI */
-          <div className="text-center py-20 bg-[#0B1221]/40 border border-white/5 rounded-3xl backdrop-blur-xl max-w-4xl mx-auto">
-            <div className="inline-flex p-6 rounded-full bg-lime-500/10 mb-6 border border-lime-500/20">
+          <div className="text-center py-10 bg-[#0B1221]/40 border border-white/5 rounded-3xl backdrop-blur-xl max-w-4xl mx-auto">
+            <div className="inline-flex p-4 rounded-full bg-lime-500/10 mb-6 border border-lime-500/20">
               <Lock className="w-12 h-12 text-lime-400" />
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Under Technical Evaluation</h2>
+            <h2 className="text-2xl md:text-4xl font-bold  text-white mb-4">Under Technical Evaluation</h2>
             <p className="text-slate-400 max-w-md mx-auto leading-relaxed">
               Challenges are currently being finalized. The complete list will be revealed on
               <br />
-              <span className="text-lime-400 font-bold text-lg">January 10th at 9:00 AM</span>.
+              <span className="text-lime-400 font-bold text-lg">January 12th at 9:00 AM</span>.
             </p>
           </div>
         )}
