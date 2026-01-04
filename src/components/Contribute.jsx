@@ -257,22 +257,36 @@ useEffect(() => {
               <div className="px-4 py-1.5 rounded-full border border-lime-500/30 bg-lime-500/5 text-lime-400 text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em]">
                 Faculty & Staff Portal
               </div>
-              <h1 className="text-4xl sm:text-4xl md:text-5xl font-black text-white tracking-wide leading-[0.95]">
-                HAVE A CHALLENGE ?<br />
-                <span className="text-lime-400 tracking-wide">
+              <h1 className="
+                text-sm sm:text-xl md:text-3xl lg:text-4xl
+                font-black text-white tracking-wide leading-tight
+              ">
+                HAVE A CHALLENGE ? <br />
+                <span className="text-lime-400">
                   CONTRIBUTE NOW.
                 </span>
               </h1>
-              <p className="max-w-xl text-slate-400 text-xs sm:text-sm md:text-lg leading-relaxed font-medium px-2">
+
+              <p className="
+                max-w-xl text-[10px] sm:text-xs md:text-sm
+                text-slate-400 leading-relaxed font-medium px-4
+              ">
                 Submit departmental requirements and problem statements. Our
                 engineering teams will analyze and develop custom software
                 solutions for you.
               </p>
-              <div className="w-full sm:w-auto px-10">
-                <Button onClick={() => setShowForm(true)}>
-                  Start Contribution <ArrowRight className="w-4 h-4 ml-2" />
+
+              <div className="w-full sm:w-auto px-6">
+                <Button
+                  onClick={() => setShowForm(true)}
+                  className="text-[10px] sm:text-xs md:text-sm px-4 py-2 sm:px-6 sm:py-3"
+                >
+                  Start Contribution
+                  <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 ml-2" />
                 </Button>
               </div>
+
+
             </motion.div>
           ) : (
             <div className="fixed inset-0 z-[100] flex items-center justify-center px-3 sm:px-4">
