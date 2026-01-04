@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, ChevronRight, Filter, AlertCircle } from "lucide-react";
+import { Search, ChevronRight, Filter, AlertCircle, Download } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import LightRays from "../components/UI/LightRays";
 import { problemData } from "../data/problemData";
@@ -35,11 +35,53 @@ const ProblemStatements = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight mb-4 drop-shadow-sm">
-            PROBLEM <span className="text-lime-400">STATEMENTS</span>
+            PROBLEM <span className="">STATEMENTS</span>
           </h1>
           <p className="text-slate-400 text-sm md:text-base max-w-2xl mx-auto">
             Real-world challenges submitted by our departments. Select a problem to view full details.
           </p>
+          
+          {/* --- NEW BOUNCING DOWNLOAD BUTTON (No Badge) --- */}
+          <div className="mt-10 flex justify-center relative z-20">
+            <motion.a 
+              href="/SCH_2026_Template.pptx" 
+              download="SCH_2026_Template.pptx"
+              
+              // Continuous Bouncing Animation
+              animate={{ y: [0, -8, 0] }}
+              transition={{ 
+                duration: 2, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+
+              className="
+                group relative
+                inline-flex items-center gap-4
+                px-8 py-4
+                bg-lime-500 hover:bg-lime-400
+                text-slate-900 font-black uppercase tracking-widest text-sm
+                rounded-xl
+                shadow-[0_0_20px_rgba(132,204,22,0.3)] 
+                hover:shadow-[0_0_40px_rgba(132,204,22,0.6)]
+                cursor-pointer
+              "
+            >
+              {/* Icon Container */}
+              <div className="p-2 bg-black/10 rounded-lg group-hover:bg-black/20 transition-colors">
+                <Download className="w-5 h-5 stroke-[3px]" />
+              </div>
+
+              <div className="text-left leading-none">
+                <span className="block text-[10px] font-bold opacity-60 mb-1">OFFICIAL PPT FORMAT</span>
+                <span>Download Template</span>
+              </div>
+            </motion.a>
+          </div>
+          {/* --- END BUTTON --- */}
+
         </div>
 
         {/* Search Bar */}

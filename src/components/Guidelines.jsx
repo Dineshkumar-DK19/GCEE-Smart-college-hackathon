@@ -27,7 +27,9 @@ const Guidelines = () => {
       icon: <Cpu className="w-6 h-6 text-white" />,
       rules: [
         "Participants may use any programming language, framework, or open-source tool.",
-        "Strict adherence to deadlines is required; late submissions will not be accepted."
+        "Strict adherence to deadlines is required; late submissions will not be accepted.",
+        // Added Rule Here:
+        "All presentations must be submitted strictly using the official PPT format provided."
       ]
     },
     {
@@ -58,17 +60,17 @@ const Guidelines = () => {
                 rounded-2xl p-6
                 hover:bg-slate-900/60 transition-colors duration-300
               "
-            >
+            > 
               {/* Header: Icon + Main Heading */}
               <div className="flex items-center gap-4 mb-5 border-b border-white/5 pb-4">
-         <div className="p-2.5 bg-white/5 rounded-lg text-lime-400 [&_svg]:stroke-lime-400">
-    {section.icon}
-  </div>
+                <div className="p-2.5 bg-white/5 rounded-lg text-lime-400 [&_svg]:stroke-lime-400">
+                  {section.icon}
+                </div>
                 <h3 className="text-lg md:text-xl font-bold text-white tracking-wide">
                   {section.title}
                 </h3>
               </div>
-
+            
               {/* Rules List - Clean Sentences with White/Grey Bullets */}
               <ul className="space-y-3 list-disc list-inside text-slate-400">
                 {section.rules.map((rule, idx) => (
@@ -85,4 +87,4 @@ const Guidelines = () => {
   );
 };
 
-export default Guidelines;
+export default Guidelines; 
