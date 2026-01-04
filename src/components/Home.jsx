@@ -58,8 +58,8 @@ const Home = () => {
           An Initiative of the
         </p>
 
-        <h2 className="text-lg sm:text-xl md:text-2xl font-bold px-4">
-          <a href="https://www.linkedin.com/company/gce-erode-cse/" target="_blank" rel="noopener noreferrer" className="text-lime-400 font-bold">
+        <h2 className=" text-sm sm:text-base md:text-2xl lg:text-2xl font-bold px-4">
+          <a href="https://www.linkedin.com/company/gce-erode-cse/" target="_blank" rel="noopener noreferrer" className="text-lime-400  font-bold">
             Department of Computer Science and Engineering
           </a>
         </h2>

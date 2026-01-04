@@ -18,52 +18,33 @@ export const TypewriterEffect = ({
   const [scope, animate] = useAnimate();
   const isInView = useInView(scope);
 
-  useEffect(() => {
+useEffect(() => {
     if (isInView) {
-     const runLoop = async () => {
-  /* 1️⃣ RESET — instant clear (no animation feel) */
-  await animate(
-    "span",
-    { opacity: 0, display: "none" },
-    { duration: 0 }
-  );
+      const runAnimation = async () => {
+        // 1. RESET (Instant)
+        await animate(
+          "span",
+          { opacity: 0, display: "none" },
+          { duration: 0 }
+        );
 
-  /* 2️⃣ TYPE IN — confident, readable, hype */
-  await animate(
-    "span",
-    { display: "inline-block", opacity: 1 },
-    {
-      duration: 0.45,              // smooth fade-in per word/letter
-      delay: stagger(0.18),         // 🔥 hackathon typing speed
-      ease: "easeOut",
+        // 2. TYPE IN (One time only)
+        await animate(
+          "span",
+          { display: "inline-block", opacity: 1 },
+          {
+            duration: 0.45,
+            delay: stagger(0.18),
+            ease: "easeOut",
+          }
+        );
+
+        // No loop or deletion logic here
+      };
+
+      runAnimation();
     }
-  );
-
-  /* 3️⃣ HOLD — let it breathe (crowd reads it) */
-  await new Promise((resolve) => setTimeout(resolve, 3500));
-  // 👆 sweet spot: not boring, not rushed
-
-  /* 4️⃣ DELETE — faster than typing (feels powerful) */
-  await animate(
-    "span",
-    { opacity: 0 },
-    {
-      duration: 0.15,
-      delay: stagger(0.12, { from: "last" }), // reverse wipe
-      ease: "easeIn",
-    }
-  );
-
-  /* 5️⃣ LOOP */
-  if (scope.current) {
-    runLoop();
-  }
-};
-
-
-      runLoop();
-    }
-  }, [isInView, animate, scope]);
+  }, [isInView, animate]); // Removed 'scope' from deps to prevent unnecessary triggers
 
   const renderWords = () => {
     return (

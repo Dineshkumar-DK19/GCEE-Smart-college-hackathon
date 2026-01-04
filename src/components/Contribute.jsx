@@ -124,6 +124,26 @@ const Contribute = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
+ useEffect(() => {
+  if (showForm) {
+    // Standard lock
+    document.body.style.overflow = "hidden";
+    // Mobile/Safari lock
+    document.body.style.height = "100vh";
+    document.body.style.touchAction = "none";
+  } else {
+    document.body.style.overflow = "";
+    document.body.style.height = "";
+    document.body.style.touchAction = "";
+  }
+
+  return () => {
+    document.body.style.overflow = "";
+    document.body.style.height = "";
+    document.body.style.touchAction = "";
+  };
+}, [showForm]);
+
   const initialData = {
     dept: "",
     title: "",
@@ -196,8 +216,8 @@ const Contribute = () => {
 
   const resetForm = () => {
     setSubmitted(false);
-    setFormData(initialData);
-   
+    setFormData(initialData); // 2. Clear all input fields
+    // setShowForm(false);      // 3. REMOVED: Keep the form open
   };
 
   return (

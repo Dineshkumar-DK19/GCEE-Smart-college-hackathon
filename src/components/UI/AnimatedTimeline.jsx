@@ -39,10 +39,10 @@ export const AnimatedTimeline = ({ data }) => {
     >
       {/* Header Section */}
       <div className="max-w-7xl mx-auto py-12 md:py-20 px-4 md:px-8 lg:px-10">
-        <h2 className="text-xl md:text-4xl mb-4 text-white max-w-4xl font-semibold">
+        <h2 className="text-xl md:text-4xl mb-4 text-white max-w-4xl font-bold">
           Hackathon Timings
         </h2>
-        <p className="text-neutral-300 text-xs md:text-sm max-w-sm">
+        <p className="text-neutral-300 text-xs sm:text-sm md:text-base max-w-sm">
           A detailed timeline of the Smart College Hackathon events and activities.
         </p>
       </div>

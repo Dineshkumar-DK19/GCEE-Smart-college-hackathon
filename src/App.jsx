@@ -23,7 +23,7 @@ function App() {
         <Particles className="absolute inset-0 z-10" particleCount={150} particleBaseSize={100} moveParticlesOnHover={false} alphaParticles={true} disableRotation={true} />
       </div>
 
-      <main className="relative z-10">
+      <main className="relative z-10 ">
         <Navbar />
         <Routes>
           <Route path="/" element={

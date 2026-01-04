@@ -45,7 +45,7 @@ const Guidelines = () => {
   return (
     <section className="bg-[#020817]/70 py-16 px-6 font-sans">
       <div className="max-w-6xl mx-auto space-y-10">
-        <h2 className="text-2xl md:text-4xl font-bold text-white/90 text-center tracking-wide mb-10">
+        <h2 className="text-2xl md:text-4xl font-bold text-white text-center tracking-wide mb-10">
           Guidelines
         </h2>
 
