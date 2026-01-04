@@ -124,11 +124,32 @@ const Contribute = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
- useEffect(() => {
+// 1. NAVIGATION & UNMOUNT CLEANUP
+// This ensures that if you click "Home" or any navbar link,
+// the form is hidden and the body scroll is restored.
+useEffect(() => {
+  const handleClose = () => {
+    setShowForm(false);
+    document.body.style.overflow = "";
+    document.body.style.height = "";
+    document.body.style.touchAction = "";
+  };
+
+  // Listen for browser back/forward and URL changes
+  window.addEventListener("popstate", handleClose);
+
+  // Also cleanup if the user clicks a link that unmounts this component
+  return () => {
+    window.removeEventListener("popstate", handleClose);
+    handleClose(); // Run the cleanup
+  };
+}, []);
+
+// 2. SCROLL LOCK STATE SYNC
+// This strictly manages the "frozen" background effect based on showForm state.
+useEffect(() => {
   if (showForm) {
-    // Standard lock
     document.body.style.overflow = "hidden";
-    // Mobile/Safari lock
     document.body.style.height = "100vh";
     document.body.style.touchAction = "none";
   } else {
@@ -136,12 +157,6 @@ const Contribute = () => {
     document.body.style.height = "";
     document.body.style.touchAction = "";
   }
-
-  return () => {
-    document.body.style.overflow = "";
-    document.body.style.height = "";
-    document.body.style.touchAction = "";
-  };
 }, [showForm]);
 
   const initialData = {
