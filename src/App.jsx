@@ -33,18 +33,18 @@ function App() {
                 <section id="contribute"><div className="w-full"><Contribute /></div></section>
                 <section id="guidelines"><div className="w-full"><Guidelines /></div></section>
                 <section id="timeline"><div className="w-full"><Timeline /></div></section>
-                <section id="youtube"><div className="w-full"><YoutubeVideo /></div></section>
+                {/* <section id="youtube"><div className="w-full"><YoutubeVideo /></div></section> */}
                 <section id="contact"><div className="w-full"><Contact/></div></section>
                 <section id="footer"><div className="w-full"><Footer /></div></section>
               </>
             }
           />
-          
+
           <Route path="/problems" element={<ProblemStatements />} />
-          
+
           {/* --- 2. ADD THIS ROUTE TO FIX THE CLICK ERROR --- */}
           <Route path="/problems/:id" element={<ProblemDetails />} />
-          
+
           <Route path="/register" element={<Register />} />
         </Routes>
       </main>

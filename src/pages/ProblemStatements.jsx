@@ -9,8 +9,8 @@ const ProblemStatements = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
-  const filteredProblems = problemData.filter(p => 
-    p.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+  const filteredProblems = problemData.filter(p =>
+    p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     p.dept.toLowerCase().includes(searchTerm.toLowerCase()) ||
     p.id.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -23,15 +23,15 @@ const ProblemStatements = () => {
 
   return (
     <div className="min-h-screen pt-28 pb-20 px-4 sm:px-6 relative overflow-hidden bg-[#020817]">
-      
+
       {/* Background Ambience */}
       <div className="absolute inset-0 pointer-events-none">
-        <LightRays raysColor="#84cc16" raysSpeed={0.2} opacity={0.15} />
+        {/* <LightRays raysColor="#84cc16" raysSpeed={0.2} opacity={0.15} /> */}
         <div className="absolute top-[10%] left-[20%] w-[30vw] h-[30vw] bg-lime-500/5 blur-[120px] rounded-full" />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        
+
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight mb-4 drop-shadow-sm">
@@ -46,9 +46,9 @@ const ProblemStatements = () => {
         <div className="max-w-xl mx-auto mb-16 relative">
           <div className="relative flex items-center bg-[#0B1221] border border-white/10 rounded-xl px-4 py-3 shadow-xl focus-within:border-lime-500/50 transition-colors">
             <Search className="w-5 h-5 text-slate-500 mr-3" />
-            <input 
-              type="text" 
-              placeholder="Search by ID, Title, or Dept..." 
+            <input
+              type="text"
+              placeholder="Search by ID, Title, or Dept..."
               className="w-full bg-transparent text-white placeholder:text-slate-500 focus:outline-none text-sm md:text-base"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -104,12 +104,12 @@ const ProblemStatements = () => {
                     <span className="w-1.5 h-1.5 rounded-full bg-lime-500"></span>
                     {problem.appType} Application
                   </span>
-                  
+
                   <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-400 group-hover:bg-lime-500 group-hover:text-black transition-all">
                     <ChevronRight className="w-4 h-4" />
                   </div>
                 </div>
-                
+
               </motion.div>
             ))}
           </AnimatePresence>
