@@ -6,6 +6,7 @@ import BlurText from './UI/BlurText';
 import { TypewriterEffect } from './UI/TypewriterEffect';
 import FlippingLogo from './UI/FlippingLogo';
 import Button from './UI/Button'; // Import shared button
+import LightRays from './UI/LightRays';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -20,7 +21,27 @@ const Home = () => {
 
   return (
     <section className="flex min-h-screen flex-col items-center justify-start pt-24 px-4 gap-y-3 md:gap-y-5 relative overflow-hidden">
+   <div className="absolute top-20 left-0 right-0 bottom-0 z-0 pointer-events-none md:inset-0 md:opacity-40">
 
+        <LightRays
+          raysOrigin="top-left"
+          raysColor="rgba(255,255,255,50)"
+          raysSpeed={0.5}
+          lightSpread={1}
+          rayLength={2}
+        />
+      </div>
+
+
+      <div className="absolute top-20 left-0 right-0 bottom-0 z-0 pointer-events-none md:top-0 md:opacity-40">
+        <LightRays
+          raysOrigin="top-right"
+          raysColor="rgba(255,255,255,0.75)"
+          raysSpeed={0.9}
+          lightSpread={0.9}
+          rayLength={3}
+        />
+      </div>
       <div className="relative z-10">
         <FlippingLogo frontImage={bannerImg} backImage={hackathonLogo} />
       </div>
@@ -68,7 +89,7 @@ const Home = () => {
           Be part of <span className="text-lime-400 font-bold">SCH '26</span> on <span className="text-lime-400 font-bold px-1">30th of January</span> to celebrate creativity and technical brilliance. Experience over eight hours of continous coding, creativity, and engineering excellence.
         </p>
 
-        <div className="w-full sm:w-auto px-6">
+        <div className=" flex justify-center sm:w-auto px-6">
           <Button onClick={() => navigate('/register')}>
             Register Now
           </Button>
