@@ -61,13 +61,14 @@ const Guidelines = () => {
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="group relative inline-flex items-center gap-4 px-8 py-4 bg-lime-500 hover:bg-lime-400 text-slate-900 font-black uppercase tracking-widest text-sm rounded-xl shadow-[0_0_20px_rgba(132,204,22,0.3)] cursor-pointer"
+            // Reduced padding (px-5 py-2.5) and font size (text-[10px]) for mobile
+            className="group relative inline-flex items-center gap-2 md:gap-4 px-5 py-2.5 md:px-8 md:py-4 bg-lime-500 hover:bg-lime-400 text-slate-900 font-black uppercase tracking-widest text-[10px] md:text-sm rounded-xl shadow-[0_0_20px_rgba(132,204,22,0.3)] cursor-pointer"
           >
-            <div className="p-2 bg-black/10 rounded-lg group-hover:bg-black/20 transition-colors">
-              <Download className="w-5 h-5 stroke-[3px]" />
+            <div className="p-1.5 md:p-2 bg-black/10 rounded-lg group-hover:bg-black/20 transition-colors">
+              <Download className="w-4 h-4 md:w-5 md:h-5 stroke-[3px]" />
             </div>
             <div className="text-left leading-none">
-              <span className="block text-[10px] font-bold opacity-60 mb-1">OFFICIAL PPT FORMAT</span>
+              <span className="block text-[8px] md:text-[10px] font-bold opacity-60 mb-0.5 md:mb-1">OFFICIAL PPT FORMAT</span>
               <span>Download Template</span>
             </div>
           </motion.a>
