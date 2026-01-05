@@ -1,23 +1,82 @@
-import React, { useState } from "react";
+"use client";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FileSpreadsheet, Users, User, Check, ShieldAlert } from "lucide-react";
+import { FileSpreadsheet, Users, User, Check, ShieldAlert, ChevronDown, AlertCircle } from "lucide-react";
 import SuccessModal from "../components/UI/SuccessModal"; 
 import ErrorModal from "../components/UI/ErrorModal"; 
 import Button from "../components/UI/Button"; 
 import { problemData } from "../data/problemData"; 
+import { Link } from "react-router-dom";
 
-const inputStyle = `
+const fastTransition = { duration: 0.2, ease: "easeOut" };
+
+const inputStyle = (hasError) => `
   w-full bg-[#0B1221] border rounded-lg
   px-3 py-2.5 sm:px-4 sm:py-3
   text-sm text-white placeholder:text-slate-600
-  focus:outline-none focus:ring-0 focus:border-lime-500/50 
-  transition-colors duration-300 border-white/10
+  focus:outline-none focus:ring-0 ${hasError ? 'border-red-500/50 bg-red-500/5' : 'focus:border-lime-500/50 border-white/10'}
+  transition-all duration-200
 `;
 
-const Label = ({ children }) => (
-  <label className="text-[10px] sm:text-xs font-bold text-slate-400 tracking-[0.1em] uppercase mb-1.5 block">
-    {children}
-  </label>
+const CustomDropdown = ({ value, onChange, options, placeholder, error }) => {
+  const [open, setOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative w-full" ref={dropdownRef}>
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className={`${inputStyle(error && !value)} flex items-center justify-between text-left relative z-10`}
+      >
+        <span className={`truncate mr-2 ${value ? "text-white" : "text-slate-600"}`}>
+          {value || placeholder}
+        </span>
+        <ChevronDown size={16} className={`text-slate-400 transition-transform duration-200 ${open ? "rotate-180" : "rotate-0"}`} />
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.98 }}
+            transition={fastTransition}
+            className="absolute z-50 mt-1 w-full bg-[#020817] border border-white/10 rounded-xl shadow-2xl max-h-56 overflow-y-auto"
+          >
+            {options.map((opt) => (
+              <button
+                key={opt}
+                type="button"
+                onClick={() => { onChange(opt); setOpen(false); }}
+                className="w-full text-left px-4 py-2.5 text-xs sm:text-sm transition-colors hover:bg-lime-500/10 hover:text-lime-400 text-slate-300"
+              >
+                {opt}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+const Label = ({ children, required, error }) => (
+  <div className="flex items-end justify-between mb-1.5 px-1">
+    <label className="text-[10px] sm:text-xs font-bold text-slate-400 tracking-widest uppercase block">
+      {children}
+      {required && <span className="text-red-500 ml-1">*</span>}
+    </label>
+    {error && <span className="text-[9px] text-red-400 font-bold uppercase tracking-tighter">Fill Out This Field</span>}
+  </div>
 );
 
 const Register = () => {
@@ -30,8 +89,7 @@ const Register = () => {
 
   const departments = ["CSE", "IT", "CS&DS", "ECE", "EEE", "MECH", "AUTO", "CIVIL"];
   const years = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
-
-  const problemOptions = problemData.map(p => ({ id: p.id, title: p.title }));
+  const problemOptions = problemData.map(p => `${p.id} - ${p.title}`);
 
   const INITIAL_STATE = {
     teamName: "",
@@ -48,16 +106,14 @@ const Register = () => {
 
   const [formData, setFormData] = useState(INITIAL_STATE);
 
-  const handleLeaderChange = (e) => {
-    const { name, value } = e.target;
+  const handleLeaderChange = (name, value) => {
     setFormData((prev) => ({
       ...prev,
       teamLeader: { ...prev.teamLeader, [name]: value },
     }));
   };
 
-  const handleMemberChange = (index, e) => {
-    const { name, value } = e.target;
+  const handleMemberChange = (index, name, value) => {
     const updatedMembers = [...formData.members];
     updatedMembers[index] = { ...updatedMembers[index], [name]: value };
     setFormData((prev) => ({ ...prev, members: updatedMembers }));
@@ -79,14 +135,21 @@ const Register = () => {
 
   const validateForm = () => {
     if (!formData.teamName || !formData.problemStatement || !formData.pptLink || !formData.agreed) return false;
-    if (!formData.teamLeader.name || !formData.teamLeader.email || !formData.teamLeader.phone) return false;
+    if (!formData.teamLeader.name || !formData.teamLeader.email || !formData.teamLeader.phone || !formData.teamLeader.year || !formData.teamLeader.dept) return false;
     for (let m of formData.members) {
-      if (!m.name || !m.rollNo || !m.dept) return false;
+      if (!m.name || !m.rollNo || !m.dept || !m.year) return false;
     }
     return true;
   };
 
-  const submitToGoogleSheets = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) {
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
+      return;
+    }
+
     setIsSubmitting(true);
     const data = new FormData();
     data.append("Team Name", formData.teamName);
@@ -108,141 +171,126 @@ const Register = () => {
     });
 
     try {
-      await fetch(SCRIPT_URL, { method: "POST", body: data, mode: "no-cors" });
+      fetch(SCRIPT_URL, { method: "POST", body: data, mode: "no-cors" });
       setSuccessData(formData);
     } catch (error) {
-      alert("Submission failed. Check connection.");
+      console.error("Submission failed.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      submitToGoogleSheets();
-    } else {
-      setShowError(true);
-    }
-  };
-
   return (
-    <div className="min-h-screen pt-20 pb-20 px-4 sm:px-6 flex justify-center relative overflow-hidden bg-[#020817]/40">
-      
+    <div className="min-h-screen pt-20 pb-20 px-4 flex justify-center bg-[#020817]/40 relative">
       <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.15]"
            style={{ backgroundImage: `linear-gradient(#ffffff10 1px, transparent 1px), linear-gradient(90deg, #ffffff10 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
 
       <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }}
-        className="w-full max-w-5xl relative z-10 mt-10 rounded-3xl border border-white/10 bg-[#020817]/95 backdrop-blur-xl shadow-2xl shadow-black/80 overflow-hidden"
+        initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={fastTransition}
+        className="w-full max-w-5xl relative z-10 mt-10 rounded-3xl border border-white/10 bg-[#020817]/95 backdrop-blur-xl shadow-2xl overflow-hidden"
       >
-        <div className="relative p-6 md:p-8 border-b border-white/5 flex justify-between items-center bg-[#020817]/80 backdrop-blur-md">
-          <div>
-            <h1 className="text-xl md:text-2xl font-black text-white tracking-tight uppercase leading-none">
-              SCH '26 <span className="text-lime-400">REGISTRATION</span>
-            </h1>
-            <p className="text-slate-500 text-[10px] md:text-xs tracking-[0.15em] font-bold mt-1 uppercase italic">
-              Join the Innovation Wave
-            </p>
-          </div>
+        <div className="p-6 md:p-8 border-b border-white/5 bg-[#020817]/80 backdrop-blur-md">
+          <h1 className="text-xl md:text-2xl font-black text-white uppercase tracking-tight">
+            SCH '26 <span className="text-lime-400">REGISTRATION</span>
+          </h1>
+          <p className="text-slate-500 text-[10px] tracking-widest font-bold mt-1 uppercase italic">Join the Innovation Wave</p>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-10">
           
+          {/* TEAM DETAILS */}
           <div className="space-y-6">
             <div className="flex items-center gap-3 pb-2 border-b border-white/5">
               <Users className="w-5 h-5 text-white" /><h3 className="text-lg font-bold text-white">Team Details</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <Label>Team Name</Label>
-                <input placeholder="e.g. GCEE Innovators" className={inputStyle} value={formData.teamName} onChange={(e) => setFormData({...formData, teamName: e.target.value})} />
+                <Label required error={showError && !formData.teamName}>Team Name</Label>
+                <input placeholder="e.g. GCEE Innovators" className={inputStyle(showError && !formData.teamName)} value={formData.teamName} onChange={(e) => setFormData({...formData, teamName: e.target.value})} />
               </div>
               <div>
-                <Label>Problem Statement</Label>
-                <div className="relative">
-                  <select className={`${inputStyle} appearance-none`} value={formData.problemStatement} onChange={(e) => setFormData({...formData, problemStatement: e.target.value})}>
-                    <option value="" disabled className="bg-[#020817] text-slate-500">Select Statement</option>
-                    {problemOptions.map((opt) => (
-                      <option key={opt.id} value={opt.id} className="bg-[#020817] text-white">{opt.id} - {opt.title}</option>
-                    ))}
-                  </select>
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500 text-xs">▼</div>
-                </div>
+                <Label required error={showError && !formData.problemStatement}>Problem Statement</Label>
+                <CustomDropdown 
+                   value={formData.problemStatement} 
+                   onChange={(val) => setFormData({...formData, problemStatement: val})} 
+                   options={problemOptions} 
+                   placeholder="Select Problem" 
+                   error={showError} 
+                />
               </div>
             </div>
           </div>
 
+          {/* TEAM LEADER */}
           <div className="space-y-6">
             <div className="flex items-center gap-3 pb-2 border-b border-white/5">
               <User className="w-5 h-5 text-white" /><h3 className="text-lg font-bold text-white">Team Leader</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div><Label>Full Name</Label><input name="name" placeholder="Alice S" className={inputStyle} value={formData.teamLeader.name} onChange={handleLeaderChange} /></div>
-              <div><Label>Email Address</Label><input name="email" type="email" placeholder="Alice@gmail.com" className={inputStyle} value={formData.teamLeader.email} onChange={handleLeaderChange} /></div>
-              <div><Label>Phone Number</Label><input name="phone" type="tel" placeholder="98765 43210" className={inputStyle} value={formData.teamLeader.phone} onChange={handleLeaderChange} /></div>
+              <div><Label required error={showError && !formData.teamLeader.name}>Full Name</Label><input placeholder="Alice S" className={inputStyle(showError && !formData.teamLeader.name)} value={formData.teamLeader.name} onChange={(e) => handleLeaderChange('name', e.target.value)} /></div>
+              <div><Label required error={showError && !formData.teamLeader.email}>Email Address</Label><input type="email" placeholder="Alice@gmail.com" className={inputStyle(showError && !formData.teamLeader.email)} value={formData.teamLeader.email} onChange={(e) => handleLeaderChange('email', e.target.value)} /></div>
+              <div><Label required error={showError && !formData.teamLeader.phone}>Phone Number</Label><input type="tel" placeholder="98765 43210" className={inputStyle(showError && !formData.teamLeader.phone)} value={formData.teamLeader.phone} onChange={(e) => handleLeaderChange('phone', e.target.value)} /></div>
               
               <div className="grid grid-cols-3 gap-3">
-                <div><Label>Roll No</Label><input name="rollNo" placeholder="23CSE01" className={inputStyle} value={formData.teamLeader.rollNo} onChange={handleLeaderChange} /></div>
-                <div><Label>Year</Label><div className="relative"><select name="year" className={`${inputStyle} appearance-none px-2`} value={formData.teamLeader.year} onChange={handleLeaderChange}><option value="" disabled>Year</option>{years.map(y => <option key={y} value={y} className="bg-[#020817]">{y}</option>)}</select></div></div>
-                <div><Label>Dept</Label><div className="relative"><select name="dept" className={`${inputStyle} appearance-none px-2`} value={formData.teamLeader.dept} onChange={handleLeaderChange}><option value="" disabled>Dept</option>{departments.map(d => <option key={d} value={d} className="bg-[#020817]">{d}</option>)}</select></div></div>
+                <div><Label required error={showError && !formData.teamLeader.rollNo}>Roll No</Label><input placeholder="23CSE01" className={inputStyle(showError && !formData.teamLeader.rollNo)} value={formData.teamLeader.rollNo} onChange={(e) => handleLeaderChange('rollNo', e.target.value)} /></div>
+                <div>
+                   <Label required error={showError && !formData.teamLeader.year}>Year</Label>
+                   <CustomDropdown value={formData.teamLeader.year} onChange={(val) => handleLeaderChange('year', val)} options={years} placeholder="Year" error={showError} />
+                </div>
+                <div>
+                   <Label required error={showError && !formData.teamLeader.dept}>Dept</Label>
+                   <CustomDropdown value={formData.teamLeader.dept} onChange={(val) => handleLeaderChange('dept', val)} options={departments} placeholder="Dept" error={showError} />
+                </div>
               </div>
             </div>
           </div>
 
+          {/* TEAM MEMBERS */}
           <div className="space-y-6">
             <div className="flex flex-wrap items-end justify-between gap-4 pb-2 border-b border-white/5">
               <div className="flex items-center gap-3"><Users className="w-5 h-5 text-white" /><h3 className="text-lg font-bold text-white">Team Members</h3></div>
-              
               <div className="w-full md:w-48">
                 <Label>Total Size (Inc. Leader)</Label>
                 <div className="flex bg-[#0B1221] rounded-lg p-1 border border-white/10 w-full">
                   {['3', '4', '5'].map((size) => (
-                    <button
-                      key={size}
-                      type="button"
-                      onClick={() => handleTotalMembersChange(size)}
-                      className={`
-                        flex-1 py-2 text-xs font-bold rounded-md transition-all
-                        ${formData.totalMembers === size 
-                          ? "bg-lime-500 text-black shadow-lg" 
-                          : "text-slate-500 hover:text-white hover:bg-white/5"}
-                      `}
-                    >
-                      {size}
-                    </button>
+                    <button key={size} type="button" onClick={() => handleTotalMembersChange(size)} className={`flex-1 py-2 text-xs font-bold rounded-md transition-all ${formData.totalMembers === size ? "bg-lime-500 text-black shadow-lg" : "text-slate-500 hover:text-white"}`}>{size}</button>
                   ))}
                 </div>
               </div>
             </div>
 
             <div className="space-y-4">
-              <AnimatePresence>
-                {formData.members.map((member, index) => (
-                  <motion.div key={index} initial={{ opacity: 0, height: 0, y: -10 }} animate={{ opacity: 1, height: "auto", y: 0 }} exit={{ opacity: 0, height: 0, y: -10 }} className="p-5 rounded-xl border border-white/5 bg-white/[0.02]">
-                    <div className="flex items-center gap-2 mb-4">
-                      <div className="w-6 h-6 rounded-full bg-white/10 text-white flex items-center justify-center text-xs font-bold">{index + 1}</div>
-                      <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Member Details</span>
+              {formData.members.map((member, index) => (
+                <div key={index} className="p-5 rounded-xl border border-white/5 bg-white/[0.02]">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="w-6 h-6 rounded-full bg-white/10 text-white flex items-center justify-center text-xs font-bold">{index + 1}</div>
+                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Member Details</span>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div><Label required error={showError && !member.name}>Name</Label><input placeholder="Name" className={inputStyle(showError && !member.name)} value={member.name} onChange={(e) => handleMemberChange(index, 'name', e.target.value)} /></div>
+                    <div><Label required error={showError && !member.rollNo}>Roll No</Label><input placeholder="Roll No" className={inputStyle(showError && !member.rollNo)} value={member.rollNo} onChange={(e) => handleMemberChange(index, 'rollNo', e.target.value)} /></div>
+                    <div>
+                      <Label required error={showError && !member.year}>Year</Label>
+                      <CustomDropdown value={member.year} onChange={(val) => handleMemberChange(index, 'year', val)} options={years} placeholder="Select" error={showError} />
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                      <div className="md:col-span-1"><Label>Name</Label><input name="name" placeholder="Name" className={inputStyle} value={member.name} onChange={(e) => handleMemberChange(index, e)} /></div>
-                      <div><Label>Roll No</Label><input name="rollNo" placeholder="Roll No" className={inputStyle} value={member.rollNo} onChange={(e) => handleMemberChange(index, e)} /></div>
-                      <div><Label>Year</Label><div className="relative"><select name="year" className={`${inputStyle} appearance-none`} value={member.year} onChange={(e) => handleMemberChange(index, e)}><option value="" disabled>Select</option>{years.map(y => <option key={y} value={y} className="bg-[#020817]">{y}</option>)}</select></div></div>
-                      <div><Label>Dept</Label><div className="relative"><select name="dept" className={`${inputStyle} appearance-none`} value={member.dept} onChange={(e) => handleMemberChange(index, e)}><option value="" disabled>Select</option>{departments.map(d => <option key={d} value={d} className="bg-[#020817]">{d}</option>)}</select></div></div>
+                    <div>
+                      <Label required error={showError && !member.dept}>Dept</Label>
+                      <CustomDropdown value={member.dept} onChange={(val) => handleMemberChange(index, 'dept', val)} options={departments} placeholder="Select" error={showError} />
                     </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
+          {/* SUBMISSION & DECLARATION (REVERTED TO ORIGINAL) */}
           <div className="pt-6 border-t border-white/10 space-y-8">
             <div>
               <div className="flex items-center gap-3 mb-4"><FileSpreadsheet className="w-5 h-5 text-white" /><h3 className="text-lg font-bold text-white">Submission</h3></div>
               <div className="space-y-2">
-                <Label>Presentation Link (Google Drive)</Label>
-                <input name="pptLink" placeholder="Paste your shareable PPT link here..." className={inputStyle} value={formData.pptLink} onChange={(e) => setFormData({...formData, pptLink: e.target.value})} />
-                 <p className="text-[10px] text-slate-500 mt-2">* Ensure the link has <span className="text-white font-bold">"Anyone with the link"</span> access.</p>
+                <label className="text-[10px] sm:text-xs font-bold text-slate-400 tracking-[0.1em] uppercase mb-1.5 block">Presentation Link (Google Drive)</label>
+                <input name="pptLink" placeholder="Paste your shareable PPT link here..." className={inputStyle(showError && !formData.pptLink)} value={formData.pptLink} onChange={(e) => setFormData({...formData, pptLink: e.target.value})} />
+                <p className="text-[10px] text-slate-500 mt-2">* Ensure the link has <span className="text-white font-bold">"Anyone with the link"</span> access.</p>
               </div>
             </div>
 
@@ -255,30 +303,40 @@ const Register = () => {
                   onClick={() => setFormData({...formData, agreed: !formData.agreed})} 
                   className={`
                     w-5 h-5 shrink-0 rounded border transition-all flex items-center justify-center mt-0.5
-                    ${formData.agreed ? 'bg-lime-500 border-lime-500' : 'bg-transparent border-white/20 group-hover:border-lime-400'}
+                    ${formData.agreed ? 'bg-lime-500 border-lime-500' : (showError && !formData.agreed ? 'border-red-500 bg-red-500/10' : 'bg-transparent border-white/20 group-hover:border-lime-400')}
                   `}
                 >
                   {formData.agreed && <Check size={12} className="text-black stroke-[4px]" />}
                 </div>
                 <span className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider leading-relaxed">
-                  I have read the <span className="text-white hover:text-lime-400 transition-colors">Guidelines</span> of SCH '26 and agree to follow all rules.
-                </span>
+  I have read the{" "}
+  <Link 
+  to="/guidelines" 
+  target="_blank" 
+  rel="noopener noreferrer"
+  className="text-white underline underline-offset-4 decoration-lime-500/50 hover:text-lime-400 transition-colors cursor-pointer"
+  onClick={(e) => {
+    // This stops the click from triggering any parent Framer Motion triggers
+    e.stopPropagation(); 
+  }}
+>
+  Guidelines
+</Link>
+  {" "} of SCH '26 and agree to follow all rules. <span className="text-red-500 ml-1">*</span>
+</span>
               </label>
             </div>
 
-            <div className="text-center pt-2">
+            <div className="text-center pt-2 flex flex-col items-center gap-4">
+              {showError && <div className="text-red-400 text-[10px] font-bold uppercase tracking-widest bg-red-500/10 px-4 py-2 rounded-full border border-red-500/20 flex items-center gap-2"><AlertCircle size={14}/> Please fill out all fields</div>}
               <Button type="submit" isLoading={isSubmitting}>Confirm Registration</Button>
             </div>
           </div>
         </form>
       </motion.div>
 
-      <AnimatePresence>
-        {successData && <SuccessModal data={successData} whatsappLink={WHATSAPP_GROUP_LINK} onClose={() => { setSuccessData(null); setFormData(INITIAL_STATE); window.scrollTo({ top: 0, behavior: 'smooth' }); }} />}
-      </AnimatePresence>
-      <AnimatePresence>
-        {showError && <ErrorModal onClose={() => setShowError(false)} />}
-      </AnimatePresence>
+      <AnimatePresence>{successData && <SuccessModal data={successData} whatsappLink={WHATSAPP_GROUP_LINK} onClose={() => { setSuccessData(null); setFormData(INITIAL_STATE); }} />}</AnimatePresence>
+      <AnimatePresence>{showError && <ErrorModal onClose={() => setShowError(false)} />}</AnimatePresence>
     </div>
   );
 };
