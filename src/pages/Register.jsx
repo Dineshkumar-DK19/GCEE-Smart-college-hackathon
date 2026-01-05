@@ -266,7 +266,7 @@ const Register = () => {
           <h1 className="text-xl md:text-2xl font-black text-white uppercase tracking-tight">
             SCH '26 <span className="text-lime-400">REGISTRATION</span>
           </h1>
-       
+
           <button
             type="button"
             onClick={() => navigate("/")}
@@ -351,7 +351,7 @@ const Register = () => {
                   Phone Number
                 </Label>
                 <input
-                  type="tel"
+                  type="number"
                   placeholder="98765 43210"
                   className={inputStyle(
                     showError && !formData.teamLeader.phone

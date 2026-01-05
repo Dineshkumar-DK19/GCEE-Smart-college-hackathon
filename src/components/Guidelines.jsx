@@ -21,7 +21,7 @@ const Guidelines = () => {
         "A valid College ID card is mandatory for all participants.",
         "Participants must bring their own laptops and chargers.",
         "All team members must remain at their allotted workspace during reviews.",
-        "Attendance at the first review is mandatory."
+        "Attendance at the each review is mandatory."
       ]
     },
     {

@@ -327,7 +327,7 @@ useEffect(() => {
                 engineering teams will develop software solutions for you.
               </p>
               <Button onClick={() => setShowForm(true)} className="px-6 py-3">
-                Start Contribution <ArrowRight className="w-4 h-4 ml-2" />
+                Start Contribution 
               </Button>
             </motion.div>
           ) : (
