@@ -1,22 +1,22 @@
 import React from "react";
-import { motion } from "framer-motion"; 
-import { Users, ClipboardCheck, Cpu, ShieldAlert, Download } from "lucide-react";  
+import { motion } from "framer-motion";
+import { Users, ClipboardCheck, Cpu, ShieldAlert, Download } from "lucide-react";
 
 const Guidelines = () => {
   const guidelines = [
     {
       title: "Team & Eligibility",
-      icon: <Users className="w-6 h-6 text-white" />, 
+      icon: <Users className="w-6 h-6 text-lime-400" />,
       rules: [
         "Teams must consist of 3 to 5 members.",
         "Interdisciplinary teams (any department or year) are highly encouraged.",
         "Each student is permitted to participate in only one team.",
-        "Top 25 teams will be selected based on uniqueness and innovation." 
+        "Top 25 teams will be selected based on uniqueness and innovation."
       ]
     },
     {
       title: "Requirements",
-      icon: <ClipboardCheck className="w-6 h-6 text-white" />,
+      icon: <ClipboardCheck className="w-6 h-6 text-lime-400" />,
       rules: [
         "A valid College ID card is mandatory for all participants.",
         "Participants must bring their own laptops and chargers.",
@@ -26,7 +26,7 @@ const Guidelines = () => {
     },
     {
       title: "Technical Guidelines",
-      icon: <Cpu className="w-6 h-6 text-white" />,
+      icon: <Cpu className="w-6 h-6 text-lime-400" />,
       rules: [
         "Participants may use any programming language or framework.",
         "Strict adherence to deadlines is required.",
@@ -35,7 +35,7 @@ const Guidelines = () => {
     },
     {
       title: "Code of Conduct",
-      icon: <ShieldAlert className="w-6 h-6 text-white" />,
+      icon: <ShieldAlert className="w-6 h-6 text-lime-400" />,
       rules: [
         "Plagiarism will result in immediate disqualification.",
         "Maintain professional behavior throughout the event.",
@@ -76,7 +76,7 @@ const Guidelines = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {guidelines.map((section, index) => (
-            <div key={index} className="bg-slate-900/40 border border-white/5 rounded-2xl p-6 hover:bg-slate-900/60 transition-colors duration-300"> 
+            <div key={index} className="bg-slate-900/40 border border-white/5 rounded-2xl p-6 hover:bg-slate-900/60 transition-colors duration-300">
               <div className="flex items-center gap-4 mb-5 border-b border-white/5 pb-4">
                 <div className="p-2.5 bg-white/5 rounded-lg text-lime-400">
                   {section.icon}

@@ -1,6 +1,6 @@
 import { cn } from "../lib/utils";
 import { motion, stagger, useAnimate, useInView } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export const TypewriterEffect = ({
   words,
@@ -18,33 +18,38 @@ export const TypewriterEffect = ({
   const [scope, animate] = useAnimate();
   const isInView = useInView(scope);
 
+  const hasAnimated = useRef(false);
+
 useEffect(() => {
-    if (isInView) {
-      const runAnimation = async () => {
-        // 1. RESET (Instant)
-        await animate(
-          "span",
-          { opacity: 0, display: "none" },
-          { duration: 0 }
-        );
+  if (!isInView || hasAnimated.current) return;
 
-        // 2. TYPE IN (One time only)
-        await animate(
-          "span",
-          { display: "inline-block", opacity: 1 },
-          {
-            duration: 0.45,
-            delay: stagger(0.18),
-            ease: "easeOut",
-          }
-        );
+  hasAnimated.current = true;
 
-        // No loop or deletion logic here
-      };
+  const runAnimation = async () => {
+    // RESET (instant)
+    await animate(
+      "span",
+      { opacity: 0, display: "none" },
+      { duration: 0 }
+    );
 
-      runAnimation();
-    }
-  }, [isInView, animate]); // Removed 'scope' from deps to prevent unnecessary triggers
+    // TYPE IN (only once)
+    await animate(
+      "span",
+      { display: "inline-block", opacity: 1 },
+      {
+        duration: 0.45,
+        delay: stagger(0.18),
+        ease: "easeOut",
+      }
+    );
+  };
+
+  runAnimation();
+}, [isInView, animate]);
+ // Removed 'scope' from deps to prevent unnecessary triggers
+
+
 
   const renderWords = () => {
     return (
