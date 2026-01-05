@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer base {
+  html, body {
+  background-color: #020817 !important; /* Matches your theme */
+  margin: 0;
+  padding: 0;
+}
   html {
     /* 1. Fixes the scroll offset so headers don't hide behind the navbar */
     /* 5rem (80px) is your navbar height + 2rem (32px) extra breathing room */
