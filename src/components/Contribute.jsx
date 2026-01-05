@@ -8,10 +8,15 @@ import {
   ShieldAlert,
   Check,
   AlertCircle,
+  Lock,
 } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import Button from "./UI/Button";
 import ContributionSuccessModal from "./UI/ContributionSuccessModal";
+
+// SET YOUR CLOSE DATE HERE: Year, Month (0=Jan), Day, Hour, Minute
+// Example: January 20th, 2026 at 9:00 AM
+const CLOSE_DATE = new Date(2026, 0, 10, 17, 0, 0);
 
 const inputStyle = (hasError) => `
   w-full bg-[#0B1221] rounded-lg
@@ -150,27 +155,35 @@ const Contribute = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [now, setNow] = useState(new Date());
   const location = useLocation();
 
+  // Update time periodically
+  useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), 60000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const isClosed = now >= CLOSE_DATE;
+
   // LOCK BACKGROUND SCROLL WHEN FORM IS OPEN
-useEffect(() => {
-  if (showForm) {
-    document.body.style.overflow = "hidden";
-    document.body.style.height = "100vh";
-    document.body.style.touchAction = "none";
-  } else {
-    document.body.style.overflow = "";
-    document.body.style.height = "";
-    document.body.style.touchAction = "";
-  }
+  useEffect(() => {
+    if (showForm) {
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100vh";
+      document.body.style.touchAction = "none";
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.height = "";
+      document.body.style.touchAction = "";
+    }
 
-  return () => {
-    document.body.style.overflow = "";
-    document.body.style.height = "";
-    document.body.style.touchAction = "";
-  };
-}, [showForm]);
-
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.height = "";
+      document.body.style.touchAction = "";
+    };
+  }, [showForm]);
 
   const initialData = {
     dept: "",
@@ -202,29 +215,26 @@ useEffect(() => {
       document.body.style.touchAction = "";
     };
 
-    // FIX: Catch clicks on Navbar links even if they don't change the URL path
     const handleNavbarClick = (e) => {
-      // If the user clicks something in the <header> (the Navbar), close the form
       if (e.target.closest("header") || e.target.closest("nav")) {
         handleClose();
       }
     };
 
-    // Close on any path change (standard routing)
     handleClose();
 
-    // Event Listeners
-    window.addEventListener("click", handleNavbarClick); // Listen for navbar clicks
-    window.addEventListener("popstate", handleClose); // Listen for back button
-    window.addEventListener("hashchange", handleClose); // Listen for #anchor changes
+    window.addEventListener("click", handleNavbarClick);
+    window.addEventListener("popstate", handleClose);
+    window.addEventListener("hashchange", handleClose);
 
     return () => {
       window.removeEventListener("click", handleNavbarClick);
       window.removeEventListener("popstate", handleClose);
       window.removeEventListener("hashchange", handleClose);
-      handleClose(); // Cleanup on unmount
+      handleClose();
     };
-  }, [location.pathname, location.key]); // Keep watching standard location changes too
+  }, [location.pathname, location.key]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const requiredFields = [
@@ -257,7 +267,6 @@ useEffect(() => {
           targetUsers: formData.targetUsers.join(", "),
         }),
       });
-      // CRITICAL: Close form before showing success modal
       setShowForm(false);
       setSubmitted(true);
     } catch (err) {
@@ -326,9 +335,28 @@ useEffect(() => {
                 Submit departmental requirements and problem statements. Our
                 engineering teams will develop software solutions for you.
               </p>
-              <Button onClick={() => setShowForm(true)} className="px-6 py-3">
-                Start Contribution 
-              </Button>
+
+              {/* CONDITIONAL BUTTON/LOCKED UI */}
+              {!isClosed ? (
+                <Button onClick={() => setShowForm(true)} className="px-6 py-3">
+                  Start Contribution 
+                </Button>
+              ) : (
+                <div className="mt-8 p-6 bg-[#0B1221]/40 border border-white/5 rounded-3xl backdrop-blur-xl max-w-md w-full mx-auto">
+                  <div className="inline-flex p-3 rounded-full bg-lime-500/10 mb-4 border border-lime-500/20">
+                    <Lock className="w-8 h-8 text-lime-400" />
+                  </div>
+                  <h2 className="text-xl font-bold text-white mb-2">
+                    Submissions Closed on
+                  </h2>
+
+                    <span className="text-lime-400 font-bold">
+                      January 10th at 5:00 PM
+                    </span>
+
+
+                </div>
+              )}
             </motion.div>
           ) : (
             <div className="fixed inset-0 z-[150] flex items-center justify-center px-3 sm:px-4">

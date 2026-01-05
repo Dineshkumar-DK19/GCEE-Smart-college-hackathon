@@ -1,8 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
- // Add X
-import { Link, useNavigate } from "react-router-dom"; // Add useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import {
   FileSpreadsheet,
   Users,
@@ -11,13 +10,16 @@ import {
   ShieldAlert,
   ChevronDown,
   AlertCircle,
-  X
+  X,
+  Lock,
 } from "lucide-react";
 import SuccessModal from "../components/UI/SuccessModal";
 import ErrorModal from "../components/UI/ErrorModal";
 import Button from "../components/UI/Button";
 import { problemData } from "../data/problemData";
 
+// SET YOUR CLOSE DATE HERE: January 21st, 2026 at 5:00 PM
+const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 4, 17, 0, 0);
 
 const fastTransition = { duration: 0.2, ease: "easeOut" };
 
@@ -113,11 +115,19 @@ const Label = ({ children, required, error }) => (
 );
 
 const Register = () => {
+  const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successData, setSuccessData] = useState(null);
   const [showError, setShowError] = useState(false);
+  const [now, setNow] = useState(new Date());
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), 60000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const isClosed = now >= REGISTRATION_CLOSE_DATE;
+
   const SCRIPT_URL =
     "https://script.google.com/macros/s/AKfycbyVAnw8z9uPyMrYlXpjpo1w_60jJRNjl23_XN_PUVwHG03W-j59UiBFO-61t62wdkK-/exec";
   const WHATSAPP_GROUP_LINK =
@@ -209,12 +219,13 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isClosed) return; // Block submission if date passed
+
     if (!validateForm()) {
       setShowError(true);
       setTimeout(() => setShowError(false), 4000);
       return;
     }
-
     setIsSubmitting(true);
     const data = new FormData();
     data.append("Team Name", formData.teamName);
@@ -227,7 +238,6 @@ const Register = () => {
     data.append("Leader Year", formData.teamLeader.year);
     data.append("Leader Dept", formData.teamLeader.dept);
     data.append("Total Members", formData.totalMembers);
-
     formData.members.forEach((m, i) => {
       data.append(`Member ${i + 1} Name`, m.name);
       data.append(`Member ${i + 1} Roll`, m.rollNo);
@@ -262,11 +272,9 @@ const Register = () => {
         className="w-full max-w-5xl relative z-10 mt-10 rounded-3xl border border-white/10 bg-[#020817]/95 backdrop-blur-xl shadow-2xl overflow-hidden"
       >
         <div className="p-6 md:p-8 border-b border-white/5 bg-[#020817]/80 backdrop-blur-md rounded-t-3xl flex justify-between items-center">
-          {" "}
           <h1 className="text-xl md:text-2xl font-black text-white uppercase tracking-tight">
             SCH '26 <span className="text-lime-400">REGISTRATION</span>
           </h1>
-
           <button
             type="button"
             onClick={() => navigate("/")}
@@ -277,7 +285,6 @@ const Register = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-10">
-          {/* TEAM DETAILS */}
           <div className="space-y-6">
             <div className="flex items-center gap-3 pb-2 border-b border-white/5">
               <Users className="w-5 h-5 text-white" />
@@ -295,6 +302,7 @@ const Register = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, teamName: e.target.value })
                   }
+                  disabled={isClosed}
                 />
               </div>
               <div>
@@ -309,12 +317,12 @@ const Register = () => {
                   options={problemOptions}
                   placeholder="Select Problem"
                   error={showError}
+                  disabled={isClosed}
                 />
               </div>
             </div>
           </div>
 
-          {/* TEAM LEADER */}
           <div className="space-y-6">
             <div className="flex items-center gap-3 pb-2 border-b border-white/5">
               <User className="w-5 h-5 text-white" />
@@ -330,6 +338,7 @@ const Register = () => {
                   className={inputStyle(showError && !formData.teamLeader.name)}
                   value={formData.teamLeader.name}
                   onChange={(e) => handleLeaderChange("name", e.target.value)}
+                  disabled={isClosed}
                 />
               </div>
               <div>
@@ -339,11 +348,10 @@ const Register = () => {
                 <input
                   type="email"
                   placeholder="Alice@gmail.com"
-                  className={inputStyle(
-                    showError && !formData.teamLeader.email
-                  )}
+                  className={inputStyle(showError && !formData.teamLeader.email)}
                   value={formData.teamLeader.email}
                   onChange={(e) => handleLeaderChange("email", e.target.value)}
+                  disabled={isClosed}
                 />
               </div>
               <div>
@@ -353,37 +361,27 @@ const Register = () => {
                 <input
                   type="number"
                   placeholder="98765 43210"
-                  className={inputStyle(
-                    showError && !formData.teamLeader.phone
-                  )}
+                  className={inputStyle(showError && !formData.teamLeader.phone)}
                   value={formData.teamLeader.phone}
                   onChange={(e) => handleLeaderChange("phone", e.target.value)}
+                  disabled={isClosed}
                 />
               </div>
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <Label
-                    required
-                    error={showError && !formData.teamLeader.rollNo}
-                  >
+                  <Label required error={showError && !formData.teamLeader.rollNo}>
                     Roll No
                   </Label>
                   <input
                     placeholder="23CSE01"
-                    className={inputStyle(
-                      showError && !formData.teamLeader.rollNo
-                    )}
+                    className={inputStyle(showError && !formData.teamLeader.rollNo)}
                     value={formData.teamLeader.rollNo}
-                    onChange={(e) =>
-                      handleLeaderChange("rollNo", e.target.value)
-                    }
+                    onChange={(e) => handleLeaderChange("rollNo", e.target.value)}
+                    disabled={isClosed}
                   />
                 </div>
                 <div>
-                  <Label
-                    required
-                    error={showError && !formData.teamLeader.year}
-                  >
+                  <Label required error={showError && !formData.teamLeader.year}>
                     Year
                   </Label>
                   <CustomDropdown
@@ -392,13 +390,11 @@ const Register = () => {
                     options={years}
                     placeholder="Year"
                     error={showError}
+                    disabled={isClosed}
                   />
                 </div>
                 <div>
-                  <Label
-                    required
-                    error={showError && !formData.teamLeader.dept}
-                  >
+                  <Label required error={showError && !formData.teamLeader.dept}>
                     Dept
                   </Label>
                   <CustomDropdown
@@ -407,13 +403,13 @@ const Register = () => {
                     options={departments}
                     placeholder="Dept"
                     error={showError}
+                    disabled={isClosed}
                   />
                 </div>
               </div>
             </div>
           </div>
 
-          {/* TEAM MEMBERS */}
           <div className="space-y-6">
             <div className="flex flex-wrap items-end justify-between gap-4 pb-2 border-b border-white/5">
               <div className="flex items-center gap-3">
@@ -428,11 +424,12 @@ const Register = () => {
                       key={size}
                       type="button"
                       onClick={() => handleTotalMembersChange(size)}
+                      disabled={isClosed}
                       className={`flex-1 py-2 text-xs font-bold rounded-md transition-all ${
                         formData.totalMembers === size
                           ? "bg-lime-500 text-black shadow-lg"
                           : "text-slate-500 hover:text-white"
-                      }`}
+                      } ${isClosed ? "cursor-not-allowed opacity-50" : ""}`}
                     >
                       {size}
                     </button>
@@ -440,7 +437,6 @@ const Register = () => {
                 </div>
               </div>
             </div>
-
             <div className="space-y-4">
               <AnimatePresence>
                 {formData.members.map((member, index) => (
@@ -449,9 +445,7 @@ const Register = () => {
                     initial={{ opacity: 0, height: 0, y: -10 }}
                     animate={{ opacity: 1, height: "auto", y: 0 }}
                     exit={{ opacity: 0, height: 0, y: -10 }}
-                    // CHANGE: Remove 'overflow-hidden' and add 'relative'
                     className="p-5 rounded-xl border border-white/5 bg-white/[0.02] relative"
-                    // ADD: Inline style for dynamic z-index stacking
                     style={{ zIndex: 10 - index }}
                   >
                     <div className="flex items-center gap-2 mb-4">
@@ -474,6 +468,7 @@ const Register = () => {
                           onChange={(e) =>
                             handleMemberChange(index, "name", e.target.value)
                           }
+                          disabled={isClosed}
                         />
                       </div>
                       <div>
@@ -487,6 +482,7 @@ const Register = () => {
                           onChange={(e) =>
                             handleMemberChange(index, "rollNo", e.target.value)
                           }
+                          disabled={isClosed}
                         />
                       </div>
                       <div>
@@ -501,6 +497,7 @@ const Register = () => {
                           options={years}
                           placeholder="Select"
                           error={showError}
+                          disabled={isClosed}
                         />
                       </div>
                       <div>
@@ -515,6 +512,7 @@ const Register = () => {
                           options={departments}
                           placeholder="Select"
                           error={showError}
+                          disabled={isClosed}
                         />
                       </div>
                     </div>
@@ -524,11 +522,10 @@ const Register = () => {
             </div>
           </div>
 
-          {/* SUBMISSION & DECLARATION */}
           <div className="pt-6 border-t border-white/10 space-y-8">
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <FileSpreadsheet className="w-5 h-5 text-white" />
+                <FileSpreadsheet className="w-5 h-5 text-white" />{" "}
                 <h3 className="text-lg font-bold text-white">Submission</h3>
               </div>
               <div className="space-y-2">
@@ -543,6 +540,7 @@ const Register = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, pptLink: e.target.value })
                   }
+                  disabled={isClosed}
                 />
                 <p className="text-[10px] text-slate-500 mt-2">
                   * Ensure the link has{" "}
@@ -561,18 +559,15 @@ const Register = () => {
               <label className="flex items-center gap-3 cursor-pointer group">
                 <div
                   onClick={() =>
-                    setFormData({ ...formData, agreed: !formData.agreed })
+                    !isClosed && setFormData({ ...formData, agreed: !formData.agreed })
                   }
-                  className={`
-                    w-5 h-5 shrink-0 rounded border transition-all flex items-center justify-center mt-0.5
-                    ${
-                      formData.agreed
-                        ? "bg-lime-500 border-lime-500"
-                        : showError && !formData.agreed
-                        ? "border-red-500 bg-red-500/10"
-                        : "bg-transparent border-white/20 group-hover:border-lime-400"
-                    }
-                  `}
+                  className={`w-5 h-5 shrink-0 rounded border transition-all flex items-center justify-center ${
+                    formData.agreed
+                      ? "bg-lime-500 border-lime-500"
+                      : showError && !formData.agreed
+                      ? "border-red-500 bg-red-500/10"
+                      : "border-white/20 group-hover:border-lime-400"
+                  } ${isClosed ? "cursor-not-allowed opacity-50" : ""}`}
                 >
                   {formData.agreed && (
                     <Check size={12} className="text-black stroke-[4px]" />
@@ -582,7 +577,6 @@ const Register = () => {
                   I have read the{" "}
                   <Link
                     to="/"
-                    rel="noopener noreferrer"
                     className="text-white underline underline-offset-4 decoration-lime-500/50 hover:text-lime-400 transition-colors cursor-pointer"
                     onClick={(e) => e.stopPropagation()}
                   >
@@ -600,10 +594,27 @@ const Register = () => {
                   <AlertCircle size={14} /> Please fill out all required fields
                 </div>
               )}
-              <Button type="submit" isLoading={isSubmitting}>
-                Confirm Registration
+              {/* THE BUTTON LOGIC CHANGES HERE */}
+              <Button
+                type="submit"
+                isLoading={isSubmitting}
+                disabled={isClosed}
+                className={isClosed ? "opacity-50 grayscale cursor-not-allowed" : ""}
+              >
+                {isClosed ? (
+                  <span className="flex items-center gap-2">
+                    <Lock size={16} /> Registration Closed
+                  </span>
+                ) : (
+                  "Confirm Registration"
+                )}
               </Button>
             </div>
+            {isClosed && (
+              <p className="text-center text-red-400 text-[10px] font-bold uppercase tracking-widest mt-2 animate-pulse">
+                The deadline for registration has passed.
+              </p>
+            )}
           </div>
         </form>
       </motion.div>

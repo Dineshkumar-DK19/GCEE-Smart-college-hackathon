@@ -1,15 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import bannerImg from '../assets/banner.png';
 import hackathonLogo from '../assets/HackathonLogo.png';
 import BlurText from './UI/BlurText';
 import { TypewriterEffect } from './UI/TypewriterEffect';
 import FlippingLogo from './UI/FlippingLogo';
-import Button from './UI/Button'; // Import shared button
+import Button from './UI/Button';
 import LightRays from './UI/LightRays';
+
+// SET YOUR CLOSE DATE HERE: January 21st, 2026 at 5:00 PM
+const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 21, 17, 0, 0);
 
 const Home = () => {
   const navigate = useNavigate();
+  const [isClosed, setIsClosed] = useState(new Date() >= REGISTRATION_CLOSE_DATE);
+
+  // Check the deadline every minute to update the UI automatically
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIsClosed(new Date() >= REGISTRATION_CLOSE_DATE);
+    }, 60000);
+    return () => clearInterval(timer);
+  }, []);
 
   const hackathonTitle = [
     { text: "SMART", className: "text-lime-400" },
@@ -68,7 +80,6 @@ const Home = () => {
             <p className="mt-2 text-[10px] sm:text-xs md:text-sm font-semibold tracking-[0.25em] text-slate-300 uppercase border-t border-slate-700/50 pt-2 w-full text-center">
               Intra College Hackathon
             </p>
-            {/* Added Tagline */}
             <p className="mt-3 text-sm md:text-lg text-lime-400 font-medium italic tracking-wide">
               "Let's build, contribute and grow together"
             </p>
@@ -91,17 +102,29 @@ const Home = () => {
           Be part of <span className="text-lime-400 font-bold">SCH '26</span> on <span className="text-lime-400 font-bold px-1">30th of January</span> to celebrate creativity and technical brilliance. Experience over eight hours of continous coding, creativity, and engineering excellence.
         </p>
 
+        {/* BUTTON SECTION WITH CONDITIONAL LOGIC */}
         <div className="flex flex-col items-center justify-center sm:w-auto px-6 gap-3">
-          <Button onClick={() => navigate('/register')}>
-            Register Now
+          <Button
+            onClick={isClosed ? null : () => navigate('/register')}
+            className={isClosed ? "opacity-50 cursor-not-allowed grayscale pointer-events-none" : ""}
+            disabled={isClosed}
+          >
+            {isClosed ? "Registration Closed" : "Register Now"}
           </Button>
-          {/* Added Free Registration Text */}
-          <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">
-            Free Registration
-          </span>
+
+          {/* This section disappears after the deadline */}
+          {!isClosed && (
+            <>
+              <span className="text-xs sm:text-sm md:text-lg tracking-widest text-lime-400 font-black uppercase">
+                Free Registration
+              </span>
+              <span className="text-[10px] sm:text-xs md:text-sm uppercase tracking-wide text-white/70 font-medium text-center max-w-md">
+                Last Date for Registration: <span className="text-white font-bold text-lime-400/90">Jan 21st, 5:00 PM</span>
+              </span>
+            </>
+          )}
         </div>
       </div>
-
     </section>
   );
 };
