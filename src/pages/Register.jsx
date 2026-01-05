@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FileSpreadsheet, Users, User, Check, ShieldAlert } from "lucide-react";
+import { useNavigate } from "react-router-dom"; // Added import
+import { FileSpreadsheet, Users, User, Check, ShieldAlert, X } from "lucide-react"; // Added X icon
 import SuccessModal from "../components/UI/SuccessModal"; 
 import ErrorModal from "../components/UI/ErrorModal"; 
 import Button from "../components/UI/Button"; 
@@ -21,6 +22,7 @@ const Label = ({ children }) => (
 );
 
 const Register = () => {
+  const navigate = useNavigate(); // Initialize hook
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successData, setSuccessData] = useState(null); 
   const [showError, setShowError] = useState(false); 
@@ -145,6 +147,13 @@ const Register = () => {
               Join the Innovation Wave
             </p>
           </div>
+          {/* Close Button matching Contribute.jsx style */}
+          <button
+            onClick={() => navigate('/')}
+            className="p-2 bg-white/5 hover:bg-red-500/20 hover:text-red-500 rounded-lg sm:rounded-xl transition-all shadow-inner group"
+          >
+            <X className="w-5 h-5 text-slate-400 group-hover:text-red-500 transition-colors" />
+          </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-10">

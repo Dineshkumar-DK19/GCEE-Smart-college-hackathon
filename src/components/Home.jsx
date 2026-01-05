@@ -12,7 +12,7 @@ const Home = () => {
 
   const hackathonTitle = [
     { text: "SMART", className: "text-lime-400" },
-    { text: "COLLEGE", className: "text-lime-400" },
+    { text: "CAMPUS", className: "text-lime-400" },
     { text: "HACKATHON", className: "text-lime-400" },
     { text: "'", className: "text-lime-400" },
     { text: "26", className: "text-white" },

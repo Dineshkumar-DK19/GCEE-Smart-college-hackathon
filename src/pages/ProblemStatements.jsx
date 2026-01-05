@@ -6,7 +6,7 @@ import { problemData } from "../data/problemData";
 
 // SET YOUR RELEASE DATE HERE: Year, Month (0=Jan), Day, Hour, Minute
 // specific target: January 12th, 2026 at 9:00 AM
-const RELEASE_DATE = new Date(2026, 0, 12, 9, 0, 0);
+const RELEASE_DATE = new Date(2026, 0, 1, 9, 0, 0);
 
 const ProblemStatements = () => {
   const [searchTerm, setSearchTerm] = useState("");

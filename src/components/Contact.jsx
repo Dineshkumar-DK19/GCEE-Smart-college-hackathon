@@ -30,7 +30,7 @@ const Contact = () => {
             Contact Us
           </h2>
           <p className="mt-3 text-slate-400 text-sm md:text-base">
-            For queries related to Smart College Hackathon ' 26
+            For queries related to Smart Campus Hackathon ' 26
           </p>
         </div>
 
