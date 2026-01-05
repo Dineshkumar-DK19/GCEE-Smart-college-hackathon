@@ -6,7 +6,7 @@ import { problemData } from "../data/problemData";
 
 // SET YOUR RELEASE DATE HERE: Year, Month (0=Jan), Day, Hour, Minute
 // specific target: January 12th, 2026 at 9:00 AM
-const RELEASE_DATE = new Date(2026, 0, 12, 9, 0, 0);
+const RELEASE_DATE = new Date(2026, 0, 1, 9, 0, 0);
 
 const ProblemStatements = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,14 +35,14 @@ const ProblemStatements = () => {
 
   return (
     <div className="min-h-screen pt-28 pb-20 px-4 sm:px-6 relative overflow-hidden bg-[#020817]">
-      
+
       {/* Background Ambience */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-[10%] left-[20%] w-[30vw] h-[30vw] bg-lime-500/5 blur-[120px] rounded-full" />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        
+
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight mb-4 drop-shadow-sm">
@@ -53,19 +53,19 @@ const ProblemStatements = () => {
               ? "Real-world challenges submitted by our departments. Select a problem to view full details."
               : "Problem statements are currently under review by the technical committee."}
           </p>
-          
+
           {/* --- BOUNCING DOWNLOAD BUTTON (Always Visible) --- */}
           <div className="mt-10 flex justify-center relative z-20">
-            <motion.a 
-              href="/SCH_2026_Template.pptx" 
+            <motion.a
+              href="/SCH_2026_Template.pptx"
               download="SCH_2026_Template.pptx"
-              
+
               // Continuous Bouncing Animation
               animate={{ y: [0, -8, 0] }}
-              transition={{ 
-                duration: 2, 
-                repeat: Infinity, 
-                ease: "easeInOut" 
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
               }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -77,7 +77,7 @@ const ProblemStatements = () => {
                 bg-lime-500 hover:bg-lime-400
                 text-slate-900 font-black uppercase tracking-widest text-sm
                 rounded-xl
-                shadow-[0_0_20px_rgba(132,204,22,0.3)] 
+                shadow-[0_0_20px_rgba(132,204,22,0.3)]
                 hover:shadow-[0_0_40px_rgba(132,204,22,0.6)]
                 cursor-pointer
               "

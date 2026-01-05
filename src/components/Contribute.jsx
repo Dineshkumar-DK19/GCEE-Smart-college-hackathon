@@ -4,12 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, X, ChevronDown, ShieldAlert, Check } from "lucide-react";
 import Button from "./UI/Button";
 import ContributionSuccessModal from "./UI/ContributionSuccessModal";
-
+import { useLocation } from "react-router-dom";
 
 const inputStyle = `
   w-full bg-[#0B1221] border rounded-lg
   px-3 py-2.5 sm:px-4 sm:py-3
-  text-sm text-white placeholder:text-slate-600
+  text-xs sm:text-sm md:text-base text-white placeholder:text-slate-600
   focus:outline-none focus:ring-0 focus:border-lime-500/50
   transition-colors duration-300 border-white/10
 `;
@@ -123,41 +123,48 @@ const Contribute = () => {
   const [showForm, setShowForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const location = useLocation();
 
 // 1. NAVIGATION & UNMOUNT CLEANUP
-// This ensures that if you click "Home" or any navbar link,
-// the form is hidden and the body scroll is restored.
-useEffect(() => {
-  const handleClose = () => {
-    setShowForm(false);
-    document.body.style.overflow = "";
-    document.body.style.height = "";
-    document.body.style.touchAction = "";
-  };
+  useEffect(() => {
+    const handleClose = () => {
+      setShowForm(false);
+      document.body.style.overflow = "";
+      document.body.style.height = "";
+      document.body.style.touchAction = "";
+    };
 
-  // Listen for browser back/forward and URL changes
-  window.addEventListener("popstate", handleClose);
+    const handleNavbarClick = (e) => {
+      if (e.target.closest("header") || e.target.closest("nav")) {
+        handleClose();
+      }
+    };
 
-  // Also cleanup if the user clicks a link that unmounts this component
-  return () => {
-    window.removeEventListener("popstate", handleClose);
-    handleClose(); // Run the cleanup
-  };
-}, []);
+    handleClose();
+    window.addEventListener("click", handleNavbarClick);
+    window.addEventListener("popstate", handleClose);
+    window.addEventListener("hashchange", handleClose);
 
-// 2. SCROLL LOCK STATE SYNC
-// This strictly manages the "frozen" background effect based on showForm state.
-useEffect(() => {
-  if (showForm) {
-    document.body.style.overflow = "hidden";
-    document.body.style.height = "100vh";
-    document.body.style.touchAction = "none";
-  } else {
-    document.body.style.overflow = "";
-    document.body.style.height = "";
-    document.body.style.touchAction = "";
-  }
-}, [showForm]);
+    return () => {
+      window.removeEventListener("click", handleNavbarClick);
+      window.removeEventListener("popstate", handleClose);
+      window.removeEventListener("hashchange", handleClose);
+      handleClose();
+    };
+  }, [location.pathname]);
+
+  // 2. SCROLL LOCK STATE SYNC
+  useEffect(() => {
+    if (showForm) {
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100vh";
+      document.body.style.touchAction = "none";
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.height = "";
+      document.body.style.touchAction = "";
+    }
+  }, [showForm]);
 
   const initialData = {
     dept: "",
@@ -228,11 +235,9 @@ useEffect(() => {
     }
   };
 
-
   const resetForm = () => {
     setSubmitted(false);
-    setFormData(initialData); // 2. Clear all input fields
-    // setShowForm(false);      // 3. REMOVED: Keep the form open
+    setFormData(initialData);
   };
 
   return (
@@ -257,36 +262,23 @@ useEffect(() => {
               <div className="px-4 py-1.5 rounded-full border border-lime-500/30 bg-lime-500/5 text-lime-400 text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em]">
                 Faculty & Staff Portal
               </div>
-              <h1 className="
-                text-sm sm:text-xl md:text-3xl lg:text-4xl
-                font-black text-white tracking-wide leading-tight
-              ">
+              <h1 className="text-sm sm:text-xl md:text-3xl lg:text-4xl font-black text-white tracking-wide leading-tight">
                 HAVE A CHALLENGE ? <br />
-                <span className="text-lime-400">
-                  CONTRIBUTE NOW.
-                </span>
+                <span className="text-lime-400">CONTRIBUTE NOW.</span>
               </h1>
 
-              <p className="
-                max-w-xl text-[10px] sm:text-xs md:text-sm
-                text-slate-400 leading-relaxed font-medium px-4
-              ">
+              <p className="max-w-xl text-[10px] sm:text-xs md:text-sm text-slate-400 leading-relaxed font-medium px-4">
                 Submit departmental requirements and problem statements. Our
                 engineering teams will analyze and develop custom software
                 solutions for you.
               </p>
 
-              <div className="w-full sm:w-auto px-6">
-                <Button
-                  onClick={() => setShowForm(true)}
-                  className="text-[10px] sm:text-xs md:text-sm px-4 py-2 sm:px-6 sm:py-3"
-                >
-                  Start Contribution
-                  <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 ml-2" />
-                </Button>
-              </div>
-
-
+              <Button
+                onClick={() => setShowForm(true)}
+                className="flex justify-center items-center"
+              >
+                Start Contribution
+              </Button>
             </motion.div>
           ) : (
             <div className="fixed inset-0 z-[100] flex items-center justify-center px-3 sm:px-4">
@@ -303,7 +295,8 @@ useEffect(() => {
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                className="relative w-full max-w-5xl mt-20 max-h-[85vh] md:max-h-[90vh] overflow-y-auto bg-[#020817]/95 border border-white/10 rounded-2xl md:rounded-3xl shadow-2xl shadow-black/80"
+                onClick={(e) => e.stopPropagation()}
+                className="relative w-full max-w-5xl mt-28 md:mt-32 max-h-[85vh] md:max-h-[90vh] overflow-y-auto bg-[#020817]/95 border border-white/10 rounded-2xl md:rounded-3xl shadow-2xl shadow-black/80"
               >
                 <div className="relative p-4 sm:p-5 md:p-6 border-b border-white/5 flex justify-between items-center bg-[#020817]/80 backdrop-blur-md sticky top-0 z-20">
                   <div className="text-left">
@@ -348,40 +341,31 @@ useEffect(() => {
 
                   <div className="space-y-4">
                     <div>
-                      <Label helper="Current manual method">
-                        Background / Current Process
-                      </Label>
+                      <Label helper="Current manual method">Background / Current Process</Label>
                       <textarea
                         className={`${inputStyle} h-24 resize-none`}
                         value={formData.background}
                         placeholder="Describe how the task is currently carried out..."
                         onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            background: e.target.value,
-                          })
+                          setFormData({ ...formData, background: e.target.value })
                         }
                         required
                       />
                     </div>
                     <div>
-                      <Label helper="List the inefficiencies">
-                        Problem Description
-                      </Label>
+                      <Label helper="List the inefficiencies">Problem Description</Label>
                       <textarea
                         className={`${inputStyle} h-24 resize-none`}
                         value={formData.description}
                         placeholder="List the issues, challenges, or inefficiencies..."
                         onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            description: e.target.value,
-                          })
+                          setFormData({ ...formData, description: e.target.value })
                         }
                         required
                       />
                     </div>
                   </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <Label helper="Goal">Objective</Label>
@@ -390,10 +374,7 @@ useEffect(() => {
                         value={formData.objective}
                         placeholder="Clearly state the goal..."
                         onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            objective: e.target.value,
-                          })
+                          setFormData({ ...formData, objective: e.target.value })
                         }
                         required
                       />
@@ -411,6 +392,7 @@ useEffect(() => {
                       />
                     </div>
                   </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 py-2">
                     <CheckboxGroup
                       label="Target Users"
@@ -422,9 +404,7 @@ useEffect(() => {
                       <Label>Application Type</Label>
                       <CustomDropdown
                         value={formData.appType}
-                        onChange={(val) =>
-                          setFormData({ ...formData, appType: val })
-                        }
+                        onChange={(val) => setFormData({ ...formData, appType: val })}
                         options={["Web", "Mobile", "Desktop", "Any Platform"]}
                         placeholder="Select Platform"
                       />
@@ -436,9 +416,7 @@ useEffect(() => {
                           <button
                             key={level}
                             type="button"
-                            onClick={() =>
-                              setFormData({ ...formData, sensitivity: level })
-                            }
+                            onClick={() => setFormData({ ...formData, sensitivity: level })}
                             className={`flex-1 py-2 text-[10px] sm:text-xs font-bold rounded-md transition-all ${
                               formData.sensitivity === level
                                 ? "bg-lime-500 text-black"
@@ -457,9 +435,7 @@ useEffect(() => {
                           <button
                             key={prio}
                             type="button"
-                            onClick={() =>
-                              setFormData({ ...formData, priority: prio })
-                            }
+                            onClick={() => setFormData({ ...formData, priority: prio })}
                             className={`flex-1 py-2 text-[10px] sm:text-xs font-bold rounded-md transition-all ${
                               formData.priority === prio
                                 ? "bg-lime-500 text-black"
@@ -472,6 +448,7 @@ useEffect(() => {
                       </div>
                     </div>
                   </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <Label helper="Outputs">Expected Deliverables</Label>
@@ -480,34 +457,26 @@ useEffect(() => {
                         value={formData.deliverables}
                         placeholder="Prototype, source code, etc..."
                         onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            deliverables: e.target.value,
-                          })
+                          setFormData({ ...formData, deliverables: e.target.value })
                         }
                       />
                     </div>
                     <div>
-                      <Label helper="Limitations">
-                        Constraints / Assumptions
-                      </Label>
+                      <Label helper="Limitations">Constraints / Assumptions</Label>
                       <input
                         className={inputStyle}
                         value={formData.constraints}
                         placeholder="Mention specific constraints..."
                         onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            constraints: e.target.value,
-                          })
+                          setFormData({ ...formData, constraints: e.target.value })
                         }
                       />
                     </div>
                   </div>
+
                   <div className="p-4 sm:p-5 rounded-2xl bg-lime-500/[0.03] border border-lime-500/10 space-y-4">
                     <div className="flex items-center gap-2 text-lime-400 uppercase text-[10px] md:text-xs font-black tracking-widest">
-                      <ShieldAlert className="w-4 h-4 md:w-5 md:h-5" />{" "}
-                      Coordinator Details
+                      <ShieldAlert className="w-4 h-4 md:w-5 md:h-5" /> Coordinator Details
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-4">
@@ -516,10 +485,7 @@ useEffect(() => {
                           value={formData.coordinatorName}
                           placeholder="Full Name"
                           onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              coordinatorName: e.target.value,
-                            })
+                            setFormData({ ...formData, coordinatorName: e.target.value })
                           }
                           required
                         />
@@ -528,10 +494,7 @@ useEffect(() => {
                           value={formData.coordinatorDesignation}
                           placeholder="Designation"
                           onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              coordinatorDesignation: e.target.value,
-                            })
+                            setFormData({ ...formData, coordinatorDesignation: e.target.value })
                           }
                           required
                         />
@@ -543,10 +506,7 @@ useEffect(() => {
                           placeholder="Official Email ID"
                           type="email"
                           onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              coordinatorEmail: e.target.value,
-                            })
+                            setFormData({ ...formData, coordinatorEmail: e.target.value })
                           }
                           required
                         />
@@ -556,10 +516,7 @@ useEffect(() => {
                           placeholder="Contact Number"
                           type="tel"
                           onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              coordinatorContact: e.target.value,
-                            })
+                            setFormData({ ...formData, coordinatorContact: e.target.value })
                           }
                           required
                         />
@@ -569,10 +526,7 @@ useEffect(() => {
                       <label className="flex items-start gap-3 cursor-pointer group">
                         <div
                           onClick={() =>
-                            setFormData((prev) => ({
-                              ...prev,
-                              consent: !prev.consent,
-                            }))
+                            setFormData((prev) => ({ ...prev, consent: !prev.consent }))
                           }
                           className={`w-5 h-5 shrink-0 rounded border transition-all flex items-center justify-center mt-0.5 ${
                             formData.consent
@@ -580,23 +534,16 @@ useEffect(() => {
                               : "bg-transparent border-white/20 group-hover:border-lime-400"
                           }`}
                         >
-                          {formData.consent && (
-                            <Check
-                              size={12}
-                              className="text-black stroke-[4px]"
-                            />
-                          )}
+                          {formData.consent && <Check size={12} className="text-black stroke-[4px]" />}
                         </div>
                         <span className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider leading-relaxed">
-                          I consent for{" "}
-                          <span className="text-white">Pilot Deployment</span>{" "}
-                          of the solution within the campus.
+                          I consent for <span className="text-white">Pilot Deployment</span> of the solution within the campus.
                         </span>
                       </label>
                     </div>
                   </div>
 
-                  <div className="text-center pt-2">
+                  <div className="flex justify-center pt-2">
                     <Button type="submit" isLoading={isSubmitting}>
                       Submit Statement
                     </Button>
