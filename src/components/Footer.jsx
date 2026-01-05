@@ -10,7 +10,7 @@ const Footer = () => {
         {/* BOTTOM BAR */}
         <div className="flex flex-col md:flex-row gap-6 md:gap-0 justify-between items-center text-xs sm:text-base text-slate-400">
           {/* COPYRIGHT */}
-          <span>© 2026 Smart College Hackathon. All rights reserved.</span>
+          <span>© 2026 Smart Campus Hackathon. All rights reserved.</span>
 
           {/* DEVELOPERS */}
           <div className="flex items-center gap-2 flex-wrap justify-center">

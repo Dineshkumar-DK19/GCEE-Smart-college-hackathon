@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, X, ChevronDown, ShieldAlert, Check, AlertCircle } from "lucide-react";
+import { useLocation } from "react-router-dom";
 import Button from "./UI/Button";
 import ContributionSuccessModal from "./UI/ContributionSuccessModal";
 
@@ -103,6 +104,7 @@ const Contribute = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [showError, setShowError] = useState(false);
+  const location = useLocation();
 
   const initialData = {
     dept: "", title: "", background: "", description: "", objective: "", features: "", deliverables: "",
@@ -112,13 +114,13 @@ const Contribute = () => {
   const [formData, setFormData] = useState(initialData);
 
   useEffect(() => {
-    const handleClose = () => { setShowForm(false); document.body.style.overflow = ""; };
-    window.addEventListener("popstate", handleClose);
-    return () => { window.removeEventListener("popstate", handleClose); handleClose(); };
-  }, []);
+    setShowForm(false);
+    document.body.style.overflow = "";
+  }, [location.pathname]);
 
   useEffect(() => {
     document.body.style.overflow = showForm ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
   }, [showForm]);
 
   const handleSubmit = async (e) => {
@@ -137,12 +139,15 @@ const Contribute = () => {
 
     setIsSubmitting(true);
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyacf7ZXmas-3DJuSWTYmY7Ou5DFH5JRLyl35AriwphHB9YNNCuus2yQIBAmYwYsjDd/exec";
+    
     try {
       await fetch(SCRIPT_URL, {
         method: "POST", mode: "no-cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, targetUsers: formData.targetUsers.join(", ") }),
       });
+      // CRITICAL: Close form before showing success modal
+      setShowForm(false); 
       setSubmitted(true);
     } catch (err) {
       console.error(err);
@@ -155,10 +160,20 @@ const Contribute = () => {
 
   const resetForm = () => { setSubmitted(false); setFormData(initialData); };
 
+  const handleToggleUser = (val) => {
+    setFormData({ 
+      ...formData, 
+      targetUsers: formData.targetUsers.includes(val) 
+        ? formData.targetUsers.filter(i => i !== val) 
+        : [...formData.targetUsers, val] 
+    });
+  };
+
   return (
     <div className="pt-20 pb-12 px-4 sm:px-6 flex justify-center relative overflow-hidden bg-[#020817]/40">
       <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.15]" style={{ backgroundImage: `linear-gradient(#ffffff10 1px, transparent 1px), linear-gradient(90deg, #ffffff10 1px, transparent 1px)`, backgroundSize: "40px 40px" }} />
       <div className="w-full max-w-5xl relative z-10">
+        
         <AnimatePresence>
           {!showForm ? (
             <motion.div key="hero" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9 }} className="flex flex-col items-center text-center space-y-6 md:space-y-10 py-10 md:py-16">
@@ -168,9 +183,9 @@ const Contribute = () => {
               <Button onClick={() => setShowForm(true)} className="px-6 py-3">Start Contribution <ArrowRight className="w-4 h-4 ml-2" /></Button>
             </motion.div>
           ) : (
-            <div className="fixed inset-0 z-[100] flex items-center justify-center px-3 sm:px-4">
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowForm(false)} className="absolute inset-0 bg-black/70 backdrop-blur-md" />
-              <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="relative w-full max-w-5xl mt-20 max-h-[85vh] overflow-y-auto bg-[#020817]/95 border border-white/10 rounded-2xl shadow-2xl shadow-black/80">
+            <div className="fixed inset-0 z-[150] flex items-center justify-center px-3 sm:px-4">
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowForm(false)} className="absolute inset-0 bg-black/80 backdrop-blur-xl" />
+              <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="relative w-full max-w-5xl mt-20 max-h-[85vh] overflow-y-auto bg-[#020817] border border-white/10 rounded-2xl shadow-2xl">
                 <div className="relative p-4 sm:p-6 border-b border-white/5 flex justify-between items-center bg-[#020817]/80 backdrop-blur-md sticky top-0 z-20">
                   <h2 className="text-lg sm:text-2xl font-black text-white uppercase">Requirement <span className="text-lime-400">Brief</span></h2>
                   <button onClick={() => setShowForm(false)} className="p-2 bg-white/5 hover:bg-red-500/20 hover:text-red-500 rounded-lg transition-all"><X className="w-5 h-5" /></button>
@@ -205,10 +220,11 @@ const Contribute = () => {
                   <div className="space-y-4">
                     <div><Label helper="Current manual method">Background / Current Process</Label><textarea className={`${inputStyle()} h-24 resize-none`} value={formData.background} placeholder="Describe the process..." onChange={(e) => setFormData({ ...formData, background: e.target.value })} /></div>
                     <div><Label helper="List the inefficiencies">Problem Description</Label><textarea className={`${inputStyle()} h-24 resize-none`} value={formData.description} placeholder="List issues..." onChange={(e) => setFormData({ ...formData, description: e.target.value })} /></div>
+                    <div><Label helper="Goals">Objective</Label><textarea className={`${inputStyle()} h-24 resize-none`} value={formData.objective} placeholder="State the goal..." onChange={(e) => setFormData({ ...formData, objective: e.target.value })} /></div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 py-2">
-                    <CheckboxGroup label="Target Users" options={["Students", "Faculty", "Office Staff", "All"]} selectedValues={formData.targetUsers} toggleValue={(val) => setFormData({ ...formData, targetUsers: formData.targetUsers.includes(val) ? formData.targetUsers.filter(i => i !== val) : [...formData.targetUsers, val] })} />
+                    <CheckboxGroup label="Target Users" options={["Students", "Faculty", "Office Staff", "All"]} selectedValues={formData.targetUsers} toggleValue={handleToggleUser} />
                     <div className="space-y-2"><Label>Application Type</Label><CustomDropdown value={formData.appType} onChange={(val) => setFormData({ ...formData, appType: val })} options={["Web", "Mobile", "Desktop", "Any"]} placeholder="Select Type" /></div>
                     <div className="space-y-2"><Label>Sensitivity</Label><div className="flex bg-[#0B1221] rounded-lg p-1 border border-white/5">{["Low", "Med", "High"].map(l => <button key={l} type="button" onClick={() => setFormData({ ...formData, sensitivity: l })} className={`flex-1 py-2 text-[10px] font-bold rounded-md transition-all ${formData.sensitivity === l ? "bg-lime-500 text-black" : "text-slate-500"}`}>{l}</button>)}</div></div>
                     <div className="space-y-2"><Label>Priority</Label><div className="flex bg-[#0B1221] rounded-lg p-1 border border-white/5">{["Low", "Med", "High"].map(p => <button key={p} type="button" onClick={() => setFormData({ ...formData, priority: p })} className={`flex-1 py-2 text-[10px] font-bold rounded-md transition-all ${formData.priority === p ? "bg-lime-500 text-black" : "text-slate-500"}`}>{p}</button>)}</div></div>
@@ -233,14 +249,22 @@ const Contribute = () => {
                     </AnimatePresence>
                   </div>
 
-                  <div className="text-center pt-2"><Button type="submit" isLoading={isSubmitting}>Submit Statement</Button></div>
+                  <div className="flex justify-center pt-2">
+                    <Button type="submit" isLoading={isSubmitting}>Submit Statement</Button>
+                  </div>
                 </form>
               </motion.div>
             </div>
           )}
         </AnimatePresence>
 
-        <AnimatePresence>{submitted && <ContributionSuccessModal data={formData} onClose={resetForm} />}</AnimatePresence>
+        <AnimatePresence>
+          {submitted && (
+            <div className="fixed inset-0 z-[200] flex items-center justify-center px-4">
+               <ContributionSuccessModal data={formData} onClose={resetForm} />
+            </div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ const Button = ({ children, isLoading, onClick, className = "", type = "button",
       disabled={isLoading || disabled}
       className={`
         group relative
-        w-full  /* CHANGED: Always full width */
+        w-70%
         px-10 py-3.5
         rounded-xl
         bg-white text-black font-black uppercase tracking-[0.2em]

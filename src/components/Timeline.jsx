@@ -143,7 +143,7 @@ const timelineData = [
         mb-2 md:mb-0
       "
         >
-          10:00 AM
+          9:15 AM
         </span>
       </div>
     ),

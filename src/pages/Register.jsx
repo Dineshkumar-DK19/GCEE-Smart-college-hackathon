@@ -1,7 +1,10 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FileSpreadsheet, Users, User, Check, ShieldAlert, ChevronDown, AlertCircle } from "lucide-react";
+import { 
+  FileSpreadsheet, Users, User, Check, ShieldAlert, 
+  ChevronDown, AlertCircle 
+} from "lucide-react";
 import SuccessModal from "../components/UI/SuccessModal"; 
 import ErrorModal from "../components/UI/ErrorModal"; 
 import Button from "../components/UI/Button"; 
@@ -75,16 +78,16 @@ const Label = ({ children, required, error }) => (
       {children}
       {required && <span className="text-red-500 ml-1">*</span>}
     </label>
-    {error && <span className="text-[9px] text-red-400 font-bold uppercase tracking-tighter">Fill Out This Field</span>}
+    {error && <span className="text-[9px] text-red-400 font-bold uppercase tracking-tighter">Required</span>}
   </div>
 );
 
 const Register = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [successData, setSuccessData] = useState(null); 
-  const [showError, setShowError] = useState(false); 
-  
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyVAnw8z9uPyMrYlXpjpo1w_60jJRNjl23_XN_PUVwHG03W-j59UiBFO-61t62wdkK-/exec"; 
+  const [successData, setSuccessData] = useState(null);
+  const [showError, setShowError] = useState(false);
+
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyVAnw8z9uPyMrYlXpjpo1w_60jJRNjl23_XN_PUVwHG03W-j59UiBFO-61t62wdkK-/exec";
   const WHATSAPP_GROUP_LINK = "https://chat.whatsapp.com/GEN0hzyt2EM731AzmfUfjW";
 
   const departments = ["CSE", "IT", "CS&DS", "ECE", "EEE", "MECH", "AUTO", "CIVIL"];
@@ -95,12 +98,12 @@ const Register = () => {
     teamName: "",
     problemStatement: "",
     teamLeader: { name: "", email: "", phone: "", rollNo: "", year: "", dept: "" },
-    totalMembers: "3", 
+    totalMembers: "3",
     members: [
-      { name: "", rollNo: "", year: "", dept: "" }, 
-      { name: "", rollNo: "", year: "", dept: "" }, 
+      { name: "", rollNo: "", year: "", dept: "" },
+      { name: "", rollNo: "", year: "", dept: "" },
     ],
-    pptLink: "", 
+    pptLink: "",
     agreed: false,
   };
 
@@ -121,22 +124,19 @@ const Register = () => {
 
   const handleTotalMembersChange = (countStr) => {
     const count = parseInt(countStr);
-    const neededMembers = count - 1; 
+    const neededMembers = count - 1;
     const currentMembers = formData.members;
-    const newMembers = Array(neededMembers).fill(null).map((_, i) => 
-      currentMembers[i] || { name: "", rollNo: "", year: "", dept: "" }
-    );
-    setFormData((prev) => ({
-      ...prev,
-      totalMembers: countStr,
-      members: newMembers,
-    }));
+    const newMembers = Array(neededMembers)
+      .fill(null)
+      .map((_, i) => currentMembers[i] || { name: "", rollNo: "", year: "", dept: "" });
+    setFormData((prev) => ({ ...prev, totalMembers: countStr, members: newMembers }));
   };
 
   const validateForm = () => {
-    if (!formData.teamName || !formData.problemStatement || !formData.pptLink || !formData.agreed) return false;
-    if (!formData.teamLeader.name || !formData.teamLeader.email || !formData.teamLeader.phone || !formData.teamLeader.year || !formData.teamLeader.dept) return false;
-    for (let m of formData.members) {
+    const { teamName, problemStatement, pptLink, agreed, teamLeader, members } = formData;
+    if (!teamName || !problemStatement || !pptLink || !agreed) return false;
+    if (!teamLeader.name || !teamLeader.email || !teamLeader.phone || !teamLeader.year || !teamLeader.dept || !teamLeader.rollNo) return false;
+    for (let m of members) {
       if (!m.name || !m.rollNo || !m.dept || !m.year) return false;
     }
     return true;
@@ -146,7 +146,7 @@ const Register = () => {
     e.preventDefault();
     if (!validateForm()) {
       setShowError(true);
-      setTimeout(() => setShowError(false), 3000);
+      setTimeout(() => setShowError(false), 4000);
       return;
     }
 
@@ -154,24 +154,24 @@ const Register = () => {
     const data = new FormData();
     data.append("Team Name", formData.teamName);
     data.append("Problem Statement", formData.problemStatement);
-    data.append("PPT Link", formData.pptLink); 
+    data.append("PPT Link", formData.pptLink);
     data.append("Leader Name", formData.teamLeader.name);
     data.append("Leader Email", formData.teamLeader.email);
     data.append("Leader Phone", formData.teamLeader.phone);
     data.append("Leader Roll", formData.teamLeader.rollNo);
-    data.append("Leader Year", formData.teamLeader.year); 
+    data.append("Leader Year", formData.teamLeader.year);
     data.append("Leader Dept", formData.teamLeader.dept);
     data.append("Total Members", formData.totalMembers);
 
     formData.members.forEach((m, i) => {
-      data.append(`Member ${i+1} Name`, m.name);
-      data.append(`Member ${i+1} Roll`, m.rollNo);
-      data.append(`Member ${i+1} Year`, m.year); 
-      data.append(`Member ${i+1} Dept`, m.dept);
+      data.append(`Member ${i + 1} Name`, m.name);
+      data.append(`Member ${i + 1} Roll`, m.rollNo);
+      data.append(`Member ${i + 1} Year`, m.year);
+      data.append(`Member ${i + 1} Dept`, m.dept);
     });
 
     try {
-      fetch(SCRIPT_URL, { method: "POST", body: data, mode: "no-cors" });
+      await fetch(SCRIPT_URL, { method: "POST", body: data, mode: "no-cors" });
       setSuccessData(formData);
     } catch (error) {
       console.error("Submission failed.");
@@ -201,7 +201,8 @@ const Register = () => {
           {/* TEAM DETAILS */}
           <div className="space-y-6">
             <div className="flex items-center gap-3 pb-2 border-b border-white/5">
-              <Users className="w-5 h-5 text-white" /><h3 className="text-lg font-bold text-white">Team Details</h3>
+              <Users className="w-5 h-5 text-white" />
+              <h3 className="text-lg font-bold text-white">Team Details</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -224,13 +225,13 @@ const Register = () => {
           {/* TEAM LEADER */}
           <div className="space-y-6">
             <div className="flex items-center gap-3 pb-2 border-b border-white/5">
-              <User className="w-5 h-5 text-white" /><h3 className="text-lg font-bold text-white">Team Leader</h3>
+              <User className="w-5 h-5 text-white" />
+              <h3 className="text-lg font-bold text-white">Team Leader</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div><Label required error={showError && !formData.teamLeader.name}>Full Name</Label><input placeholder="Alice S" className={inputStyle(showError && !formData.teamLeader.name)} value={formData.teamLeader.name} onChange={(e) => handleLeaderChange('name', e.target.value)} /></div>
               <div><Label required error={showError && !formData.teamLeader.email}>Email Address</Label><input type="email" placeholder="Alice@gmail.com" className={inputStyle(showError && !formData.teamLeader.email)} value={formData.teamLeader.email} onChange={(e) => handleLeaderChange('email', e.target.value)} /></div>
               <div><Label required error={showError && !formData.teamLeader.phone}>Phone Number</Label><input type="tel" placeholder="98765 43210" className={inputStyle(showError && !formData.teamLeader.phone)} value={formData.teamLeader.phone} onChange={(e) => handleLeaderChange('phone', e.target.value)} /></div>
-              
               <div className="grid grid-cols-3 gap-3">
                 <div><Label required error={showError && !formData.teamLeader.rollNo}>Roll No</Label><input placeholder="23CSE01" className={inputStyle(showError && !formData.teamLeader.rollNo)} value={formData.teamLeader.rollNo} onChange={(e) => handleLeaderChange('rollNo', e.target.value)} /></div>
                 <div>
@@ -260,35 +261,46 @@ const Register = () => {
             </div>
 
             <div className="space-y-4">
-              {formData.members.map((member, index) => (
-                <div key={index} className="p-5 rounded-xl border border-white/5 bg-white/[0.02]">
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="w-6 h-6 rounded-full bg-white/10 text-white flex items-center justify-center text-xs font-bold">{index + 1}</div>
-                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Member Details</span>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div><Label required error={showError && !member.name}>Name</Label><input placeholder="Name" className={inputStyle(showError && !member.name)} value={member.name} onChange={(e) => handleMemberChange(index, 'name', e.target.value)} /></div>
-                    <div><Label required error={showError && !member.rollNo}>Roll No</Label><input placeholder="Roll No" className={inputStyle(showError && !member.rollNo)} value={member.rollNo} onChange={(e) => handleMemberChange(index, 'rollNo', e.target.value)} /></div>
-                    <div>
-                      <Label required error={showError && !member.year}>Year</Label>
-                      <CustomDropdown value={member.year} onChange={(val) => handleMemberChange(index, 'year', val)} options={years} placeholder="Select" error={showError} />
+              <AnimatePresence>
+                {formData.members.map((member, index) => (
+                  <motion.div 
+                    key={index}
+                    initial={{ opacity: 0, height: 0, y: -10 }}
+                    animate={{ opacity: 1, height: "auto", y: 0 }}
+                    exit={{ opacity: 0, height: 0, y: -10 }}
+                    className="p-5 rounded-xl border border-white/5 bg-white/[0.02] overflow-hidden"
+                  >
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="w-6 h-6 rounded-full bg-white/10 text-white flex items-center justify-center text-xs font-bold">{index + 1}</div>
+                      <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Member Details</span>
                     </div>
-                    <div>
-                      <Label required error={showError && !member.dept}>Dept</Label>
-                      <CustomDropdown value={member.dept} onChange={(val) => handleMemberChange(index, 'dept', val)} options={departments} placeholder="Select" error={showError} />
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                      <div><Label required error={showError && !member.name}>Name</Label><input placeholder="Name" className={inputStyle(showError && !member.name)} value={member.name} onChange={(e) => handleMemberChange(index, 'name', e.target.value)} /></div>
+                      <div><Label required error={showError && !member.rollNo}>Roll No</Label><input placeholder="Roll No" className={inputStyle(showError && !member.rollNo)} value={member.rollNo} onChange={(e) => handleMemberChange(index, 'rollNo', e.target.value)} /></div>
+                      <div>
+                        <Label required error={showError && !member.year}>Year</Label>
+                        <CustomDropdown value={member.year} onChange={(val) => handleMemberChange(index, 'year', val)} options={years} placeholder="Select" error={showError} />
+                      </div>
+                      <div>
+                        <Label required error={showError && !member.dept}>Dept</Label>
+                        <CustomDropdown value={member.dept} onChange={(val) => handleMemberChange(index, 'dept', val)} options={departments} placeholder="Select" error={showError} />
+                      </div>
                     </div>
-                  </div>
-                </div>
-              ))}
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
           </div>
 
-          {/* SUBMISSION & DECLARATION (REVERTED TO ORIGINAL) */}
+          {/* SUBMISSION & DECLARATION */}
           <div className="pt-6 border-t border-white/10 space-y-8">
             <div>
-              <div className="flex items-center gap-3 mb-4"><FileSpreadsheet className="w-5 h-5 text-white" /><h3 className="text-lg font-bold text-white">Submission</h3></div>
+              <div className="flex items-center gap-3 mb-4">
+                <FileSpreadsheet className="w-5 h-5 text-white" />
+                <h3 className="text-lg font-bold text-white">Submission</h3>
+              </div>
               <div className="space-y-2">
-                <label className="text-[10px] sm:text-xs font-bold text-slate-400 tracking-[0.1em] uppercase mb-1.5 block">Presentation Link (Google Drive)</label>
+                <Label required error={showError && !formData.pptLink}>Presentation Link (Google Drive)</Label>
                 <input name="pptLink" placeholder="Paste your shareable PPT link here..." className={inputStyle(showError && !formData.pptLink)} value={formData.pptLink} onChange={(e) => setFormData({...formData, pptLink: e.target.value})} />
                 <p className="text-[10px] text-slate-500 mt-2">* Ensure the link has <span className="text-white font-bold">"Anyone with the link"</span> access.</p>
               </div>
@@ -296,11 +308,11 @@ const Register = () => {
 
             <div className="p-4 sm:p-5 rounded-2xl bg-lime-500/[0.03] border border-lime-500/10">
               <div className="flex items-center gap-2 text-lime-400 uppercase text-[10px] md:text-xs font-black tracking-widest mb-3">
-                <ShieldAlert className="w-4 h-4 md:w-5 md:h-5"/> Declaration
+                <ShieldAlert className="w-4 h-4 md:w-5 md:h-5" /> Declaration
               </div>
               <label className="flex items-start gap-3 cursor-pointer group">
-                <div 
-                  onClick={() => setFormData({...formData, agreed: !formData.agreed})} 
+                <div
+                  onClick={() => setFormData({ ...formData, agreed: !formData.agreed })}
                   className={`
                     w-5 h-5 shrink-0 rounded border transition-all flex items-center justify-center mt-0.5
                     ${formData.agreed ? 'bg-lime-500 border-lime-500' : (showError && !formData.agreed ? 'border-red-500 bg-red-500/10' : 'bg-transparent border-white/20 group-hover:border-lime-400')}
@@ -309,33 +321,46 @@ const Register = () => {
                   {formData.agreed && <Check size={12} className="text-black stroke-[4px]" />}
                 </div>
                 <span className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider leading-relaxed">
-  I have read the{" "}
-  <Link 
-  to="/guidelines" 
-  target="_blank" 
-  rel="noopener noreferrer"
-  className="text-white underline underline-offset-4 decoration-lime-500/50 hover:text-lime-400 transition-colors cursor-pointer"
-  onClick={(e) => {
-    // This stops the click from triggering any parent Framer Motion triggers
-    e.stopPropagation(); 
-  }}
->
-  Guidelines
-</Link>
-  {" "} of SCH '26 and agree to follow all rules. <span className="text-red-500 ml-1">*</span>
-</span>
+                  I have read the{" "}
+                  <Link 
+                    to="/guidelines" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-white underline underline-offset-4 decoration-lime-500/50 hover:text-lime-400 transition-colors cursor-pointer"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    Guidelines
+                  </Link>
+                  {" "} of SCH '26 and agree to follow all rules. <span className="text-red-500 ml-1">*</span>
+                </span>
               </label>
             </div>
 
             <div className="text-center pt-2 flex flex-col items-center gap-4">
-              {showError && <div className="text-red-400 text-[10px] font-bold uppercase tracking-widest bg-red-500/10 px-4 py-2 rounded-full border border-red-500/20 flex items-center gap-2"><AlertCircle size={14}/> Please fill out all fields</div>}
+              {showError && (
+                <div className="text-red-400 text-[10px] font-bold uppercase tracking-widest bg-red-500/10 px-4 py-2 rounded-full border border-red-500/20 flex items-center gap-2">
+                  <AlertCircle size={14}/> Please fill out all required fields
+                </div>
+              )}
               <Button type="submit" isLoading={isSubmitting}>Confirm Registration</Button>
             </div>
           </div>
         </form>
       </motion.div>
 
-      <AnimatePresence>{successData && <SuccessModal data={successData} whatsappLink={WHATSAPP_GROUP_LINK} onClose={() => { setSuccessData(null); setFormData(INITIAL_STATE); }} />}</AnimatePresence>
+      <AnimatePresence>
+        {successData && (
+          <SuccessModal 
+            data={successData} 
+            whatsappLink={WHATSAPP_GROUP_LINK} 
+            onClose={() => { 
+              setSuccessData(null); 
+              setFormData(INITIAL_STATE); 
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }} 
+          />
+        )}
+      </AnimatePresence>
       <AnimatePresence>{showError && <ErrorModal onClose={() => setShowError(false)} />}</AnimatePresence>
     </div>
   );

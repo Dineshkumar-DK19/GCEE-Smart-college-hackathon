@@ -18,7 +18,7 @@ const About = () => {
           <div className="space-y-4">
             <ul className="list-disc list-inside md:space-y-5  text-xs sm:text-sm md:text-lg text-white/70 leading-relaxed">
               <li>
-                Smart College Hackathon (SCH) is an internal hackathon initiative
+                Smart Campus Hackathon (SCH) is an internal hackathon initiative
                 designed exclusively for students of Government College of
                 Engineering, Erode.
               </li>
@@ -60,7 +60,7 @@ const About = () => {
               </div>
               <p className="text-xs sm:text-sm md:text-lg text-slate-400 leading-relaxed">
                 Open exclusively to students of our college. Participation is
-                allowed individually or in teams.
+                allowed only in teams.
               </p>
             </div>
 
