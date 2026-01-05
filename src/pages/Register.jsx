@@ -519,7 +519,7 @@ const Register = () => {
               </label>
             </div>
 
-            <div className="flex items-center pt-2">
+            <div className="flex justify-center pt-2">
               <Button type="submit" isLoading={isSubmitting}>
                 Confirm Registration
               </Button>

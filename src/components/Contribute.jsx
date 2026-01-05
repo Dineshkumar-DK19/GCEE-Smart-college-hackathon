@@ -296,7 +296,7 @@ const Contribute = () => {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
                 onClick={(e) => e.stopPropagation()}
-                className="relative w-full max-w-5xl mt-28 md:mt-32 max-h-[85vh] md:max-h-[90vh] overflow-y-auto bg-[#020817]/95 border border-white/10 rounded-2xl md:rounded-3xl shadow-2xl shadow-black/80"
+                className="relative w-full max-w-5xl mt-28 md:mt-32 mb-8 max-h-[85vh] md:max-h-[90vh] overflow-y-auto bg-[#020817]/95 border border-white/10 rounded-2xl md:rounded-3xl shadow-2xl shadow-black/80"
               >
                 <div className="relative p-4 sm:p-5 md:p-6 border-b border-white/5 flex justify-between items-center bg-[#020817]/80 backdrop-blur-md sticky top-0 z-20">
                   <div className="text-left">
@@ -543,7 +543,7 @@ const Contribute = () => {
                     </div>
                   </div>
 
-                  <div className="flex justify-center pt-2">
+                  <div className="flex justify-center pt-2 ">
                     <Button type="submit" isLoading={isSubmitting}>
                       Submit Statement
                     </Button>

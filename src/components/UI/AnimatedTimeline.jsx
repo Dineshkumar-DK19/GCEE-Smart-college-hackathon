@@ -43,10 +43,19 @@ export const AnimatedTimeline = ({ data }) => {
           Hackathon Timings
         </h2>
         <p className="text-neutral-300 text-xs sm:text-sm md:text-base max-w-sm">
-          A detailed timeline of the Smart College Hackathon events and activities.
+          A detailed timeline of the Smart Campus Hackathon events and activities.
         </p>
       </div>
 
+<div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-10 mb-8 md:mb-12">
+    <div className="flex flex-col items-center justify-center text-center">
+      <p className="text-sm sm:text-lg md:text-xl font-semibold tracking-wide text-lime-400/90 uppercase">
+        Venue: <span className="text-white">Department of CSE</span>
+      </p>
+      {/* Optional decorative underline to match your theme */}
+      <div className="h-px w-24 md:w-32 bg-gradient-to-r from-transparent via-lime-500/50 to-transparent mt-2" />
+    </div>
+  </div>
       {/* TIMELINE WRAPPER */}
       <div ref={ref} className="relative max-w-7xl mx-auto pb-20">
         {data.map((item, index) => (
