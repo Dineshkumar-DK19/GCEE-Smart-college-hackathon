@@ -16,9 +16,9 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { name: "Home", type: "scroll", path: "home", icon: <Home size={18} /> },
-  { name: "Problem Statements", type: "route", path: "/problems", icon: <FileQuestion size={18} /> },
-  { name: "Contribute", type: "scroll", path: "contribute", icon: <GitBranch size={18} /> },
   { name: "About", type: "scroll", path: "about", icon: <Info size={18} /> },
+  { name: "Contribute", type: "scroll", path: "contribute", icon: <GitBranch size={18} /> },
+  { name: "Problem Statements", type: "route", path: "/problems", icon: <FileQuestion size={18} /> },
   { name: "Guidelines", type: "scroll", path: "guidelines", icon: <BookOpen size={18} /> },
   { name: "Timeline", type: "scroll", path: "timeline", icon: <Calendar size={18} /> },
 ];
