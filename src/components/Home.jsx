@@ -99,7 +99,7 @@ const Home = () => {
         </h2>
 
         <p className="mt-4 max-w-2xl text-xs sm:text-sm md:text-base text-slate-300 leading-relaxed px-6 mb-8">
-          Be part of <span className="text-lime-400 font-bold">SCH '26</span> on <span className="text-lime-400 font-bold px-1">30th of January</span> to celebrate creativity and technical brilliance. Experience over eight hours of continous coding, creativity, and engineering excellence.
+          Be part of <span className="text-lime-400 font-bold">SCH '26</span> on <span className="text-lime-400 font-bold px-1">30th of January</span> to celebrate creativity and technical brilliance. Experience over 12 hours of continous coding, creativity, and engineering excellence.
         </p>
 
         {/* BUTTON SECTION WITH CONDITIONAL LOGIC */}
