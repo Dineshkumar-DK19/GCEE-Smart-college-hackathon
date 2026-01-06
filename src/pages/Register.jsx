@@ -19,7 +19,7 @@ import Button from "../components/UI/Button";
 import { problemData } from "../data/problemData";
 
 // SET YOUR CLOSE DATE HERE: January 21st, 2026 at 5:00 PM
-const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 4, 17, 0, 0);
+const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 21, 17, 0, 0);
 
 const fastTransition = { duration: 0.2, ease: "easeOut" };
 
