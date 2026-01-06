@@ -1,5 +1,5 @@
 import React from "react";
-import { Shield, Zap } from "lucide-react";
+import { Shield, Zap, Rocket } from "lucide-react"; 
 
 const About = () => {
   return (
@@ -61,6 +61,17 @@ const About = () => {
               <p className="text-xs sm:text-sm md:text-lg text-slate-400 leading-relaxed">
                 Open exclusively to students of our college. Participation is
                 allowed only in teams.
+              </p>
+            </div>
+
+            {/* ADDED: Impact / Deployment Statement */}
+            <div className="bg-slate-900/40 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-2">
+                <Rocket className="w-5 h-5 text-lime-400" />
+                <h3 className="text-lg font-semibold text-white">Real-Time Impact</h3>
+              </div>
+              <p className="text-xs sm:text-sm md:text-lg text-slate-400 leading-relaxed">
+                Solutions that effectively address the problem statements will be deployed for real-time use within our campus.
               </p>
             </div>
 

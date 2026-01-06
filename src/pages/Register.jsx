@@ -142,7 +142,7 @@ const Register = () => {
     "MECH",
     "AUTO",
     "CIVIL",
-  ];
+  ].sort();
   const years = ["1st Year", "2nd Year", "3rd Year"];
   const problemOptions = problemData.map((p) => `${p.id} - ${p.title}`);
 

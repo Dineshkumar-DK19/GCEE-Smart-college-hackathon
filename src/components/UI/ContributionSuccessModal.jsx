@@ -21,7 +21,15 @@ const ContributionSuccessModal = ({ data, onClose }) => {
       >
         {/* Background Blur Effect */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-32 bg-lime-500/10 blur-[60px]" />
-        
+
+        {/* --- NEW CLOSE BUTTON (Top Right) --- */}
+        <button 
+          onClick={onClose}
+          className="absolute top-4 right-4 p-2 bg-white/5 hover:bg-white/10 rounded-lg text-slate-400 hover:text-white transition-colors z-20"
+        >
+          <X className="w-5 h-5" />
+        </button>
+
         <div className="relative z-10 flex flex-col items-center">
           {/* Logo */}
           <div className="w-24 h-24 mb-4 drop-shadow-[0_0_15px_rgba(163,230,53,0.4)]">
@@ -31,7 +39,6 @@ const ContributionSuccessModal = ({ data, onClose }) => {
           <h2 className="text-3xl font-bold text-white mb-2 tracking-tight">Statement Submitted!</h2>
           <p className="text-slate-400 text-sm mb-1">Your requirement brief has been recorded successfully.</p>
           
-          {/* ADDED LINE BELOW */}
           <p className="text-lime-400 font-bold text-sm mb-8 tracking-wide">Thank you for contributing! 🤝</p>
 
           {/* Details Card */}
@@ -50,19 +57,12 @@ const ContributionSuccessModal = ({ data, onClose }) => {
             </div>
           </div>
 
-          {/* Actions */}
+          {/* Actions - Removed bottom 'Close' button */}
           <button 
             onClick={onClose} 
             className="w-full py-3.5 rounded-lg bg-lime-500 text-black font-bold uppercase tracking-wider text-xs hover:bg-lime-400 transition-colors flex items-center justify-center gap-2"
           >
             <CheckCircle className="w-4 h-4" /> Submit Another
-          </button>
-
-          <button 
-            onClick={() => window.location.reload()} 
-            className="text-slate-500 hover:text-white text-xs mt-6 transition-colors flex items-center gap-1 mx-auto"
-          >
-            <X className="w-3 h-3" /> Close
           </button>
         </div>
       </motion.div>
@@ -70,4 +70,4 @@ const ContributionSuccessModal = ({ data, onClose }) => {
   );
 };
 
-export default ContributionSuccessModal;
+export default ContributionSuccessModal; 
