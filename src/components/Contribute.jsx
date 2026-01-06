@@ -277,19 +277,23 @@ const Contribute = () => {
   };
 
   const departments = [
-    "Admin Office",
-    "Automobile Engineering",
-    "Civil Engineering",
+    "AUTO",
+    "Civil",
     "CSE",
     "CS&DS",
     "ECE",
     "EEE",
+    "IT",
+    "MECH",
+    "Accounts Office",
+    "Admin Office",
     "Estate Management",
     "Exam Cell",
-    "Information Technology",
-    "Mechanical Engineering",
-    "Sports",
-  ].sort();
+    "First Year",
+    "Hostel Office",
+    "Library",
+    "Physical Education Department",
+  ];
 
   const resetForm = () => {
     setSubmitted(false);

@@ -1,22 +1,14 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Share2, MessageCircle, X, Home } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Share2, MessageCircle, X } from "lucide-react"; // Removed Home import
 import hackathonLogo from "../../assets/HackathonLogo.png";
 
 const SuccessModal = ({ data, onClose, whatsappLink }) => {
-  const navigate = useNavigate();
-
   if (!data) return null;
 
   const handleShare = () => {
-    const text = `Hey guys! 👋%0A%0AI just registered our team *${data.teamName}* for *SCH '26*! 🚀%0A%0AJoin the official WhatsApp group here to stay updated:%0A${whatsappLink}%0A%0ALet's build something awesome! 🔥`;
+    const text = `Hey guys! 🚀%0A%0AI just registered our team *${data.teamName}* for *SCH '26*! 🎉%0A%0AJoin the official WhatsApp group here to stay updated:%0A${whatsappLink}%0A%0ALet's build something awesome! 💻`;
     window.open(`https://wa.me/?text=${text}`, "_blank");
-  };
-
-  const handleCloseAndNavigate = () => {
-    onClose();
-    navigate("/");
   };
 
   return (
@@ -40,6 +32,14 @@ const SuccessModal = ({ data, onClose, whatsappLink }) => {
         "
       >
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-24 sm:h-32 bg-lime-500/10 blur-[60px]" />
+
+        {/* --- NEW CLOSE BUTTON (Top Right) --- */}
+        <button 
+          onClick={onClose}
+          className="absolute top-4 right-4 p-2 bg-white/5 hover:bg-white/10 rounded-lg text-slate-400 hover:text-white transition-colors z-20"
+        >
+          <X className="w-5 h-5" />
+        </button>
 
         <div className="relative z-10 flex flex-col items-center">
           {/* Logo */}
@@ -76,8 +76,8 @@ const SuccessModal = ({ data, onClose, whatsappLink }) => {
                 Problem ID
               </span>
              <span className="text-lime-400 font-mono text-xs sm:text-sm text-right sm:text-left">
-  {data.problemStatement}
-</span>
+              {data.problemStatement}
+            </span>
             </div>
 
             <div className="flex justify-between items-center">
@@ -97,7 +97,7 @@ const SuccessModal = ({ data, onClose, whatsappLink }) => {
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-emerald-400">
                 JANUARY 30
               </span>{" "}
-              🚀
+              🎉
             </p>
           </div>
 
@@ -120,13 +120,7 @@ const SuccessModal = ({ data, onClose, whatsappLink }) => {
             </a>
           </div>
 
-          {/* Close */}
-          <button
-            onClick={handleCloseAndNavigate}
-            className="text-white hover:text-white text-[10px] sm:text-xs mt-5 sm:mt-6 transition-colors flex items-center gap-1 mx-auto"
-          >
-            <Home className="w-3 h-3" /> Close & Return Home
-          </button>
+          {/* Removed bottom "Close & Return Home" button */}
         </div>
       </motion.div>
     </motion.div>
