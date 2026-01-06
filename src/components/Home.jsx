@@ -96,7 +96,7 @@ const Home = () => {
             Register Now
           </Button>
           {/* Added Free Registration Text */}
-          <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">
+          <span className="text-[12px] uppercase tracking-widest font-bold text-lime-400">
             Free Registration
           </span>
         </div>
