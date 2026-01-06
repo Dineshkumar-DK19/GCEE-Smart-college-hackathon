@@ -12,13 +12,17 @@
   html {
     /* 1. Fixes the scroll offset so headers don't hide behind the navbar */
     /* 5rem (80px) is your navbar height + 2rem (32px) extra breathing room */
-    scroll-padding-top: 7rem;
+    scroll-padding-top: 100px;
     scroll-behavior: smooth;
     overscroll-behavior-y: none;
     /* height: 100%;
    touch-action: manipulation; */
   }
-
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: 80px; /* Exact navbar height for desktop */
+  }
+}
   body {
     /* Enforcing Dark Mode Styles Default */
     @apply m-0 p-0 min-h-screen overflow-x-hidden font-sans transition-colors duration-300 ease-in-out;
@@ -71,8 +75,8 @@ body,
 }
 
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
 input:-webkit-autofill:active{
     -webkit-box-shadow: 0 0 0 30px #0B1221 inset !important;
     -webkit-text-fill-color: white !important;
