@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { problemData } from "../data/problemData";
 
 // SET YOUR DATES HERE
-const RELEASE_DATE = new Date(2026, 0, 12, 9, 0, 0);
+const RELEASE_DATE = new Date(2025, 0, 1, 0, 0, 0);
 const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 21, 17, 0, 0); // Jan 21st, 5:00 PM
 
 const ProblemStatements = () => {

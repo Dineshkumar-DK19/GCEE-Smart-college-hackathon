@@ -90,35 +90,6 @@ const ProblemDetails = () => {
                     {problem.objective}
                   </div>
                 </div>
-
-                <div>
-                  <h3 className="text-sm font-bold text-lime-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                    <Lightbulb className="w-4 h-4" /> Key Features
-                  </h3>
-                  <p className="text-slate-300 text-xs sm:text-sm md:text-lg">
-                    {problem.features}
-                  </p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-[#0B1221]/50 border border-white/5 rounded-xl p-5">
-                  <h4 className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2 flex items-center gap-2">
-                    <FileBox className="w-3 h-3" /> Deliverables
-                  </h4>
-                  <p className="text-white text-xs sm:text-sm md:text-lg">
-                    {problem.deliverables}
-                  </p>
-                </div>
-
-                <div className="bg-[#0B1221]/50 border border-white/5 rounded-xl p-5">
-                  <h4 className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2 flex items-center gap-2">
-                    <Lock className="w-3 h-3" /> Constraints
-                  </h4>
-                  <p className="text-white text-xs sm:text-sm md:text-lg">
-                    {problem.constraints}
-                  </p>
-                </div>
               </div>
             </div>
 
