@@ -36,22 +36,32 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close menu when route changes
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
+
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
     el?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleNavigation = (link) => {
+    // CRITICAL FIX: Close menu FIRST
     setMenuOpen(false);
+
     if (link.type === "route") {
       navigate(link.path);
       return;
     }
+
     if (location.pathname !== "/") {
       navigate("/");
-      setTimeout(() => scrollToSection(link.path), 120);
+      // Wait for navigation AND menu close animation to complete
+      setTimeout(() => scrollToSection(link.path), 300);
     } else {
-      scrollToSection(link.path);
+      // Small delay to let menu close animation start
+      setTimeout(() => scrollToSection(link.path), 100);
     }
   };
 
@@ -86,24 +96,23 @@ export default function Navbar() {
       >
         <nav className="mx-auto max-w-7xl px-0 h-20 flex items-center justify-between lg:justify-center gap-12 relative z-10">
           <Link to="/" className="flex items-center gap-2 group">
-         <img
-  src={hackathonLogo}
-  alt="Hackathon Logo"
-className="
-  w-10 h-10
-  sm:w-12 sm:h-12
-  md:w-16 md:h-16
-  object-contain
-  transition-transform
-  group-hover:scale-110
-  ml-4
-"
-
-/>
+            <img
+              src={hackathonLogo}
+              alt="Hackathon Logo"
+              className="
+                w-10 h-10
+                sm:w-12 sm:h-12
+                md:w-16 md:h-16
+                object-contain
+                transition-transform
+                group-hover:scale-110
+                ml-4
+              "
+            />
           </Link>
 
           {/* DESKTOP NAV */}
-          <div className="hidden md:flex items-center h-full gap-4 ">
+          <div className="hidden md:flex items-center h-full gap-4">
             {navLinks.map((link, i) => (
               <motion.div
                 key={link.name}
@@ -118,16 +127,32 @@ className="
           </div>
 
           {/* MOBILE TOGGLE */}
-          <div className="flex items-center md:hidden  justify-between px-4 sm:px-6 md:px-8">
+          <div className="flex items-center md:hidden justify-between px-4 sm:px-6 md:px-8">
             <button
               className="p-2 rounded-full text-white/80 hover:bg-white/10 transition"
               onClick={() => setMenuOpen((p) => !p)}
             >
               <AnimatePresence mode="wait">
                 {menuOpen ? (
-                  <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.25 }}><X size={22} /></motion.div>
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                  >
+                    <X size={22} />
+                  </motion.div>
                 ) : (
-                  <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.25 }}><Menu size={22} /></motion.div>
+                  <motion.div
+                    key="menu"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                  >
+                    <Menu size={22} />
+                  </motion.div>
                 )}
               </AnimatePresence>
             </button>
@@ -142,8 +167,8 @@ className="
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="md:hidden  w-full bg-[#020817]/80 backdrop-blur-xl border-b border-white/10 overflow-hidden relative z-30"
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="md:hidden w-full bg-[#020817]/95 backdrop-blur-xl border-b border-white/10 overflow-hidden relative z-30"
           >
             <div className="mx-auto max-w-7xl px-6 py-4">
               <div className="flex flex-col gap-1">

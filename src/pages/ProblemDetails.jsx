@@ -165,7 +165,7 @@ const ProblemDetails = () => {
 
             {/* REGISTER BUTTON — LAST ROW, CENTER */}
             <div className="lg:col-span-3 flex justify-center pt-6">
-              <Button onClick={() => navigate("/register")}>
+              <Button onClick={() => navigate("/")}>
                 Register Now
               </Button>
             </div>

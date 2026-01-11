@@ -7,21 +7,25 @@ import { TypewriterEffect } from './UI/TypewriterEffect';
 import FlippingLogo from './UI/FlippingLogo';
 import Button from './UI/Button';
 import LightRays from './UI/LightRays';
+import { Lock, Clock } from "lucide-react";
 
-// SET YOUR CLOSE DATE HERE: January 21st, 2026 at 5:00 PM
-const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 21, 17, 0, 0);
+
+const REGISTRATION_OPEN_DATE = new Date(2026, 0, 12, 9, 0, 0);  // Jan 12, 9:00 AM
+const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 21, 17, 0, 0); // Jan 21, 5:00 PM
 
 const Home = () => {
   const navigate = useNavigate();
-  const [isClosed, setIsClosed] = useState(new Date() >= REGISTRATION_CLOSE_DATE);
+  const [now, setNow] = useState(new Date());
 
-  // Check the deadline every minute to update the UI automatically
+
   useEffect(() => {
-    const timer = setInterval(() => {
-      setIsClosed(new Date() >= REGISTRATION_CLOSE_DATE);
-    }, 60000);
+    const timer = setInterval(() => setNow(new Date()), 60000);
     return () => clearInterval(timer);
   }, []);
+
+  const isNotStarted = now < REGISTRATION_OPEN_DATE;
+  const isClosed = now >= REGISTRATION_CLOSE_DATE;
+  const isOpen = !isNotStarted && !isClosed;
 
   const hackathonTitle = [
     { text: "SMART", className: "text-lime-400" },
@@ -80,7 +84,7 @@ const Home = () => {
             <p className="mt-2 text-[10px] sm:text-xs md:text-sm font-semibold tracking-[0.25em] text-slate-300 uppercase border-t border-slate-700/50 pt-2 w-full text-center">
               Intra College Hackathon
             </p>
-            <p className="mt-3 text-sm md:text-lg text-lime-400 font-medium italic tracking-wide">
+            <p className="mt-3 text-xs sm:text-sm md:text-lg text-lime-400 font-medium italic tracking-wide">
               "Let's build, contribute and grow together"
             </p>
           </div>
@@ -93,28 +97,48 @@ const Home = () => {
         </p>
 
         <h2 className=" text-sm sm:text-base md:text-2xl lg:text-2xl font-bold px-4">
-          <a href="https://www.linkedin.com/company/gce-erode-cse/" target="_blank" rel="noopener noreferrer" className="text-lime-400  font-bold">
+          <a href="https://www.linkedin.com/company/gce-erode-cse/" target="_blank" rel="noopener noreferrer" className="text-lime-400 font-bold">
             Department of Computer Science and Engineering
           </a>
         </h2>
 
         <p className="mt-4 max-w-2xl text-xs sm:text-sm md:text-base text-slate-300 leading-relaxed px-6 mb-8">
-          Be part of <span className="text-lime-400 font-bold">SCH '26</span> on <span className="text-lime-400 font-bold px-1">30th of January</span> to celebrate creativity and technical brilliance. Experience over eight hours of continous coding, creativity, and engineering excellence.
+          Be part of <span className="text-lime-400 font-bold">SCH '26</span> on <span className="text-lime-400 font-bold px-1">30th of January</span> to celebrate creativity and technical brilliance. Experience over 12 hours of continous coding, creativity, and engineering excellence.
         </p>
 
-        {/* BUTTON SECTION WITH CONDITIONAL LOGIC */}
+        {/* BUTTON SECTION WITH TRIP-STATE LOGIC */}
         <div className="flex flex-col items-center justify-center sm:w-auto px-6 gap-3">
-          <Button
-            onClick={isClosed ? null : () => navigate('/register')}
-            className={isClosed ? "opacity-50 cursor-not-allowed grayscale pointer-events-none" : ""}
-            disabled={isClosed}
-          >
-            {isClosed ? "Registration Closed" : "Register Now"}
-          </Button>
 
-          {/* This section disappears after the deadline */}
-          {!isClosed && (
+          {isNotStarted ? (
+            /* STATE 1: NOT STARTED YET */
             <>
+              <Button disabled className="opacity-60 cursor-not-allowed grayscale pointer-events-none">
+                <span className="flex items-center gap-2">
+                  <Clock size={16} />  Opens Soon
+                </span>
+              </Button>
+              <span className="text-xs sm:text-sm md:text-lg tracking-widest text-lime-400/60 font-black uppercase italic">
+                Free Registration
+              </span>
+              <span className="text-[10px] sm:text-xs md:text-sm uppercase tracking-wide text-white/70 font-medium text-center max-w-md">
+               Registration Opens on: <span className="text-white font-bold text-lime-400/90">Jan 12th, 9:00 AM</span>
+              </span>
+            </>
+          ) : isClosed ? (
+            /* STATE 2: REGISTRATION CLOSED */
+            <>
+              <Button disabled className="opacity-50 cursor-not-allowed grayscale pointer-events-none">
+                <span className="flex items-center gap-2">
+                  <Lock size={16} /> Registration Closed
+                </span>
+              </Button>
+            </>
+          ) : (
+            /* STATE 3: REGISTRATION OPEN */
+            <>
+              <Button onClick={() => navigate('/register')}>
+                Register Now
+              </Button>
               <span className="text-xs sm:text-sm md:text-lg tracking-widest text-lime-400 font-black uppercase">
                 Free Registration
               </span>
@@ -123,7 +147,6 @@ const Home = () => {
               </span>
             </>
           )}
-          
         </div>
       </div>
     </section>
