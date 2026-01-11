@@ -335,7 +335,7 @@ const Contribute = () => {
                 HAVE A CHALLENGE ? <br />
                 <span className="text-lime-400">CONTRIBUTE NOW.</span>
               </h1>
-              <p className="max-w-xl text-[10px] sm:text-xs md:text-sm text-slate-400 font-medium">
+              <p className="max-w-xl text-[10px] text-base  text-slate-400 font-medium">
                 Submit departmental requirements and problem statements. Our
                 engineering teams will develop software solutions for you.
               </p>
@@ -343,7 +343,7 @@ const Contribute = () => {
               {/* CONDITIONAL BUTTON/LOCKED UI */}
               {!isClosed ? (
                 <Button onClick={() => setShowForm(true)} className="px-6 py-3">
-                  Start Contribution 
+                  Start Contribution
                 </Button>
               ) : (
                 <div className="mt-8 p-6 bg-[#0B1221]/40 border border-white/5 rounded-3xl backdrop-blur-xl max-w-md w-full mx-auto">

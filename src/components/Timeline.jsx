@@ -44,7 +44,7 @@ const timelineData = [
 
           <h3
             className="
-                text-sm md:text-4xl lg:text-3xl
+                text-base md:text-4xl lg:text-3xl
                  font-bold
                  text-white/90
                  tracking-wide
@@ -59,7 +59,7 @@ const timelineData = [
         <p
           className="
   text-white/70
-  text-xs leading-snug
+  text-base leading-snug
   md:text-base lg:text-lg"
         >
           Teams come together at the venue to kick off the Smart Campus
@@ -105,7 +105,7 @@ const timelineData = [
 
           <h3
             className="
-                text-sm md:text-4xl lg:text-3xl
+                text-base md:text-4xl lg:text-3xl
                  font-bold
                  text-white/90
                  tracking-wide
@@ -120,7 +120,7 @@ const timelineData = [
         <p
           className="
   text-white/70
-  text-xs leading-snug
+  text-base leading-snug
   md:text-base lg:text-lg"
         >
           Teams come together at the venue to kick off the Smart Campus
@@ -166,7 +166,7 @@ const timelineData = [
 
           <h3
             className="
-                text-sm md:text-4xl lg:text-3xl
+                text-base md:text-4xl lg:text-3xl
                  font-bold
                  text-white/90
                  tracking-wide
@@ -181,7 +181,7 @@ const timelineData = [
         <p
           className="
   text-white/70
-  text-xs leading-snug
+  text-base leading-snug
   md:text-base lg:text-lg"
         >
           Participants present their initial progress, and proposed solutions
@@ -226,7 +226,7 @@ const timelineData = [
 
           <h3
             className="
-                text-sm md:text-4xl lg:text-3xl
+                text-base md:text-4xl lg:text-3xl
                  font-bold
                  text-white/90
                  tracking-wide
@@ -241,7 +241,7 @@ const timelineData = [
         <p
           className="
   text-white/70
-  text-xs leading-snug
+  text-base leading-snug
   md:text-base lg:text-lg"
         >
          Participants take a quick break to recharge with morning snacks. It is a brief interval to refresh before heading into the Second project review.
@@ -285,7 +285,7 @@ const timelineData = [
 
           <h3
             className="
-                text-sm md:text-4xl lg:text-3xl
+                text-base md:text-4xl lg:text-3xl
                  font-bold
                  text-white/90
                  tracking-wide
@@ -300,7 +300,7 @@ const timelineData = [
         <p
           className="
   text-white/70
-  text-xs leading-snug
+  text-base leading-snug
   md:text-base lg:text-lg"
         >
           Participants present their enhanced work while mentors and evaluators
@@ -346,7 +346,7 @@ const timelineData = [
 
           <h3
             className="
-                text-sm md:text-4xl lg:text-3xl
+                text-base md:text-4xl lg:text-3xl
                  font-bold
                  text-white/90
                  tracking-wide
@@ -361,7 +361,7 @@ const timelineData = [
         <p
           className="
   text-white/70
-  text-xs leading-snug
+  text-base leading-snug
   md:text-base lg:text-lg"
         >
           Participants take a break to refresh, recharge, and prepare for the
@@ -408,7 +408,7 @@ const timelineData = [
 
           <h3
             className="
-                text-sm md:text-4xl lg:text-3xl
+                text-base md:text-4xl lg:text-3xl
                  font-bold
                  text-white/90
                  tracking-wide
@@ -423,7 +423,7 @@ const timelineData = [
         <p
           className="
            text-white/70
-            text-xs leading-snug
+            text-base leading-snug
              md:text-base lg:text-lg"
         >
          Participants should assemble after the lunch break at 1:30 PM to continue their innovation and development.
@@ -467,7 +467,7 @@ const timelineData = [
 
           <h3
             className="
-                text-sm md:text-4xl lg:text-3xl
+                text-base md:text-4xl lg:text-3xl
                  font-bold
                  text-white/90
                  tracking-wide
@@ -482,7 +482,7 @@ const timelineData = [
         <p
           className="
   text-white/70
-  text-xs leading-snug
+  text-base leading-snug
   md:text-base lg:text-lg"
         >
          Participants take a brief interval to recharge with snacks and drinks. It’s a moment to step away from screens and gather energy for the final project sprint.
@@ -526,7 +526,7 @@ const timelineData = [
 
           <h3
             className="
-                text-sm md:text-4xl lg:text-3xl
+                text-base md:text-4xl lg:text-3xl
                  font-bold
                  text-white/90
                  tracking-wide
@@ -541,7 +541,7 @@ const timelineData = [
         <p
           className="
   text-white/70
-  text-xs leading-snug
+  text-base leading-snug
   md:text-base lg:text-lg"
         >
           Participants present their finalized solutions, which are evaluated by
@@ -584,7 +584,7 @@ const timelineData = [
 
           <h3
             className="
-                text-sm md:text-4xl lg:text-3xl
+                text-base md:text-4xl lg:text-3xl
                  font-bold
                  text-white/90
                  tracking-wide
@@ -599,7 +599,7 @@ const timelineData = [
         <p
           className="
   text-white/70
-  text-xs leading-snug
+  text-base leading-snug
   md:text-base lg:text-lg"
         >
          The coding phase officially concludes. Teams submit their final projects and  marking the end of an intensive journey of innovation.
@@ -641,7 +641,7 @@ const timelineData = [
 
           <h3
             className="
-                text-sm md:text-4xl lg:text-3xl
+                text-base md:text-4xl lg:text-3xl
                  font-bold
                  text-white/90
                  tracking-wide
@@ -656,7 +656,7 @@ const timelineData = [
         <p
           className="
   text-white/70
-  text-xs leading-snug
+  text-base leading-snug
   md:text-base lg:text-lg"
         >
           The top teams are announced and celebrated for their innovative

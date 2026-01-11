@@ -29,12 +29,6 @@ const ProblemStatements = () => {
       p.id.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const getPriorityColor = (p) => {
-    if (p === "High") return "text-red-400 bg-red-400/10 border-red-400/20";
-    if (p === "Medium")
-      return "text-yellow-400 bg-yellow-400/10 border-yellow-400/20";
-    return "text-lime-400 bg-lime-400/10 border-lime-400/20";
-  };
 
   return (
     <div className="min-h-screen pt-28 pb-20 px-4 sm:px-6 relative overflow-hidden bg-[#020817]">
@@ -46,7 +40,7 @@ const ProblemStatements = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight mb-4 drop-shadow-sm">
+          <h1 className="text-2xl md:text-5xl font-black text-white tracking-tight mb-4 drop-shadow-sm">
             PROBLEM <span className="text-lime-400">STATEMENTS</span>
           </h1>
           <p className="text-slate-400 text-sm md:text-base max-w-2xl mx-auto">
@@ -98,20 +92,14 @@ const ProblemStatements = () => {
                       <span className="text-[10px] font-bold font-mono text-slate-400 bg-white/5 px-2 py-1 rounded border border-white/5">
                         {problem.id}
                       </span>
-                      <span
-                        className={`text-[10px] font-bold px-2 py-1 rounded border uppercase tracking-wider ${getPriorityColor(
-                          problem.priority
-                        )}`}
-                      >
-                        {problem.priority} Priority
-                      </span>
+
                     </div>
 
                     <div>
                       <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1">
                         {problem.dept}
                       </div>
-                      <h3 className="text-lg font-bold text-white leading-snug group-hover:text-lime-400 transition-colors">
+                      <h3 className=" text-base sm:text-base md:text-lg font-bold text-white leading-snug group-hover:text-lime-400 transition-colors">
                         {problem.title}
                       </h3>
                     </div>
@@ -144,7 +132,7 @@ const ProblemStatements = () => {
                   onClick={() => navigate("/register")}
                   className="px-10 py-4 rounded-xl bg-white text-black font-black uppercase tracking-widest text-sm hover:bg-lime-400 transition-all active:scale-95 shadow-lg shadow-lime-500/20"
                 >
-                  Register Your Team Now
+                  Register Now
                 </button>
               )}
             </div>
