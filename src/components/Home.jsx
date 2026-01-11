@@ -10,7 +10,7 @@ import LightRays from './UI/LightRays';
 import { Lock, Clock } from "lucide-react";
 
 
-const REGISTRATION_OPEN_DATE = new Date(2025, 0, 1, 0, 0, 0);  // Jan 12, 9:00 AM
+const REGISTRATION_OPEN_DATE = new Date(2026, 0, 12, 7, 0, 0); // Jan 12, 9:00 AM
 const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 21, 17, 0, 0); // Jan 21, 5:00 PM
 
 const Home = () => {
@@ -68,7 +68,7 @@ const Home = () => {
           direction="top"
           className="
             flex justify-center gap-x-0.5 flex-wrap
-            text-sm sm:text-xl md:text-3xl lg:text-4xl
+            text-xl sm:text-xl md:text-3xl lg:text-4xl
             font-bold text-center text-white/90
           "
         />
@@ -96,13 +96,13 @@ const Home = () => {
           An Initiative of the
         </p>
 
-        <h2 className=" text-sm sm:text-base md:text-2xl lg:text-2xl font-bold px-4">
+        <h2 className=" text-base sm:text-base md:text-2xl lg:text-2xl font-bold px-4">
           <a href="https://www.linkedin.com/company/gce-erode-cse/" target="_blank" rel="noopener noreferrer" className="text-lime-400 font-bold">
             Department of Computer Science and Engineering
           </a>
         </h2>
 
-        <p className="mt-4 max-w-2xl text-xs sm:text-sm md:text-base text-slate-300 leading-relaxed px-6 mb-8">
+        <p className="mt-4 max-w-2xl text-base sm:text-sm md:text-base text-slate-300 leading-relaxed px-6 mb-8">
           Be part of <span className="text-lime-400 font-bold">SCH '26</span> on <span className="text-lime-400 font-bold px-1">30th of January</span> to celebrate creativity and technical brilliance. Experience over 12 hours of continous coding, creativity, and engineering excellence.
         </p>
 
@@ -117,10 +117,10 @@ const Home = () => {
                   <Clock size={16} />  Opens Soon
                 </span>
               </Button>
-              <span className="text-xs sm:text-sm md:text-lg tracking-widest text-lime-400/60 font-black uppercase italic">
+              <span className="text-base sm:text-sm md:text-lg tracking-widest text-lime-400/60 font-black uppercase italic">
                 Free Registration
               </span>
-              <span className="text-[10px] sm:text-xs md:text-sm uppercase tracking-wide text-white/70 font-medium text-center max-w-md">
+              <span className="text-[10px] text-base uppercase tracking-wide text-white/70 font-medium text-center max-w-md">
                Registration Opens on: <span className="text-white font-bold text-lime-400/90">Jan 12th, 9:00 AM</span>
               </span>
             </>

@@ -359,7 +359,7 @@ const Contribute = () => {
                     </span>
 
                     {/* --- NEW THANK YOU MESSAGE HERE --- */}
-                    <p className="text-white text-xs sm:text-sm mt-6 font-medium italic leading-relaxed drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">
+                    <p className="text-white text-base sm:text-base mt-6 font-medium italic leading-relaxed drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">
                       "We extend our heartfelt gratitude to everyone who contributed a Problem Statement."
                     </p>
 

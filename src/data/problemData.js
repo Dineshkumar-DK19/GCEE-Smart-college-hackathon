@@ -49,7 +49,7 @@ export const problemData = [
     "To design and develop an automated system for managing internal assessment activities that reduces manual effort, improves accuracy, and ensures timely communication of student performance.",
 
   targetUsers: ["Students", "Faculty"],
-  appType: ["Mobile,Desktop"],
+  appType: ["Mobile","Desktop"],
   sensitivity: "High",
   priority: "High",
   submittedBy: {
@@ -446,7 +446,7 @@ objective: "1. Using smart technologies (such as RFID, biometric, QR code, or fa
   },
 },
 {
-  id: "PS16",
+  id: "PS17",
   dept: "CSE",
   title: "Stock Verification Application",
 
@@ -471,7 +471,7 @@ objective:
   },
 },
 {
-  id: "PS17",
+  id: "PS18",
   dept: "CSE",
   title: "Event Tracker System for College",
 
