@@ -104,12 +104,21 @@ const ProblemStatements = () => {
                       </h3>
                     </div>
 
-                    <div className="mt-auto pt-4 border-t border-white/5 flex justify-between items-center">
+                    <div className="mt-auto pt-4 border-t border-white/5 flex flex-col gap-2">
+                      {/* App Type */}
                       <span className="text-xs text-slate-400 flex items-center gap-1.5">
                         <span className="w-1.5 h-1.5 rounded-full bg-lime-500"></span>
                         {problem.appType} Application
                       </span>
-                      <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-400 group-hover:bg-lime-500 group-hover:text-black transition-all">
+
+                      {/* Data Sensitivity */}
+                      <span className="text-xs text-slate-400 flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                        Data Sensitivity: {problem.sensitivity}
+                      </span>
+
+                      {/* Arrow */}
+                      <div className="absolute bottom-4 right-4 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-400 group-hover:bg-lime-500 group-hover:text-black transition-all">
                         <ChevronRight className="w-4 h-4" />
                       </div>
                     </div>
