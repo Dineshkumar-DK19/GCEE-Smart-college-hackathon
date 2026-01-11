@@ -21,6 +21,10 @@ const ProblemDetails = () => {
   const navigate = useNavigate();
   const problem = problemData.find((p) => p.id === id);
 
+  // LOGIC: If there are more than 3 files, move to bottom. Otherwise, keep on right.
+  const hasDownloads = problem?.downloads && problem.downloads.length > 0;
+  const showDownloadsAtBottom = hasDownloads && problem.downloads.length > 3;
+
   if (!problem)
     return (
       <div className="min-h-screen bg-[#020817] text-white flex items-center justify-center">
@@ -91,40 +95,42 @@ const ProblemDetails = () => {
                     {problem.objective}
                   </div>
                 </div>
-
-                <div>
-                  <h3 className="text-sm font-bold text-lime-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                    <Lightbulb className="w-4 h-4" /> Key Features
-                  </h3>
-                  <p className="text-slate-300 text-xs sm:text-sm md:text-lg">
-                    {problem.features}
-                  </p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-[#0B1221]/50 border border-white/5 rounded-xl p-5">
-                  <h4 className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2 flex items-center gap-2">
-                    <FileBox className="w-3 h-3" /> Deliverables
-                  </h4>
-                  <p className="text-white text-xs sm:text-sm md:text-lg">
-                    {problem.deliverables}
-                  </p>
-                </div>
-
-                <div className="bg-[#0B1221]/50 border border-white/5 rounded-xl p-5">
-                  <h4 className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2 flex items-center gap-2">
-                    <Lock className="w-3 h-3" /> Constraints
-                  </h4>
-                  <p className="text-white text-xs sm:text-sm md:text-lg">
-                    {problem.constraints}
-                  </p>
-                </div>
               </div>
             </div>
 
             {/* RIGHT COLUMN */}
             <div className="space-y-6">
+              {/* --- 1. RIGHT SIDE DOWNLOADS (For small lists like PS01) --- */}
+              {hasDownloads && !showDownloadsAtBottom && (
+                <div className="bg-[#0B1221] border border-white/10 rounded-2xl p-6">
+                  <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">
+                    Resources & Attachments
+                  </h3>
+                  <div className="flex flex-col gap-3">
+                    {problem.downloads.map((file, index) => (
+                      <a
+                        key={index}
+                        href={file.url}
+                        download
+                        className="
+                          flex items-center gap-3 p-3 rounded-xl 
+                          bg-white/5 border border-white/5 
+                          hover:bg-lime-500/10 hover:border-lime-500/30 hover:text-lime-400 
+                          transition-all group
+                        "
+                      >
+                        <div className="p-2 bg-black/20 rounded-lg text-slate-400 group-hover:text-lime-400 transition-colors">
+                          <Download className="w-4 h-4" />
+                        </div>
+                        <span className="text-sm font-medium text-slate-300 group-hover:text-white truncate">
+                          {file.name}
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <div className="bg-[#0B1221] border border-white/10 rounded-2xl p-6">
                 <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">
                   Submitted By
@@ -164,8 +170,8 @@ const ProblemDetails = () => {
               </div>
             </div>
 
-            {/* --- MOVED DOWNLOADS SECTION TO BOTTOM (FULL WIDTH) --- */}
-            {problem.downloads && problem.downloads.length > 0 && (
+            {/* --- 2. BOTTOM DOWNLOADS (For large lists like PS04) --- */}
+            {showDownloadsAtBottom && (
               <div className="lg:col-span-3">
                 <div className="bg-[#0B1221] border border-white/10 rounded-2xl p-6">
                   <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">
