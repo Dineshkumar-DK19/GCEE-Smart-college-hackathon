@@ -354,10 +354,14 @@ const Contribute = () => {
                     Submissions Closed on
                   </h2>
 
-                    <span className="text-lime-400 font-bold">
+                    <span className="text-lime-400 font-bold block">
                       January 10th at 5:00 PM
                     </span>
 
+                    {/* --- NEW THANK YOU MESSAGE HERE --- */}
+                    <p className="text-white text-xs sm:text-sm mt-6 font-medium italic leading-relaxed drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">
+                      "We extend our heartfelt gratitude to everyone who contributed a Problem Statement."
+                    </p>
 
                 </div>
               )}
