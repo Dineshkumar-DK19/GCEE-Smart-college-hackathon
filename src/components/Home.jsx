@@ -10,7 +10,7 @@ import LightRays from './UI/LightRays';
 import { Lock, Clock } from "lucide-react";
 
 
-const REGISTRATION_OPEN_DATE = new Date(2026, 0, 12, 9, 0, 0);  // Jan 12, 9:00 AM
+const REGISTRATION_OPEN_DATE = new Date(2025, 0, 1, 0, 0, 0);  // Jan 12, 9:00 AM
 const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 21, 17, 0, 0); // Jan 21, 5:00 PM
 
 const Home = () => {
@@ -147,7 +147,6 @@ const Home = () => {
               </span>
             </>
           )}
-
         </div>
       </div>
     </section>

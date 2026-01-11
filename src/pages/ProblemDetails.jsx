@@ -32,11 +32,29 @@ const ProblemDetails = () => {
       </div>
     );
 
+  const renderFormattedText = (text) => {
+    if (!text) return null;
+    // If the text contains a newline, split it and add spacing between points
+    if (text.includes("\n")) {
+      return (
+        <div className="flex flex-col gap-4">
+          {text.split("\n").map((point, i) => (
+            <p key={i} className="leading-relaxed">
+              {point}
+            </p>
+          ))}
+        </div>
+      );
+    }
+    // Otherwise, just render as a standard paragraph
+    return <p className="leading-relaxed">{text}</p>;
+  };
+
   return (
     <div className="min-h-screen pt-28 pb-20 px-4 sm:px-6 bg-[#020817] relative overflow-hidden font-sans">
-      <div className="absolute inset-0 pointer-events-none">
+      {/* <div className="absolute inset-0 pointer-events-none">
         <LightRays raysColor="#84cc16" raysSpeed={0.2} opacity={0.1} />
-      </div>
+      </div> */}
 
       <div className="max-w-5xl mx-auto relative z-10">
         <button
@@ -61,16 +79,13 @@ const ProblemDetails = () => {
               <span className="px-3 py-1 bg-white/5 border border-white/10 text-slate-300 text-xs font-bold rounded-lg uppercase tracking-wider">
                 {problem.dept}
               </span>
-              <span className="px-3 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold rounded-lg uppercase tracking-wider">
-                {problem.appType}
-              </span>
             </div>
-            <h1 className="text-sm sm:text-xl md:text-3xl lg:text-4xl font-bold text-white mb-6">
+            <h1 className="text-base sm:text-xl md:text-3xl lg:text-4xl font-bold text-white mb-6">
               {problem.title}
             </h1>
-            <p className="text-slate-400 text-xs sm:text-sm md:text-lg max-w-3xl">
-              {problem.description}
-            </p>
+            <div className="text-slate-400 text-base sm:text-base md:text-lg max-w-3xl">
+              {renderFormattedText(problem.description)}
+            </div>
           </div>
 
           {/* GRID */}
@@ -82,17 +97,24 @@ const ProblemDetails = () => {
                   <h3 className="text-sm font-bold text-lime-400 uppercase tracking-widest mb-3 flex items-center gap-2">
                     <AlertTriangle className="w-4 h-4" /> Current Background
                   </h3>
-                  <p className="text-slate-300 text-xs sm:text-sm md:text-lg">
+                  <p className="text-slate-300 text-base sm:text-base md:text-lg">
                     {problem.background}
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-bold text-lime-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                    <Target className="w-4 h-4" /> Core Objective
-                  </h3>
-                  <div className="bg-white/[0.02] border border-white/5 rounded-xl p-4 text-white text-xs sm:text-sm md:text-lg">
-                    {problem.objective}
+                  <div className="">
+                    <h3 className="text-sm font-bold text-lime-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                      <Target className="w-4 h-4" /> Core Objective
+                    </h3>
+                    {/* Added flex flex-col and gap-4 to create space specifically between points */}
+                    <div className="bg-white/[0.02] border border-white/5 rounded-xl p-6 text-white text-base sm:text-base md:text-lg flex flex-col gap-2">
+                      {problem.objective.split("\n").map((point, index) => (
+                        <div key={index} className="leading-relaxed">
+                          {point}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -113,9 +135,9 @@ const ProblemDetails = () => {
                         href={file.url}
                         download
                         className="
-                          flex items-center gap-3 p-3 rounded-xl 
-                          bg-white/5 border border-white/5 
-                          hover:bg-lime-500/10 hover:border-lime-500/30 hover:text-lime-400 
+                          flex items-center gap-3 p-3 rounded-xl
+                          bg-white/5 border border-white/5
+                          hover:bg-lime-500/10 hover:border-lime-500/30 hover:text-lime-400
                           transition-all group
                         "
                       >
@@ -168,6 +190,28 @@ const ProblemDetails = () => {
                   ))}
                 </div>
               </div>
+              {/* Application Type */}
+              <div className="bg-[#0B1221] border border-white/10 rounded-2xl p-6">
+                <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">
+                  Application Type
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {Array.isArray(problem.appType) ? (
+                    problem.appType.map((type, i) => (
+                      <span
+                        key={i}
+                        className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/5 text-xs sm:text-sm md:text-base text-white"
+                      >
+                        {type}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/5 text-xs sm:text-sm md:text-base text-white">
+                      {problem.appType}
+                    </span>
+                  )}
+                </div>
+              </div>
             </div>
 
             {/* --- 2. BOTTOM DOWNLOADS (For large lists like PS04) --- */}
@@ -184,9 +228,9 @@ const ProblemDetails = () => {
                         href={file.url}
                         download
                         className="
-                          flex items-center gap-3 p-3 rounded-xl 
-                          bg-white/5 border border-white/5 
-                          hover:bg-lime-500/10 hover:border-lime-500/30 hover:text-lime-400 
+                          flex items-center gap-3 p-3 rounded-xl
+                          bg-white/5 border border-white/5
+                          hover:bg-lime-500/10 hover:border-lime-500/30 hover:text-lime-400
                           transition-all group
                         "
                       >
@@ -204,10 +248,8 @@ const ProblemDetails = () => {
             )}
 
             {/* REGISTER BUTTON — LAST ROW, CENTER */}
-            <div className="lg:col-span-3 flex justify-center pt-2">
-              <Button onClick={() => navigate("/")}>
-                Register Now
-              </Button>
+            <div className="lg:col-span-3 flex justify-center pt-6">
+              <Button onClick={() => navigate("/")}>Register Now</Button>
             </div>
           </div>
         </motion.div>

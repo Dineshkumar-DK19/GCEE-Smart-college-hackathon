@@ -131,7 +131,7 @@ const Register = () => {
   const SCRIPT_URL =
     "https://script.google.com/macros/s/AKfycbyVAnw8z9uPyMrYlXpjpo1w_60jJRNjl23_XN_PUVwHG03W-j59UiBFO-61t62wdkK-/exec";
   const WHATSAPP_GROUP_LINK =
-    "https://chat.whatsapp.com/GEN0hzyt2EM731AzmfUfjW";
+    "https://chat.whatsapp.com/CaDk6iw1c9O3SPk2bkr6d1";
 
   const departments = [
     "CSE",
@@ -574,15 +574,7 @@ const Register = () => {
                   )}
                 </div>
                 <span className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider leading-relaxed">
-                  I have read the{" "}
-                  <Link
-                    to="/"
-                    className="text-white underline underline-offset-4 decoration-lime-500/50 hover:text-lime-400 transition-colors cursor-pointer"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    Guidelines
-                  </Link>{" "}
-                  of SCH '26 and agree to follow all rules.{" "}
+                  I have read the Guidelines of SCH '26 and agree to follow all rules.
                   <span className="text-red-500 ml-1">*</span>
                 </span>
               </label>

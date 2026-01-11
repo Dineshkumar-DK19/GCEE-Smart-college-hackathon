@@ -39,10 +39,10 @@ export const AnimatedTimeline = ({ data }) => {
     >
       {/* Header Section */}
       <div className="max-w-7xl mx-auto py-12 md:py-20 px-4 md:px-8 lg:px-10">
-        <h2 className="text-xl md:text-4xl mb-4 text-white max-w-4xl font-bold">
+        <h2 className="text-2xl md:text-4xl mb-4 text-white max-w-4xl font-bold">
           Hackathon Timings
         </h2>
-        <p className="text-neutral-300 text-xs sm:text-sm md:text-base max-w-sm">
+        <p className="text-neutral-300 text-base sm:text-sm md:text-base max-w-sm">
           A detailed timeline of the Smart Campus Hackathon events and activities.
         </p>
       </div>
@@ -86,7 +86,7 @@ export const AnimatedTimeline = ({ data }) => {
               </h3>
 
               {/* Content Body */}
-              <div className="text-neutral-300">
+              <div className="text-neutral-300 ">
                 {item.content}
               </div>
             </div>

@@ -85,7 +85,7 @@ const Guidelines = () => {
               </div>
               <ul className="space-y-3 list-disc list-inside text-slate-400">
                 {section.rules.map((rule, idx) => (
-                  <li key={idx} className="text-xs sm:text-sm md:text-lg leading-relaxed pl-1 marker:text-white/50">{rule}</li>
+                  <li key={idx} className="text-base sm:text-sm md:text-lg leading-relaxed pl-1 marker:text-white/50">{rule}</li>
                 ))}
               </ul>
             </div>
