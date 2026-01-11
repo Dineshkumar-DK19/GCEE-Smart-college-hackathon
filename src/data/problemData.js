@@ -165,10 +165,36 @@ export const problemData = [
   },
 },
 
+{
+  id: "PS07",
+  dept: "EEE",
+  title: "Digital Attendance Management System with Hourly Tracking and Reporting",
+
+  background:
+    "In many institutions, student attendance is recorded manually or using basic daily attendance systems. These methods do not support hourly attendance tracking for each class and subject, making it difficult to maintain accurate records. Manual processes are time-consuming and prone to errors, especially when attendance needs to be monitored subject-wise and across multiple classes.",
+
+  description:
+    "A digital attendance management system is required to record student attendance on an hourly basis for every class. The system should automatically calculate attendance percentages for each subject and generate detailed reports. These reports must be available both student-wise and subject-wise, enabling faculty to monitor attendance patterns efficiently and take timely academic decisions.",
+
+  objective:
+    "To design and implement a digital attendance management system that records hourly attendance for students of every class, calculates attendance percentage for each subject, and generates accurate student-wise and subject-wise attendance reports, thereby reducing manual effort and improving accuracy in attendance management.",
+
+  targetUsers: ["Faculty"],
+  appType: "Any",
+  sensitivity: "High",
+  priority: "Medium",
+  submittedBy: {
+    name: "Dr R Baby Priya",
+    designation: "Assistant Professor",
+    email: "babypriya@gcee.ac.in",
+    contact: "+91 94869 37393",
+  },
+},
+
 /* ===================== EXAM CELL ===================== */
 
 {
-  id: "PS07",
+  id: "PS08",
   dept: "Exam Cell",
   title: "Automated University Theory Examination Seating Arrangement System",
 
@@ -196,7 +222,7 @@ export const problemData = [
 /* ===================== EXAM CELL ===================== */
 
 {
-  id: "PS08",
+  id: "PS09",
   dept: "Exam Cell",
   title: "Automated Hall Invigilation Duty Allocation System",
 
@@ -222,7 +248,7 @@ export const problemData = [
 },
 
 {
-  id: "PS09",
+  id: "PS10",
   dept: "Exam Cell",
   title: "Automated Internal Test Scheduling System",
 
@@ -248,7 +274,7 @@ export const problemData = [
 },
 
 {
-  id: "PS10",
+  id: "PS11",
   dept: "Exam Cell",
   title: "Automated University Practical Examination Slot Allocation System",
 
@@ -276,7 +302,7 @@ export const problemData = [
 /* ===================== FIRST YEAR ===================== */
 
 {
-  id: "PS11",
+  id: "PS12",
   dept: "First Year",
   title: "Automation in Management Counselling",
 
@@ -304,7 +330,7 @@ export const problemData = [
 /* ===================== IT ===================== */
 
 {
-  id: "PS12",
+  id: "PS13",
   dept: "IT",
   title: "Intelligent Digital Notification Framework for Engineering Colleges",
 
@@ -332,7 +358,7 @@ export const problemData = [
 /* ===================== LIBRARY ===================== */
 
 {
-  id: "PS13",
+  id: "PS14",
   dept: "Library",
   title: "Desktop Application for Library Book Automation System",
 
@@ -358,7 +384,7 @@ export const problemData = [
 },
 
 {
-  id: "PS14",
+  id: "PS15",
   dept: "Library",
   title: "Desktop Application for Library Book Stock Verification",
 
@@ -385,7 +411,7 @@ export const problemData = [
 /* ===================== SPORTS ===================== */
 
 {
-  id: "PS15",
+  id: "PS16",
   dept: "Sports",
   title: "Mobile Application for Sports Event Management and Indoor Stadium Stock Management",
 
