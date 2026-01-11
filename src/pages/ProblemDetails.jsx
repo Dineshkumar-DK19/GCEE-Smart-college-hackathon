@@ -10,6 +10,7 @@ import {
   FileBox,
   Lock,
   AlertTriangle,
+  Download,
 } from "lucide-react";
 import { problemData } from "../data/problemData";
 import Button from "../components/UI/Button";
@@ -163,8 +164,41 @@ const ProblemDetails = () => {
               </div>
             </div>
 
+            {/* --- MOVED DOWNLOADS SECTION TO BOTTOM (FULL WIDTH) --- */}
+            {problem.downloads && problem.downloads.length > 0 && (
+              <div className="lg:col-span-3">
+                <div className="bg-[#0B1221] border border-white/10 rounded-2xl p-6">
+                  <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">
+                    Resources & Attachments
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {problem.downloads.map((file, index) => (
+                      <a
+                        key={index}
+                        href={file.url}
+                        download
+                        className="
+                          flex items-center gap-3 p-3 rounded-xl 
+                          bg-white/5 border border-white/5 
+                          hover:bg-lime-500/10 hover:border-lime-500/30 hover:text-lime-400 
+                          transition-all group
+                        "
+                      >
+                        <div className="p-2 bg-black/20 rounded-lg text-slate-400 group-hover:text-lime-400 transition-colors">
+                          <Download className="w-4 h-4" />
+                        </div>
+                        <span className="text-sm font-medium text-slate-300 group-hover:text-white truncate">
+                          {file.name}
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* REGISTER BUTTON — LAST ROW, CENTER */}
-            <div className="lg:col-span-3 flex justify-center pt-6">
+            <div className="lg:col-span-3 flex justify-center pt-2">
               <Button onClick={() => navigate("/")}>
                 Register Now
               </Button>

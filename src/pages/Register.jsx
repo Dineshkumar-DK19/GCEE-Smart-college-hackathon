@@ -334,7 +334,7 @@ const Register = () => {
                   Full Name
                 </Label>
                 <input
-                  placeholder="Alice S"
+                  placeholder="Name"
                   className={inputStyle(showError && !formData.teamLeader.name)}
                   value={formData.teamLeader.name}
                   onChange={(e) => handleLeaderChange("name", e.target.value)}
@@ -347,7 +347,7 @@ const Register = () => {
                 </Label>
                 <input
                   type="email"
-                  placeholder="Alice@gmail.com"
+                  placeholder="Email"
                   className={inputStyle(showError && !formData.teamLeader.email)}
                   value={formData.teamLeader.email}
                   onChange={(e) => handleLeaderChange("email", e.target.value)}
@@ -360,12 +360,12 @@ const Register = () => {
                 </Label>
                 <input
                   type="number"
-                  placeholder="98765 43210"
-                  className={inputStyle(showError && !formData.teamLeader.phone)}
+                  placeholder="Mobile Number"
+                  className={`${inputStyle(showError && (!formData.teamLeader.phone || formData.teamLeader.phone.toString().length !== 10))} [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
                   value={formData.teamLeader.phone}
-                  onChange={(e) => handleLeaderChange("phone", e.target.value)}
+                  onChange={(e) => handleLeaderChange("phone", e.target.value.slice(0, 10))}
                   disabled={isClosed}
-                />
+                /> 
               </div>
               <div className="grid grid-cols-3 gap-3">
                 <div>
@@ -373,7 +373,7 @@ const Register = () => {
                     Roll No
                   </Label>
                   <input
-                    placeholder="23CSE01"
+                    placeholder="Roll No"
                     className={inputStyle(showError && !formData.teamLeader.rollNo)}
                     value={formData.teamLeader.rollNo}
                     onChange={(e) => handleLeaderChange("rollNo", e.target.value)}

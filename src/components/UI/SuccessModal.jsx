@@ -76,7 +76,7 @@ const SuccessModal = ({ data, onClose, whatsappLink }) => {
                 Problem ID
               </span>
              <span className="text-lime-400 font-mono text-xs sm:text-sm text-right sm:text-left">
-              {data.problemStatement}
+              {data.problemStatement?.split("-")[0]} 
             </span>
             </div>
 
