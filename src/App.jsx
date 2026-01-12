@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Components
+import ScrollToTop from "./components/ScrollToTop";
 import {
   Navbar, Home, Contribute, Guidelines, YoutubeVideo, Timeline, Footer, About
 } from "./components";
@@ -35,6 +36,7 @@ function App() {
         </div>
 
         <main className="relative z-10 ">
+          <ScrollToTop />
           <Navbar />
           <Routes>
             <Route path="/" element={
