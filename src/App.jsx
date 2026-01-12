@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // Components
 import ScrollToTop from "./components/ScrollToTop";
 import {
-  Navbar, Home, Contribute, Guidelines, YoutubeVideo, Timeline, Footer, About
+  Navbar, Home, Contribute, Guidelines, Timeline, Footer, About
 } from "./components";
 import ProblemStatements from "./pages/ProblemStatements";
 import ProblemDetails from "./pages/ProblemDetails";
