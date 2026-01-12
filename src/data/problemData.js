@@ -385,7 +385,8 @@ export const problemData = [
       "1.The Physical Education department requires a centralized digital platform to efficiently manage sports events and indoor stadium resources.\n2. The lack of a dedicated system makes it difficult for staff to publish event details instantly and manage stock accurately.\n3. Manual processes increase administrative workload, reduce transparency, and affect smooth coordination between staff and students.\n4.This problem focuses on developing a mobile application where staff can publish sports event details through a dashboard and manage indoor stadium stock digitally.\n5. The application introduces role-based access to ensure secure and controlled usage.",
     objective:
       "1.To develop a mobile application for the Physical Education department.\n2.To implement a two-level login system with Admin and Student roles.\n3.To allow Admin users to publish, edit, and manage sports event details through a dashboard.\n4.To enable Admin users to manage and update indoor stadium stock and equipment records.\n5.To restrict stock management access strictly to Admin users.\n6.To allow Student users to view sports event details and announcements.\n7.To ensure students do not have access to stock or inventory details.\n8.To reduce manual work and improve accuracy, transparency, and efficiency.",
-    appType: "Mobile",
+     targetUsers: ["Faculty","Students"],
+      appType: "Mobile",
     sensitivity: "Medium",
     priority: "Medium",
     submittedBy: {
