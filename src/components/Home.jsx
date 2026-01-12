@@ -7,7 +7,7 @@ import { TypewriterEffect } from './UI/TypewriterEffect';
 import FlippingLogo from './UI/FlippingLogo';
 import Button from './UI/Button';
 import LightRays from './UI/LightRays';
-import { Lock, Clock } from "lucide-react";
+import { Lock, Clock, ArrowRight } from "lucide-react";
 
 
 const REGISTRATION_OPEN_DATE = new Date(2026, 0, 12, 7, 0, 0); // Jan 12, 9:00 AM
@@ -108,6 +108,23 @@ const Home = () => {
 
         {/* BUTTON SECTION WITH TRIP-STATE LOGIC */}
         <div className="flex flex-col items-center justify-center sm:w-auto px-6 gap-3">
+          
+          {/* --- NEW MOBILE-ONLY NAVIGATION BUTTON (Glassmorphic Pill Style) --- */}
+          <button
+            onClick={() => navigate('/problems')}
+            className="
+              md:hidden flex items-center gap-2 
+              px-5 py-2.5 rounded-full 
+              bg-white/5 border border-white/10 
+              text-slate-300 text-[10px] font-bold uppercase tracking-widest 
+              hover:bg-lime-500/10 hover:border-lime-500/30 hover:text-lime-400 
+              transition-all duration-300 group
+              backdrop-blur-sm shadow-sm
+            "
+          >
+            View Problem Statements
+            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+          </button>
 
           {isNotStarted ? (
             /* STATE 1: NOT STARTED YET */

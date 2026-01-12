@@ -67,7 +67,7 @@ export const problemData = [
     sensitivity: "High",
     priority: "High",
     submittedBy: {
-      name: "Dr.A.Kavitha",
+      name: "Dr.A.Kavidha",
       designation: "CSE - HOD",
       email: "kavidha.irtt@gmail.com",
       contact: "9442513055",
@@ -133,10 +133,10 @@ export const problemData = [
     sensitivity: "Medium",
     priority: "Medium",
     submittedBy: {
-      name: "Dr.N.Vasuki",
-      designation: "Assistant Professor",
-      email: "",
-      contact: "",
+      name: "Dr.A.Kavidha",
+      designation: "CSE - HOD",
+      email: "kavidha.irtt@gmail.com",
+      contact: "9442513055",
     },
   },
 
