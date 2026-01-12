@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply bg-[#020817];
+}
 
 @layer base {
   html, body {
