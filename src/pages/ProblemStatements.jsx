@@ -6,7 +6,7 @@ import { problemData } from "../data/problemData";
 
 // SET YOUR DATES HERE
 const RELEASE_DATE = new Date(2026, 0, 12, 7, 0, 0);
-const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 21, 17, 0, 0); // Jan 21st, 5:00 PM
+const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 22, 17, 0, 0); // Jan 22st, 5:00 PM
 
 const ProblemStatements = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -145,6 +145,12 @@ const ProblemStatements = () => {
                 </button>
               )}
             </div>
+
+            {/* --- NOTE FIXED: Removed opacity-60 to make it bright white and glowing --- */}
+            <p className="text-center text-white text-[10px] sm:text-xs mt-12 font-medium italic drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">
+              Note: Problem Statement IDs are assigned based on the alphabetical order of the Department names.
+            </p>
+
           </>
         ) : (
           /* Locked State UI */
