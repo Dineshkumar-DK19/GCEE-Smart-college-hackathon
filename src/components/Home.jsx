@@ -36,7 +36,7 @@ const Home = () => {
   ];
 
   return (
-    <section className="flex min-h-screen flex-col items-center justify-start pt-24 px-4 gap-y-3 md:gap-y-5 relative overflow-hidden">
+<section className="flex min-h-fit md:min-h-[90vh] flex-col items-center justify-start pt-24 px-4 gap-y-3 md:gap-y-5 relative overflow-hidden">
       <div className="absolute top-20 left-0 right-0 bottom-0 z-0 pointer-events-none md:inset-0 md:opacity-40">
         <LightRays
           raysOrigin="top-left"
@@ -108,16 +108,16 @@ const Home = () => {
 
         {/* BUTTON SECTION WITH TRIP-STATE LOGIC */}
         <div className="flex flex-col items-center justify-center sm:w-auto px-6 gap-3">
-          
+
           {/* --- NEW MOBILE-ONLY NAVIGATION BUTTON (Glassmorphic Pill Style) --- */}
           <button
             onClick={() => navigate('/problems')}
             className="
-              md:hidden flex items-center gap-2 
-              px-5 py-2.5 rounded-full 
-              bg-white/5 border border-white/10 
-              text-slate-300 text-[10px] font-bold uppercase tracking-widest 
-              hover:bg-lime-500/10 hover:border-lime-500/30 hover:text-lime-400 
+              md:hidden flex items-center gap-2
+              px-5 py-2.5 rounded-full
+              bg-white/5 border border-white/10
+              text-slate-300 text-[10px] font-bold uppercase tracking-widest
+              hover:bg-lime-500/10 hover:border-lime-500/30 hover:text-lime-400
               transition-all duration-300 group
               backdrop-blur-sm shadow-sm
             "
