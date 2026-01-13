@@ -36,7 +36,7 @@ const Home = () => {
   ];
 
   return (
-<section className="flex min-h-fit md:min-h-[90vh] flex-col items-center justify-start pt-24 px-4 gap-y-3 md:gap-y-5 relative overflow-hidden">
+    <section className="flex  flex-col items-center justify-center pt-24 px-4 gap-y-3 md:gap-y-5 relative overflow-hidden">
       <div className="absolute top-20 left-0 right-0 bottom-0 z-0 pointer-events-none md:inset-0 md:opacity-40">
         <LightRays
           raysOrigin="top-left"

@@ -3,7 +3,7 @@ import { Shield, Zap, Rocket } from "lucide-react";
 
 const About = () => {
   return (
-    <section className="bg-[#020817]/70 pt-8 pb-16 px-6 font-sans">
+    <section className="bg-[#020817]/70 py-16 px-6 font-sans">
       <div className="max-w-6xl mx-auto lg:space-y-10  sm:space-y-8 space-y-6">
 
         {/* SECTION TITLE — TOP CENTER */}
