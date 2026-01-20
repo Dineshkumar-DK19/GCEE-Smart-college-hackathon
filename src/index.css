@@ -32,7 +32,7 @@ body {
 
     /* Hardcoded Dark Mode Colors */
     @apply bg-[#020817] text-white;
-    overscroll-behavior-y: none;
+   
     /* height: 100%; */
   }
 }

@@ -18,8 +18,8 @@ import ErrorModal from "../components/UI/ErrorModal";
 import Button from "../components/UI/Button";
 import { problemData } from "../data/problemData";
 
-// SET YOUR CLOSE DATE HERE: January 21st, 2026 at 5:00 PM
-const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 21, 17, 0, 0);
+// SET YOUR CLOSE DATE HERE: January 25th, 2026 at 5:00 PM
+const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 25, 17, 0, 0);
 
 const fastTransition = { duration: 0.2, ease: "easeOut" };
 
@@ -365,7 +365,7 @@ const Register = () => {
                   value={formData.teamLeader.phone}
                   onChange={(e) => handleLeaderChange("phone", e.target.value.slice(0, 10))}
                   disabled={isClosed}
-                /> 
+                />
               </div>
               <div className="grid grid-cols-3 gap-3">
                 <div>

@@ -11,7 +11,7 @@ import { Lock, Clock, ArrowRight } from "lucide-react";
 
 
 const REGISTRATION_OPEN_DATE = new Date(2026, 0, 12, 7, 0, 0); // Jan 12, 9:00 AM
-const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 21, 17, 0, 0); // Jan 21, 5:00 PM
+const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 25, 17, 0, 0); // Jan 25, 5:00 PM
 
 const Home = () => {
   const navigate = useNavigate();
@@ -160,7 +160,7 @@ const Home = () => {
                 Free Registration
               </span>
               <span className="text-[10px] sm:text-xs md:text-sm uppercase tracking-wide text-white/70 font-medium text-center max-w-md">
-                Last Date for Registration: <span className="text-white font-bold text-lime-400/90">Jan 21st, 5:00 PM</span>
+                Last Date for Registration: <span className="text-white font-bold text-lime-400/90">Jan 25th, 5:00 PM</span>
               </span>
             </>
           )}
