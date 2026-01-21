@@ -6,7 +6,7 @@ import { problemData } from "../data/problemData";
 
 // SET YOUR DATES HERE
 const RELEASE_DATE = new Date(2026, 0, 12, 7, 0, 0);
-const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 26, 0, 0, 0); // Jan 26th, 12:00 AM
+const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 26, 23, 0, 0); // Jan 26th, 11:00 PM
 
 const ProblemStatements = () => {
   const [searchTerm, setSearchTerm] = useState("");
