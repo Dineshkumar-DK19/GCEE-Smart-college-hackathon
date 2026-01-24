@@ -17,7 +17,7 @@ body {
     /* 5rem (80px) is your navbar height + 2rem (32px) extra breathing room */
     scroll-padding-top: 100px;
     scroll-behavior: smooth;
-    overscroll-behavior-y: none;
+    /* overscroll-behavior-y: none; */
     /* height: 100%;
    touch-action: manipulation; */
   }
@@ -32,7 +32,7 @@ body {
 
     /* Hardcoded Dark Mode Colors */
     @apply bg-[#020817] text-white;
-    overscroll-behavior-y: none;
+    /* overscroll-behavior-y: none; */
     /* height: 100%; */
   }
 }
