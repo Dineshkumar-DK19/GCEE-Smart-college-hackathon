@@ -11,7 +11,7 @@ import { Lock, Clock, ArrowRight } from "lucide-react";
 
 
 const REGISTRATION_OPEN_DATE = new Date(2026, 0, 12, 7, 0, 0); // Jan 12, 9:00 AM
-const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 26, 23, 0, 0); // Jan 26, 11:00 PM
+const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 26, 20, 0, 0); // Jan 26, 11:00 PM
 
 const Home = () => {
   const navigate = useNavigate();
