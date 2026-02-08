@@ -7,20 +7,30 @@ import { TypewriterEffect } from './UI/TypewriterEffect';
 import FlippingLogo from './UI/FlippingLogo';
 import Button from './UI/Button';
 import LightRays from './UI/LightRays';
-import { Lock, Clock, ArrowRight } from "lucide-react";
+import ImageCarousel from './UI/ImageCarousel';
+import { Lock, Clock, ArrowRight, Images } from "lucide-react"; // Added 'Images' icon
 
-
+// Registration Dates
 const REGISTRATION_OPEN_DATE = new Date(2026, 0, 12, 7, 0, 0); // Jan 12, 9:00 AM
-<<<<<<< HEAD
-const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 21, 17, 0, 0); // Jan 21, 5:00 PM
-=======
-const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 26, 20, 0, 0); // Jan 26, 11:00 PM
->>>>>>> 4b9335395de604c23c85b0e441f59ce6b055dc38
+const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 26, 20, 0, 0); // Jan 26, 8:00 PM
+
+const carouselImages = [
+  { id: 'organizers', src: '/PIC/Organizers.jpeg', alt: 'The Organizing Team' },
+  { id: 'team1', src: '/PIC/Team1.jpeg', alt: 'Winning Team 1' },
+  { id: 'team2', src: '/PIC/Team2.jpeg', alt: 'Winning Team 2' },
+  { id: 'team3', src: '/PIC/Team3.jpeg', alt: 'Winning Team 3' },
+  { id: 'team4', src: '/PIC/Team4.jpeg', alt: 'Winning Team 4' },
+  { id: 'team5', src: '/PIC/Team5.jpeg', alt: 'Winning Team 5' },
+  { id: 'team6', src: '/PIC/Team6.jpeg', alt: 'Winning Team 6' },
+  { id: 'team7', src: '/PIC/Team7.jpeg', alt: 'Winning Team 7' },
+  { id: 'team8', src: '/PIC/Team8.jpeg', alt: 'Winning Team 8' },
+  { id: 'team9', src: '/PIC/Team9.jpeg', alt: 'Winning Team 9' },
+  { id: 'team10', src: '/PIC/Team10.jpeg', alt: 'Winning Team 10' },
+];
 
 const Home = () => {
   const navigate = useNavigate();
   const [now, setNow] = useState(new Date());
-
 
   useEffect(() => {
     const timer = setInterval(() => setNow(new Date()), 60000);
@@ -29,7 +39,13 @@ const Home = () => {
 
   const isNotStarted = now < REGISTRATION_OPEN_DATE;
   const isClosed = now >= REGISTRATION_CLOSE_DATE;
+  // eslint-disable-next-line no-unused-vars
   const isOpen = !isNotStarted && !isClosed;
+
+  // Handler for carousel clicks
+  const handleCarouselClick = (id) => {
+    navigate('/gallery');
+  };
 
   const hackathonTitle = [
     { text: "SMART", className: "text-lime-400" },
@@ -40,7 +56,9 @@ const Home = () => {
   ];
 
   return (
-    <section className="flex  flex-col items-center justify-center pt-24 px-4 gap-y-3 md:gap-y-5 relative overflow-hidden">
+    <section className="flex flex-col items-center justify-center pt-24 px-4 gap-y-3 md:gap-y-5 relative overflow-hidden">
+      
+      {/* --- Background Effects --- */}
       <div className="absolute top-20 left-0 right-0 bottom-0 z-0 pointer-events-none md:inset-0 md:opacity-40">
         <LightRays
           raysOrigin="top-left"
@@ -60,10 +78,13 @@ const Home = () => {
           rayLength={3}
         />
       </div>
+
+      {/* --- Logo Section --- */}
       <div className="relative z-10">
         <FlippingLogo frontImage={bannerImg} backImage={hackathonLogo} />
       </div>
 
+      {/* --- College Name --- */}
       <div className="w-full px-2 md:px-0 relative z-10">
         <BlurText
           text="Government College of Engineering, Erode"
@@ -78,6 +99,7 @@ const Home = () => {
         />
       </div>
 
+      {/* --- Title Section --- */}
       <div className="relative z-10 mt-2">
         <div className="relative flex flex-col items-center justify-center px-6 py-4 sm:px-10 sm:py-6 rounded-xl overflow-hidden">
           <div className="relative z-10 flex flex-col items-center">
@@ -95,7 +117,34 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="relative z-10 flex flex-col items-center text-center animate-fade-in-up mt-2 pb-10">
+      {/* --- CAROUSEL SECTION WITH GALLERY BUTTON --- */}
+      <div className="relative z-10 w-full max-w-4xl px-4 mt-6 mb-2 animate-fade-in-up flex flex-col items-center">
+         <div className="text-center mb-3">
+            <h3 className="text-lg sm:text-xl font-bold text-white">
+              Hall of <span className="text-lime-400">Fame</span>
+            </h3>
+            <p className="text-[10px] sm:text-xs text-slate-400 tracking-wider uppercase">
+              Celebrating our Winners & Team
+            </p>
+         </div>
+         
+         <ImageCarousel 
+            images={carouselImages} 
+            onImageClick={handleCarouselClick} 
+         />
+
+         {/* NEW: View Gallery Button */}
+         <div className="mt-6">
+            <Button onClick={() => navigate('/gallery')} className="!px-6 !py-2.5">
+              <span className="flex items-center gap-2 text-sm font-bold tracking-wide uppercase">
+                <Images size={18} /> View SCH'26 Gallery <ArrowRight size={18} />
+              </span>
+            </Button>
+         </div>
+      </div>
+
+      {/* --- Info & Buttons Section --- */}
+      <div className="relative z-10 flex flex-col items-center text-center animate-fade-in-up mt-8 pb-10">
         <p className="my-1 text-[10px] sm:text-xs font-bold tracking-[0.2em] text-slate-400 uppercase">
           An Initiative of the
         </p>
@@ -113,7 +162,7 @@ const Home = () => {
         {/* BUTTON SECTION WITH TRIP-STATE LOGIC */}
         <div className="flex flex-col items-center justify-center sm:w-auto px-6 gap-3">
 
-          {/* --- NEW MOBILE-ONLY NAVIGATION BUTTON (Glassmorphic Pill Style) --- */}
+          {/* --- MOBILE-ONLY NAVIGATION BUTTON --- */}
           <button
             onClick={() => navigate('/problems')}
             className="

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Gallery from "./pages/Gallery";
 
 // Components
 import ScrollToTop from "./components/ScrollToTop";
@@ -58,6 +59,8 @@ function App() {
             <Route path="/problems" element={<ProblemStatements />} />
             <Route path="/problems/:id" element={<ProblemDetails />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/gallery" element={<Gallery />} />
+          
           </Routes>
         </main>
       </div>

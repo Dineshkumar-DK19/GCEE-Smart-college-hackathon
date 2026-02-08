@@ -18,13 +18,9 @@ import ErrorModal from "../components/UI/ErrorModal";
 import Button from "../components/UI/Button";
 import { problemData } from "../data/problemData";
 
-<<<<<<< HEAD
-// SET YOUR CLOSE DATE HERE: January 21st, 2026 at 5:00 PM
-const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 21, 17, 0, 0);
-=======
 // SET YOUR CLOSE DATE HERE: January 26th, 2026 at 11:00 PM
 const REGISTRATION_CLOSE_DATE = new Date(2026, 0, 26, 20, 0, 0);
->>>>>>> 4b9335395de604c23c85b0e441f59ce6b055dc38
+
 
 const fastTransition = { duration: 0.2, ease: "easeOut" };
 
