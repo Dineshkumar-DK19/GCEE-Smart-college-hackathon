@@ -16,24 +16,26 @@ const ImageCarousel = ({ images, onImageClick, autoSlide = true, autoSlideInterv
   return (
     <div className="relative overflow-hidden group w-full max-w-3xl mx-auto rounded-xl shadow-[0_0_20px_rgba(163,230,53,0.3)] border border-lime-500/30 bg-slate-900/50 backdrop-blur-sm">
       
+      {/* TRACK */}
       <div
-        className="flex transition-transform ease-out duration-500"
+        // CHANGE 1: Changed 'ease-out duration-500' to 'ease-in-out duration-700' for smoother movement
+        className="flex transition-transform ease-in-out duration-700"
         style={{ transform: `translateX(-${curr * 100}%)` }}
       >
         {images.map((img, i) => (
           <div 
             key={i} 
-            className="min-w-full flex-shrink-0 relative cursor-pointer"
+            className="w-full min-w-full flex-shrink-0 relative cursor-pointer"
             onClick={() => onImageClick(img.id)}
           >
-            {/* CHANGE: Added 'object-top' here.
-               This aligns the image to the top edge, so if cropping happens, 
-               it cuts the bottom, not the top/center.
-            */}
+            {/* IMAGE */}
             <img
               src={img.src}
               alt={img.alt}
-              className="w-full h-64 sm:h-80 md:h-96 object-cover object-top hover:opacity-90 transition-opacity"
+              // CHANGE 2: 
+              // - Added 'object-left-top' for mobile: Anchors image to Left (shows left, crops right) and Top.
+              // - Added 'sm:object-top': On larger screens (sm+), it switches back to Center-Top (your "perfect" setting).
+              className="w-full aspect-[4/3] sm:h-80 md:h-96 object-cover object-left-top sm:object-top hover:opacity-90 transition-opacity"
             />
             
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
