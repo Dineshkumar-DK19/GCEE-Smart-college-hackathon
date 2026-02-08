@@ -16,9 +16,6 @@ const ImageCarousel = ({ images, onImageClick, autoSlide = true, autoSlideInterv
   return (
     <div className="relative overflow-hidden group w-full max-w-3xl mx-auto rounded-xl shadow-[0_0_20px_rgba(163,230,53,0.3)] border border-lime-500/30 bg-slate-900/50 backdrop-blur-sm">
       
-      {/* FIX: Added 'min-w-full' and 'flex-shrink-0' to the mapping div/img.
-         This ensures each slide is exactly 100% width and never shrinks.
-      */}
       <div
         className="flex transition-transform ease-out duration-500"
         style={{ transform: `translateX(-${curr * 100}%)` }}
@@ -29,16 +26,16 @@ const ImageCarousel = ({ images, onImageClick, autoSlide = true, autoSlideInterv
             className="min-w-full flex-shrink-0 relative cursor-pointer"
             onClick={() => onImageClick(img.id)}
           >
-             {/* Using aspect-video (16:9) or aspect-[4/3] ensures consistent height.
-                object-cover ensures it fills the area without distortion.
-             */}
+            {/* CHANGE: Added 'object-top' here.
+               This aligns the image to the top edge, so if cropping happens, 
+               it cuts the bottom, not the top/center.
+            */}
             <img
               src={img.src}
               alt={img.alt}
-              className="w-full h-64 sm:h-80 md:h-96 object-cover hover:opacity-90 transition-opacity"
+              className="w-full h-64 sm:h-80 md:h-96 object-cover object-top hover:opacity-90 transition-opacity"
             />
             
-            {/* Optional: Add a subtle gradient overlay so text is always readable if you add it later */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
         ))}
@@ -46,7 +43,6 @@ const ImageCarousel = ({ images, onImageClick, autoSlide = true, autoSlideInterv
 
       {/* Navigation Buttons */}
       <div className="absolute inset-0 flex items-center justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-        {/* pointer-events-auto needed on buttons because parent has pointer-events-none */}
         <button 
           onClick={(e) => { e.stopPropagation(); prev(); }} 
           className="p-2 rounded-full bg-black/50 text-white hover:bg-lime-500 hover:text-black transition-all pointer-events-auto backdrop-blur-sm"
