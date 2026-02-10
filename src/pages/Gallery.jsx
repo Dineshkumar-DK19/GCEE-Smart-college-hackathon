@@ -5,6 +5,12 @@ import { ArrowLeft } from "lucide-react";
 // Gallery Images (FINAL & CLEAN)
 const galleryImages = [
   // 🔹 HOD with Organizers (FIRST)
+    {
+    id: "hod-organizers",
+    src: "/PIC/Overall.jpeg",
+    title: "Under the Leadership of Our HOD",
+    desc: "Guided by leadership, powered by teamwork — the minds behind SCH 2026.",
+  },
 
   // 🔹 Organizing Team
   {
@@ -49,12 +55,7 @@ const galleryImages = [
     desc: "Creativity and teamwork coming together inside SCH 2026.",
   },
 
-  {
-    id: "hod-organizers",
-    src: "/PIC/Overall.jpeg",
-    title: "Under the Leadership of Our HOD",
-    desc: "Guided by leadership, powered by teamwork — the minds behind SCH 2026.",
-  },
+
 ];
 
 const Gallery = () => {

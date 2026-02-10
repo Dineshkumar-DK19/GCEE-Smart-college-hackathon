@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "gcee-sch26"
-  }
+  },
+  "targets": {
+    "gcee-sch26": {
+      "hosting": {
+        "web": [
+          "gcee-sch26"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
