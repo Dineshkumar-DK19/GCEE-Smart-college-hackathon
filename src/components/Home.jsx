@@ -57,7 +57,7 @@ const Home = () => {
 
   return (
     <section className="flex flex-col items-center justify-center pt-24 px-4 gap-y-3 md:gap-y-5 relative overflow-hidden">
-      
+
       {/* --- Background Effects --- */}
       <div className="absolute top-20 left-0 right-0 bottom-0 z-0 pointer-events-none md:inset-0 md:opacity-40">
         <LightRays
@@ -117,31 +117,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* --- CAROUSEL SECTION WITH GALLERY BUTTON --- */}
-      <div className="relative z-10 w-full max-w-4xl px-4 mt-6 mb-2 animate-fade-in-up flex flex-col items-center">
-         <div className="text-center mb-3">
-            <h3 className="text-lg sm:text-xl font-bold text-white">
-              Hall of <span className="text-lime-400">Fame</span>
-            </h3>
-            <p className="text-[10px] sm:text-xs text-slate-400 tracking-wider uppercase">
-              Celebrating our Winners & Team
-            </p>
-         </div>
-         
-         <ImageCarousel 
-            images={carouselImages} 
-            onImageClick={handleCarouselClick} 
-         />
-
-         {/* NEW: View Gallery Button */}
-         <div className="mt-6">
-            <Button onClick={() => navigate('/gallery')} className="!px-6 !py-2.5">
-              <span className="flex items-center gap-2 text-sm font-bold tracking-wide uppercase">
-                <Images size={18} /> View SCH'26 Gallery <ArrowRight size={18} />
-              </span>
-            </Button>
-         </div>
-      </div>
 
       {/* --- Info & Buttons Section --- */}
       <div className="relative z-10 flex flex-col items-center text-center animate-fade-in-up mt-8 pb-10">
@@ -219,6 +194,32 @@ const Home = () => {
           )}
         </div>
       </div>
+        {/* --- CAROUSEL SECTION WITH GALLERY BUTTON --- */}
+      <div className="relative z-10 w-full max-w-4xl px-4 mt-6 mb-2 animate-fade-in-up flex flex-col items-center">
+         <div className="text-center mb-3">
+            <h3 className="text-lg sm:text-xl font-bold text-white">
+              Hall of <span className="text-lime-400">Fame</span>
+            </h3>
+            <p className="text-[10px] sm:text-xs text-slate-400 tracking-wider uppercase">
+              Celebrating our Winners & Team
+            </p>
+         </div>
+
+         <ImageCarousel
+            images={carouselImages}
+            onImageClick={handleCarouselClick}
+         />
+
+         {/* NEW: View Gallery Button */}
+         <div className="mt-6">
+            <Button onClick={() => navigate('/gallery')} className="!px-6 !py-2.5">
+              <span className="flex items-center gap-2 text-sm font-bold tracking-wide uppercase">
+                <Images size={18} /> View SCH'26 Gallery <ArrowRight size={18} />
+              </span>
+            </Button>
+         </div>
+      </div>
+
     </section>
   );
 };
